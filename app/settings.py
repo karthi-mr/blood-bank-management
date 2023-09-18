@@ -43,6 +43,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'auth.apps.AuthConfig',
+    'admin.apps.AdminConfig',
+    'blood.apps.BloodConfig',
+    'donor.apps.DonorConfig',
+    'patient.apps.PatientConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +138,9 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+AUTH_USER_MODEL = 'auth1.User'
+
+# Allowing All Origins
+CORS_ALLOW_ALL_ORIGINS = True

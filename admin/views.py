@@ -1,3 +1,8 @@
-from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
 
-# Create your views here.
+from .models import Admin
+from .serializers import AdminSerializer
+
+class AdminViewSet(ModelViewSet):
+    queryset = Admin.objects.all()
+    serializer_class = AdminSerializer

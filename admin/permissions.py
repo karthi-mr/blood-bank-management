@@ -6,7 +6,7 @@ class AdminPermission(BasePermission):
     def has_permission(self, request, view):
         if not request.user.is_authenticated:
             return False
-        if view.action in ('list', 'destroy') and request.user.username != "admin":
+        if view.action in ('list', 'destroy', 'create') and request.user.username != "admin":
             return False
         return True
 

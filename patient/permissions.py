@@ -4,7 +4,7 @@ from rest_framework.permissions import BasePermission
 class PatientPermission(BasePermission):
 
     def has_permission(self, request, view):
-        if not request.user.is_authenticated:
+        if not request.user.is_authenticated and view.action != 'create':
             return False
         if view.action in ('list', 'destroy') and request.user.user_type != 1:
             return False

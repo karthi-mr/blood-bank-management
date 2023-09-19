@@ -146,6 +146,14 @@ AUTH_USER_MODEL = 'auth1.User'
 # Allowing All Origins
 CORS_ALLOW_ALL_ORIGINS = True
 
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
 # Custom settings for JWT token
 SIMPLE_JWT = {
     "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),

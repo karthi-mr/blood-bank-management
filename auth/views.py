@@ -1,4 +1,5 @@
 from django.contrib.auth.hashers import check_password, make_password
+from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from rest_framework import authentication, generics, permissions, status
@@ -33,6 +34,7 @@ class MyObtainTokenPairView(TokenObtainPairView):  # user login
             return Response({'error': "WRONG_PASSWORD"}, status=status.HTTP_403_FORBIDDEN)
         
         user_token = MyTokenObtainPairSerializer.get_token(user)
+        update_last_login(None, user)
         response = {
             'access': str(user_token.access_token),
             'refresh': str(user_token)

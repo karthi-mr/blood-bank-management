@@ -17,8 +17,7 @@ class DonorSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         """ creating user """
         user_data = validated_data.pop('user')
-        if user_data.get('user_type') != 2:
-            raise ValidationError("You have entered wrong user type.")
+        user_data['user_type'] = 2
         user_data['password'] = make_password(user_data.get('password'))
         user = User.objects.create(**user_data)
 

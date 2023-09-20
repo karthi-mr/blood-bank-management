@@ -1,3 +1,6 @@
+from collections.abc import Iterable
+from datetime import date
+
 from django.db import models
 
 from auth.models import User
@@ -36,3 +39,13 @@ class BloodDonate(models.Model):
 
     def __str__(self):
         return f"{self.donor.user.username}"
+
+    @property
+    def calculate_age(self):
+        today = date.today()
+        age = today.year - self.donor.date_of_birth.year - \
+                ((today.month, today.day) < \
+                (self.donor.date_of_birth.month, self.donor.date_of_birth.day))
+
+        return age
+    

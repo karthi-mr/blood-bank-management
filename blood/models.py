@@ -26,8 +26,10 @@ class Stock(models.Model):
 
 
 class BloodRequest(models.Model):
-    request_by_patient = models.ForeignKey(Patient, on_delete=models.CASCADE, null=True, blank=True)
-    request_by_donor = models.ForeignKey(Donor, on_delete=models.CASCADE, null=True, blank=True)
+    request_by_patient = models.ForeignKey(
+        Patient, on_delete=models.CASCADE, null=True, blank=True)
+    request_by_donor = models.ForeignKey(
+        Donor, on_delete=models.CASCADE, null=True, blank=True)
     patient_name = models.CharField(max_length=50)
     patient_age = models.PositiveIntegerField()
     reason = models.TextField(max_length=500)

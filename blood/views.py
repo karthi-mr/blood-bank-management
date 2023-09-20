@@ -5,7 +5,8 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 
 from .models import BloodGroup, Stock
-from .permissions import BloodGroupPermission, UpdateStockPermission
+from .permissions import (BloodGroupPermission, StockPermission,
+                          UpdateStockPermission)
 from .serializers import BloodGroupSerializer, StockSerializer
 
 
@@ -28,7 +29,8 @@ class BloodGroupViewSet(ViewSet):
 
 
 class StockViewSet(ViewSet):
-    
+    permission_classes = [StockPermission]
+
     def list(self, request, *args, **kwargs):
         queryset = Stock.objects.all()
         serializer = StockSerializer(queryset, many=True)
@@ -45,4 +47,3 @@ class StockViewSet(ViewSet):
             return Response({'detail': "Stock updated successfully."}, status=status.HTTP_200_OK)
         except Exception:
             return Response({'detail': "An Unknown error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-            

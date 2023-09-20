@@ -5,7 +5,7 @@ from patient.models import Patient
 
 
 class BloodGroup(models.Model):
-    blood_group = models.CharField(max_length=10)
+    blood_group = models.CharField(max_length=10, unique=True)
 
     class Meta:
         db_table = 'bbm_blood_group'

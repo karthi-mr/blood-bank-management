@@ -36,7 +36,7 @@ class BloodDonateHistoryPermission(BasePermission):
         return False
 
 
-class BloodRequestUpdatePermission(BasePermission):
+class BloodDonateUpdatePermission(BasePermission):
 
     def has_permission(self, request, view):
         if request.user.user_type == 1:

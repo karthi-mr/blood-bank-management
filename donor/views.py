@@ -9,7 +9,7 @@ from app.pagination import CustomPagination
 
 from .models import BloodDonate, Donor
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
-                          BloodRequestUpdatePermission, DonorPermission)
+                          BloodDonateUpdatePermission, DonorPermission)
 from .serializers import BloodDonateSerializer, DonorSerializer
 
 
@@ -54,10 +54,11 @@ class BloodDonateViewSet(ModelViewSet):
                         status=status.HTTP_201_CREATED)
 
 
-    @action(detail=True, methods=['PATCH'], permission_classes=[BloodRequestUpdatePermission])
-    def update_status(self, request, pk=None):
+    @action(detail=False, methods=['PATCH'], permission_classes=[BloodDonateUpdatePermission])
+    def update_status(self, request):
+        id = request.data.get('id')
         status_update = request.data.get('status')
-        queryset = get_object_or_404(BloodDonate, pk=pk)
+        queryset = get_object_or_404(BloodDonate, id=id)
         try:
             queryset.status = status_update
             queryset.save()

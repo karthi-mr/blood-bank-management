@@ -31,3 +31,19 @@ class UpdateStockPermission(BasePermission):
         if request.user.user_type != 1:
             return False
         return True
+
+
+class BloodRequestPermission(BasePermission):
+
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        return True
+
+
+class BloodRequestUpdatePermission(BasePermission):
+
+    def has_permission(self, request, view):
+        if request.user.user_type == 1:
+            return True
+        return False

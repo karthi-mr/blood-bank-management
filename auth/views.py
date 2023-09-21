@@ -75,7 +75,7 @@ class ResetPasswordView(APIView):  # password reset
 def get_tab(request):
     if not request.user.is_authenticated:
         response = [{'name': 'home', 'link': 'home'},
-                    {'name': 'auth', 'link': 'auth'},
+                    {'name': 'login', 'link': 'auth'},
                ]
     else:
         if request.user.user_type == 1:

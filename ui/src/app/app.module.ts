@@ -11,6 +11,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { DonorComponent } from './admin/donor/donor.component';
+import { PatientComponent } from './admin/patient/patient.component';
+import { AdminComponent } from './admin/admin/admin.component';
+import { BloodGroupPipe } from './shared/blood-group.pipe';
 
 @NgModule({
   declarations: [
@@ -19,7 +23,11 @@ import { LogoutComponent } from './auth/logout/logout.component';
     HeaderComponent,
     HomeComponent,
     PageNotFoundComponent,
-    LogoutComponent
+    LogoutComponent,
+    DonorComponent,
+    PatientComponent,
+    AdminComponent,
+    BloodGroupPipe,
   ],
   imports: [
     BrowserModule,

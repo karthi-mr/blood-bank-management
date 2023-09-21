@@ -12,6 +12,7 @@ export class SharedService {
   private readonly TABS_API = "http://127.0.0.1:8000/auth/tab/";
 
   blood_groups: Subject<BloodGroup[]> = new Subject<BloodGroup[]>
+  blood_groups_array: BloodGroup[] = []
 
   constructor(private http: HttpClient) { }
 
@@ -19,6 +20,7 @@ export class SharedService {
     return this.http.get<BloodGroup[]>(`${this.BLOOD_GROUP_API}`).pipe(
       tap((data: BloodGroup[]) => {
         this.blood_groups.next(data);
+        this.blood_groups_array = data;
       })
     );
   }

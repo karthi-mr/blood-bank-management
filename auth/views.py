@@ -3,12 +3,11 @@ from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import Q
 from rest_framework import authentication, generics, permissions, status
-from rest_framework.decorators import APIView
+from rest_framework.decorators import APIView, api_view, permission_classes
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.views import TokenObtainPairView
-
 from .models import User
 from .serializers import MyTokenObtainPairSerializer
 
@@ -69,3 +68,13 @@ class ResetPasswordView(APIView):  # password reset
                 return Response({'detail': "Password updated successfully"})
             except:
                 return Response({'detail': "An Unknown error occurred."})
+
+
+@api_view(['GET'])
+@permission_classes([permissions.IsAuthenticated])
+def get_tab(request):
+    # print(request.user.user_type)
+    return Response({'tabs': [
+        {'name': 'home', 'link': 'home'},
+        {'name': 'auth', 'link': 'auth'},
+    ]})

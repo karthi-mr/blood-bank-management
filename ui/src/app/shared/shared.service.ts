@@ -9,6 +9,8 @@ import { Observable, Subject, Subscription, tap } from 'rxjs';
 export class SharedService {
 
   private readonly BLOOD_GROUP_API = "http://127.0.0.1:8000/api/blood-group/";
+  private readonly TABS_API = "http://127.0.0.1:8000/auth/tab/";
+
   blood_groups: Subject<BloodGroup[]> = new Subject<BloodGroup[]>
 
   constructor(private http: HttpClient) { }
@@ -19,5 +21,9 @@ export class SharedService {
         this.blood_groups.next(data);
       })
     );
+  }
+
+  get_tabs(): any {
+    return this.http.get(`${this.TABS_API}`);
   }
 }

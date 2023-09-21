@@ -11,7 +11,7 @@ import { SharedService } from '../shared/shared.service';
 export class HeaderComponent implements OnInit{
 
   isUserLoggedIn: boolean = false;
-  tabs: any;
+  tabs:any = [];
 
   constructor(private authService: AuthService,
     private sharedService: SharedService,
@@ -20,6 +20,7 @@ export class HeaderComponent implements OnInit{
    ) {}
    
    ngOnInit(): void {
+    this.getTabs()
     this.isUserLoggedIn = this.authService.auto_login();
     this.authService.isLoggedIn.subscribe({
       next: (data: boolean) => {

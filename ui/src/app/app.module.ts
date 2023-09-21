@@ -10,6 +10,7 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
 import { AuthInterceptor } from './auth/auth.interceptor';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AuthInterceptor } from './auth/auth.interceptor';
     AuthComponent,
     HeaderComponent,
     HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    LogoutComponent
   ],
   imports: [
     BrowserModule,

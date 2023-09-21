@@ -71,10 +71,45 @@ class ResetPasswordView(APIView):  # password reset
 
 
 @api_view(['GET'])
-@permission_classes([permissions.IsAuthenticated])
+# @permission_classes([permissions.IsAuthenticated])
 def get_tab(request):
-    # print(request.user.user_type)
-    return Response({'tabs': [
-        {'name': 'home', 'link': 'home'},
-        {'name': 'auth', 'link': 'auth'},
-    ]})
+    if not request.user.is_authenticated:
+        response = [{'name': 'home', 'link': 'home'},
+                    {'name': 'auth', 'link': 'auth'},
+               ]
+    else:
+        if request.user.user_type == 1:
+            response = [{'name': 'dashboard', 'link': 'admin/dashboard'},
+                        {'name': 'donor', 'link': 'admin/donor'},
+                        {'name': 'patient', 'link': 'admin/patient'},
+                        {'name': 'blood donate details', 
+                         'link': 'admin/blood-donate-details'},
+                        {'name': 'blood request details', 
+                         'link': 'admin/blood-request-details'},
+                        {'name': 'blood request history', 
+                         'link': 'admin/blood-request-history'},
+                        {'name': 'blood donate history', 
+                         'link': 'blood-donate-history'},
+                        {'name': 'blood stock', 'link': 'admin/blood-stock'},
+                        {'name': 'logout', 'link': 'logout'},
+                       ]
+            if request.user.username == 'admin':
+                response.insert(1,{'name': 'admin', 'link': 'admin/admin'})
+        elif request.user.user_type == 2:
+            response = [{'name': 'dashboard', 'link': 'donor/dashboard'},
+                        {'name': 'donate blood', 'link': 'donor/donate-blood'},
+                        {'name': 'donate blood history', 
+                         'link': 'donor/donate-blood-history'},
+                        {'name': 'request blood', 'link': 'donor/request-blood'},
+                        {'name': 'request blood history', 
+                         'link': 'donor/request-blood-history'},
+                        {'name': 'logout', 'link': 'logout'},
+                       ]
+        elif request.user.user_type == 3:
+            response = [{'name': 'dashboard', 'link': 'patient/dashboard'},
+                        {'name': 'request blood', 'link': 'patient/request-blood'},
+                        {'name': 'request blood history', 
+                         'link': 'patient/request-blood-history'},
+                        {'name': 'logout', 'link': 'logout'},
+                       ]
+    return Response(response, status=status.HTTP_200_OK)

@@ -87,9 +87,9 @@ def get_tab(request):
                         {'name': 'blood request details', 
                          'link': 'admin/blood-request-details'},
                         {'name': 'blood request history', 
-                         'link': 'admin/blood-request-history'},
+                         'link': 'admin/request-blood-history'},
                         {'name': 'blood donate history', 
-                         'link': 'blood-donate-history'},
+                         'link': 'admin/donate-blood-history'},
                         {'name': 'blood stock', 'link': 'admin/blood-stock'},
                         {'name': 'logout', 'link': 'logout'},
                        ]

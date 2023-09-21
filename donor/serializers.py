@@ -32,7 +32,7 @@ class DonorSerializer(serializers.ModelSerializer):
 
 
 class BloodDonateSerializer(serializers.ModelSerializer):
-    # donor = DonorSerializer(read_only=True)
+    donor = DonorSerializer(read_only=True)
     
     class Meta:
         model = BloodDonate

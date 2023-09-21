@@ -1,0 +1,41 @@
+<div class="container-fluid">
+  <h1 class="text-secondary text-center my-3">Donor Details</h1>
+  <table class="table table-striped table-hover table-bordered table-responsive-lg">
+    <thead class="table-danger">
+      <tr>
+        <th scope="col">Donor</th>
+        <th scope="col">Disease</th>
+        <th scope="col">Age</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Added</th>
+        <th scope="col">Blood Group</th>
+        <th scope="col">Status</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let history of donateHistory">
+        <td>{{ history.donor.user.username }}</td>
+        <td>{{ history.disease }}</td>
+        <td>{{ history.age }}</td>
+        <td>{{ history.unit }}</td>
+        <td>{{ history.added | date }}</td>
+        <td>{{ history.blood_group | bloodGroup }}</td>
+        <td>{{ history.status | status}}</td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <div class="text-center">
+    <button type="button" 
+            class="btn btn-outline-primary me-3" 
+            (click)="onPrev()"
+            [disabled]="!prevLink">
+      Prev
+    </button>
+    <button type="button" 
+            class="btn btn-outline-primary" 
+            (click)="onNext()" 
+            [disabled]="!nextLink">
+      Next
+    </button>
+  </div> -->
+</div>

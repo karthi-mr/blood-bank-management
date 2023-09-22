@@ -19,7 +19,7 @@ export class PatientComponent implements OnInit{
   ngOnInit(): void {
       this.adminService.get_patient(null).subscribe({
         next: (data: PatientResult) => {
-          console.log(data);
+          // console.log(data);
           this.nextLink = data.links.next;
           this.prevLink = data.links.prev;
           this.patients = data.results;
@@ -30,7 +30,7 @@ export class PatientComponent implements OnInit{
   onNext(): void {
     this.adminService.get_patient(this.nextLink).subscribe({
       next: (data: PatientResult) => {
-        console.log(data);
+        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.prev;
         this.patients = data.results;
@@ -41,7 +41,7 @@ export class PatientComponent implements OnInit{
   onPrev(): void {
     this.adminService.get_patient(this.prevLink).subscribe({
       next: (data: PatientResult) => {
-        console.log(data);
+        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.prev;
         this.patients = data.results;

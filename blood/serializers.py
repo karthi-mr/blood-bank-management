@@ -1,19 +1,27 @@
 from rest_framework import serializers
 
-from .models import BloodGroup, Stock, BloodRequest
-
-
-class StockSerializer(serializers.ModelSerializer):
-
-    class Meta:
-        model = Stock
-        fields = '__all__'
+from .models import BloodGroup, BloodRequest, Stock
 
 
 class BloodGroupSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = BloodGroup
+        fields = '__all__'
+
+
+class StockSerializer1(serializers.ModelSerializer):
+
+    class Meta:
+        model = Stock
+        fields = '__all__'
+
+
+class StockSerializer(serializers.ModelSerializer):
+    blood_group = BloodGroupSerializer()
+    
+    class Meta:
+        model = Stock
         fields = '__all__'
 
 

@@ -40,7 +40,7 @@
         <td *ngIf="userType==1">
           <button type="button" 
                   class="btn btn-success me-2" 
-                  (click)="onApproveRequest(request.id)">
+                  (click)="onApproveRequest(request.id, request.blood_group, request.unit)">
             Approve
           </button>
           <button type="button" 

@@ -10,6 +10,8 @@ import { AdminComponent } from './admin/admin/admin.component';
 import { DonateBloodComponent } from './donor/donate-blood/donate-blood.component';
 import { DonateBloodHistoryComponent } from './donor/donate-blood-history/donate-blood-history.component';
 import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edit.component';
+import { StockComponent } from './admin/stock/stock.component';
+import { AddBloodComponent } from './admin/stock/add-blood/add-blood.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,6 +23,8 @@ const routes: Routes = [
     {path: 'admin',component: AdminComponent},
     {path: 'blood-donate-details', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
+    {path: 'blood-stock', component: StockComponent},
+    {path: 'add-blood-group', component: AddBloodComponent},
   ]},
   {path: 'donor', children: [
     {path: 'donate-blood', component: DonateBloodComponent},

@@ -18,7 +18,7 @@ export class DonorComponent implements OnInit{
   ngOnInit(): void {
       this.adminService.get_donor(null).subscribe({
         next: (data: DonorResult) => {
-          console.log(data);
+          // console.log(data);
           this.nextLink = data.links.next;
           this.prevLink = data.links.prev;
           this.donors = data.results;
@@ -29,7 +29,7 @@ export class DonorComponent implements OnInit{
   onNext(): void {
     this.adminService.get_patient(this.nextLink).subscribe({
       next: (data: DonorResult) => {
-        console.log(data);
+        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.prev;
         this.donors = data.results;
@@ -40,7 +40,7 @@ export class DonorComponent implements OnInit{
   onPrev(): void {
     this.adminService.get_patient(this.prevLink).subscribe({
       next: (data: DonorResult) => {
-        console.log(data);
+        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.prev;
         this.donors = data.results;

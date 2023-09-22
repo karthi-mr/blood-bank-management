@@ -19,6 +19,8 @@ import { DonateBloodComponent } from './donor/donate-blood/donate-blood.componen
 import { DonateBloodHistoryComponent } from './donor/donate-blood-history/donate-blood-history.component';
 import { StatusPipe } from './shared/status.pipe';
 import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edit.component';
+import { StockComponent } from './admin/stock/stock.component';
+import { AddBloodComponent } from './admin/stock/add-blood/add-blood.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edi
     DonateBloodHistoryComponent,
     StatusPipe,
     DonateEditComponent,
+    StockComponent,
+    AddBloodComponent,
   ],
   imports: [
     BrowserModule,

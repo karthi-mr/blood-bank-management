@@ -46,3 +46,9 @@ export interface PatientResult {
   count: number;
   results: Patient[];
 }
+
+export interface BloodStock {
+  id: number;
+  unit: number;
+  blood_group: BloodGroup;
+}

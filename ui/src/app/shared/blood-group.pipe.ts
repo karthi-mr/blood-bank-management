@@ -11,9 +11,13 @@ export class BloodGroupPipe implements PipeTransform {
 
   transform(value: number, ...args: unknown[]): unknown {
 
-    // console.log(this.sharedService.blood_groups_array[value]);
+    // console.log(value);
+
+    // console.log(this.sharedService.blood_groups_array[0]);
 
     return this.sharedService.blood_groups_array[value].blood_group;
+
+    // return 1;
   }
 
 }

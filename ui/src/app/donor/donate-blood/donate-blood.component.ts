@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { DonateHistory } from '../donor.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AdminService } from 'src/app/admin/admin.service';
 
 @Component({
   selector: 'app-donate-blood',
@@ -16,6 +17,7 @@ export class DonateBloodComponent implements OnInit{
 
   constructor(private donorService: DonorService, 
               private authService: AuthService,
+              private adminService: AdminService,
               private router: Router,
               private route: ActivatedRoute
              ) {}
@@ -27,7 +29,7 @@ export class DonateBloodComponent implements OnInit{
   getAllBloodDonateRequests(): void {
     this.donorService.get_blood_donate_requests().subscribe({
       next: (data: DonateHistory[]) => {
-        console.log(data.length);
+        // console.log(data.length);
         this.donateRequests = data;
       }
     })
@@ -38,10 +40,15 @@ export class DonateBloodComponent implements OnInit{
     this.router.navigate(['../donate-blood-add'], {relativeTo: this.route})
   }
 
-  onApproveRequest(id: number): void {
+  onApproveRequest(id: number, blood_group: number, unit: number): void {
     this.donorService.update_status_donate_requests({id: id, status: 1}).subscribe({
       next: (data: any) => {
         // console.log(data);
+        this.adminService.update_stock({blood_group: blood_group, unit: unit}).subscribe({
+          next: (data: any) => {
+            console.log(data)
+          }
+        })
         this.getAllBloodDonateRequests();
       }
     });

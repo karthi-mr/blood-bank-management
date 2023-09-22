@@ -1,0 +1,22 @@
+<div class="container-fluid">
+  <h1 class="text-secondary text-center my-3">Blood Stock Details</h1>
+  <button type="button" 
+          class="btn btn-danger mb-3" 
+          (click)="onAddBloodGroup()">
+    Add Blood Group
+  </button>
+  <table class="table table-striped table-hover table-bordered table-responsive-lg">
+    <thead class="table-danger">
+      <tr>
+        <th scope="col">Blood Group</th>
+        <th scope="col">Unit</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let stock of stocks">
+        <td>{{ stock.blood_group.blood_group }}</td>
+        <td>{{ stock.unit }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

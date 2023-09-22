@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
+from rest_framework.validators import ValidationError
 
 from donor.models import Donor
 from patient.models import Patient
@@ -47,9 +48,26 @@ class StockViewSet(ViewSet):
         unit = request.data.get('unit')
         try:
             queryset = get_object_or_404(Stock, blood_group=blood_group)
+            if queryset.unit + unit < 0:
+                return Response({'detail': "No unit available."},
+                                status=status.HTTP_400_BAD_REQUEST)
             queryset.unit += unit
             queryset.save()
             return Response({'detail': "Stock updated successfully."}, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({'detail': "An Unknown error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=['POST'], permission_classes=[])
+    def unit_available(self, request):
+        blood_group = request.data.get('blood_group')
+        unit = request.data.get('unit')
+        try:
+            queryset = get_object_or_404(Stock, blood_group=blood_group)
+            if queryset.unit + unit < 0:
+                return Response({'unit_available': False},
+                                status=status.HTTP_200_OK)
+            return Response({'unit_available': True},
+                            status=status.HTTP_200_OK)
         except Exception:
             return Response({'detail': "An Unknown error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 

@@ -12,6 +12,9 @@ import { DonateBloodHistoryComponent } from './donor/donate-blood-history/donate
 import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edit.component';
 import { StockComponent } from './admin/stock/stock.component';
 import { AddBloodComponent } from './admin/stock/add-blood/add-blood.component';
+import { RequestBloodComponent } from './patient/request-blood/request-blood.component';
+import { RequestBloodHistoryComponent } from './patient/request-blood-history/request-blood-history.component';
+import { RequestEditComponent } from './patient/request-blood/request-edit/request-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -25,11 +28,21 @@ const routes: Routes = [
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
     {path: 'blood-stock', component: StockComponent},
     {path: 'add-blood-group', component: AddBloodComponent},
+    {path: 'blood-request-details', component: RequestBloodComponent},
+    {path: 'request-blood-history', component: RequestBloodHistoryComponent},
   ]},
   {path: 'donor', children: [
     {path: 'donate-blood', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
     {path: 'donate-blood-add', component: DonateEditComponent},
+    {path: 'request-blood', component: RequestBloodComponent},
+    {path: 'request-blood-history', component: RequestBloodHistoryComponent},
+    {path: 'donate-request-add', component: RequestEditComponent},
+  ]},
+  {path: 'patient', children: [
+    {path: 'request-blood', component: RequestBloodComponent},
+    {path: 'request-blood-history', component: RequestBloodHistoryComponent},
+    {path: 'donate-request-add', component: RequestEditComponent},
   ]},
   {path: 'logout', component: LogoutComponent},
   {path: '**', component: PageNotFoundComponent}

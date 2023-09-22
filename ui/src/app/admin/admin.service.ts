@@ -13,6 +13,8 @@ export class AdminService {
   private readonly UPDATE_BLOOD_STOCK_API = 
         "http://127.0.0.1:8000/api/blood-stock/update_stock/";
   private readonly ADD_BLOOD_GROUP_API = "http://127.0.0.1:8000/api/blood-group/";
+  private readonly CHECK_BLOOD_UNIT_AVAILABLE_API = 
+        "http://127.0.0.1:8000/api/blood-stock/unit_available/";
 
   constructor(private http: HttpClient) { }
 
@@ -36,6 +38,12 @@ export class AdminService {
 
   update_stock(data: {blood_group: number, unit: number}): any {
     return this.http.patch(`${this.UPDATE_BLOOD_STOCK_API}`, data);
+  }
+
+  unit_available(data: {blood_group: number, unit: number}): 
+        Observable<{unit_available: boolean}> {
+    return this.http.post<{unit_available: boolean}>
+          (`${this.CHECK_BLOOD_UNIT_AVAILABLE_API}`, data);
   }
 
   add_blood_group(data: {blood_group: string}): any {

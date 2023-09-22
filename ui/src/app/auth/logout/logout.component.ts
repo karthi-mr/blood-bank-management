@@ -18,6 +18,10 @@ export class LogoutComponent implements OnInit{
   ngOnInit(): void {
     this.message = "You have been logged out successfully.";
     this.authService.logout_user();
+
+    setTimeout(() => {
+      this.onClickLogin();
+    }, 10000);
   }
 
   onClickLogin(): void {

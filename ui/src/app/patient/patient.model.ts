@@ -1,4 +1,5 @@
 import { Donor, Patient } from "../admin/admin.model";
+import { BloodGroup } from "../shared/shared.model";
 
 export interface PatientHistory {
   id: number;
@@ -10,7 +11,7 @@ export interface PatientHistory {
   added: Date;
   request_by_patient: Patient | null;
   request_by_donor: Donor | null;
-  blood_group: number;
+  blood_group: BloodGroup;
 }
 
 export interface RequestBlood {

@@ -37,7 +37,7 @@ export class DonateEditComponent implements OnInit{
       age: new FormControl('', [Validators.required]),
       disease: new FormControl('' , []),
       unit: new FormControl('', [Validators.required]),
-      blood_group: new FormControl('', [Validators.required]),
+      blood_group_id: new FormControl('', [Validators.required]),
     })
   }
 

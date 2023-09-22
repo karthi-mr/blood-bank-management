@@ -36,7 +36,7 @@
       <label for="unit">Unit</label>
     </div>
     <!-- blood_group -->
-    <select class="form-select shadow-none mb-3" formControlName="blood_group">
+    <select class="form-select shadow-none mb-3" formControlName="blood_group_id">
       <option value="" selected disabled>Select Blood Group</option>
       <option *ngFor="let blood_group of bloodGroups" [value]="blood_group.id">
         {{ blood_group.blood_group }}

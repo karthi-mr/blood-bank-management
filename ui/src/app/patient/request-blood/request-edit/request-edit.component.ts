@@ -37,7 +37,7 @@ export class RequestEditComponent {
       patient_age: new FormControl('' , [Validators.required]),
       reason: new FormControl('', [Validators.required]),
       unit: new FormControl('', [Validators.required]),
-      blood_group: new FormControl('', [Validators.required]),
+      blood_group_id: new FormControl('', [Validators.required]),
     })
   }
 

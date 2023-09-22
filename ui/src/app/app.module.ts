@@ -24,6 +24,9 @@ import { AddBloodComponent } from './admin/stock/add-blood/add-blood.component';
 import { RequestBloodComponent } from './patient/request-blood/request-blood.component';
 import { RequestBloodHistoryComponent } from './patient/request-blood-history/request-blood-history.component';
 import { RequestEditComponent } from './patient/request-blood/request-edit/request-edit.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
+import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +49,9 @@ import { RequestEditComponent } from './patient/request-blood/request-edit/reque
     RequestBloodComponent,
     RequestBloodHistoryComponent,
     RequestEditComponent,
+    AdminDashboardComponent,
+    PatientDashboardComponent,
+    DonorDashboardComponent,
   ],
   imports: [
     BrowserModule,

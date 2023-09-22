@@ -4,6 +4,7 @@ import { DonateHistory } from '../donor.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from 'src/app/admin/admin.service';
+import { BloodGroup } from 'src/app/shared/shared.model';
 
 @Component({
   selector: 'app-donate-blood',
@@ -40,11 +41,11 @@ export class DonateBloodComponent implements OnInit{
     this.router.navigate(['../donate-blood-add'], {relativeTo: this.route})
   }
 
-  onApproveRequest(id: number, blood_group: number, unit: number): void {
+  onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
     this.donorService.update_status_donate_requests({id: id, status: 1}).subscribe({
       next: (data: any) => {
         // console.log(data);
-        this.adminService.update_stock({blood_group: blood_group, unit: unit}).subscribe({
+        this.adminService.update_stock({blood_group: blood_group.id, unit: unit}).subscribe({
           next: (data: any) => {
             console.log(data)
           }

@@ -15,12 +15,16 @@ import { AddBloodComponent } from './admin/stock/add-blood/add-blood.component';
 import { RequestBloodComponent } from './patient/request-blood/request-blood.component';
 import { RequestBloodHistoryComponent } from './patient/request-blood-history/request-blood-history.component';
 import { RequestEditComponent } from './patient/request-blood/request-edit/request-edit.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
+import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'auth', component: AuthComponent},
   {path: 'admin', children: [
+    {path: 'dashboard',component: AdminDashboardComponent},
     {path: 'donor',component: DonorComponent},
     {path: 'patient',component: PatientComponent},
     {path: 'admin',component: AdminComponent},
@@ -32,6 +36,7 @@ const routes: Routes = [
     {path: 'request-blood-history', component: RequestBloodHistoryComponent},
   ]},
   {path: 'donor', children: [
+    {path: 'dashboard',component: DonorDashboardComponent},
     {path: 'donate-blood', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
     {path: 'donate-blood-add', component: DonateEditComponent},
@@ -40,6 +45,7 @@ const routes: Routes = [
     {path: 'donate-request-add', component: RequestEditComponent},
   ]},
   {path: 'patient', children: [
+    {path: 'dashboard',component: PatientDashboardComponent},
     {path: 'request-blood', component: RequestBloodComponent},
     {path: 'request-blood-history', component: RequestBloodHistoryComponent},
     {path: 'donate-request-add', component: RequestEditComponent},

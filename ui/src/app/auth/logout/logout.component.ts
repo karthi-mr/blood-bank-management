@@ -10,6 +10,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class LogoutComponent implements OnInit{
 
   message: string = "An Unknown error occurred in Logout.";
+  time: number = 10;
+  interval: any;
+  timeout: any;
 
   constructor(private authService: AuthService,
               private router: Router,
@@ -19,12 +22,22 @@ export class LogoutComponent implements OnInit{
     this.message = "You have been logged out successfully.";
     this.authService.logout_user();
 
-    setTimeout(() => {
+    this.interval = setInterval(() => {
+      this.time--;
+    }, 1000);
+
+    this.timeout = setTimeout(() => {
       this.onClickLogin();
     }, 10000);
   }
 
   onClickLogin(): void {
     this.router.navigate(['/auth'], {relativeTo: this.route})
+    if(this.interval) {
+      clearInterval(this.interval);
+    }
+    if(this.timeout) {
+      clearTimeout(this.timeout);
+    }
   }
 }

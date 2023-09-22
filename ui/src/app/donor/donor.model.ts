@@ -9,7 +9,7 @@ export interface DonateHistory {
   status: number;
   added: Date;
   donor: Donor;
-  blood_group: number;
+  blood_group: BloodGroup;
 }
 
 export interface DonateBlood {

@@ -25,7 +25,7 @@ export class HeaderComponent implements OnInit{
     this.authService.isLoggedIn.subscribe({
       next: (data: boolean) => {
         this.isUserLoggedIn = data;
-        console.log(data);
+        // console.log(data);
         this.getTabs();
       }
     })
@@ -35,7 +35,7 @@ export class HeaderComponent implements OnInit{
     this.sharedService.get_tabs().subscribe({
       next: (data: any) => {
         this.tabs = data
-        console.log(this.tabs);
+        // console.log(this.tabs);
       }
     })
   }

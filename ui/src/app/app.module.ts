@@ -18,6 +18,7 @@ import { BloodGroupPipe } from './shared/blood-group.pipe';
 import { DonateBloodComponent } from './donor/donate-blood/donate-blood.component';
 import { DonateBloodHistoryComponent } from './donor/donate-blood-history/donate-blood-history.component';
 import { StatusPipe } from './shared/status.pipe';
+import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edit.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { StatusPipe } from './shared/status.pipe';
     DonateBloodComponent,
     DonateBloodHistoryComponent,
     StatusPipe,
+    DonateEditComponent,
   ],
   imports: [
     BrowserModule,

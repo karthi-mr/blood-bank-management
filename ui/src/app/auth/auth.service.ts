@@ -130,9 +130,11 @@ export class AuthService {
     return localStorage.getItem('refresh')
   }
 
-  decode_token(token: string): JWTToken | null {
+  decode_token(token: string | null): JWTToken | null {
     try {
-      return jwt_decode(token);
+      if(token)
+        return jwt_decode(token);
+      return null;
     }
     catch(Error) {
       return null;
@@ -155,5 +157,10 @@ export class AuthService {
       return this.is_token_expired(refreshToken);
     }
     return false
+  }
+
+  get_user_type(): number | undefined {
+    const token = this.get_access_token();
+    return this.decode_token(token)?.user_type;
   }
 }

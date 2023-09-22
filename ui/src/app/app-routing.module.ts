@@ -1,5 +1,5 @@
 import { DonorComponent } from './admin/donor/donor.component';
-import { NgModule } from '@angular/core';
+import { NgModule, Component } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
@@ -9,6 +9,7 @@ import { PatientComponent } from './admin/patient/patient.component';
 import { AdminComponent } from './admin/admin/admin.component';
 import { DonateBloodComponent } from './donor/donate-blood/donate-blood.component';
 import { DonateBloodHistoryComponent } from './donor/donate-blood-history/donate-blood-history.component';
+import { DonateEditComponent } from './donor/donate-blood/donate-edit/donate-edit.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -18,12 +19,13 @@ const routes: Routes = [
     {path: 'donor',component: DonorComponent},
     {path: 'patient',component: PatientComponent},
     {path: 'admin',component: AdminComponent},
-    {path: 'donate-blood', component: DonateBloodComponent},
+    {path: 'blood-donate-details', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
   ]},
   {path: 'donor', children: [
     {path: 'donate-blood', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
+    {path: 'donate-blood-add', component: DonateEditComponent},
   ]},
   {path: 'logout', component: LogoutComponent},
   {path: '**', component: PageNotFoundComponent}

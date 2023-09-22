@@ -1,1 +1,69 @@
-<p>donate-blood works!</p>
+<div class="container-fluid">
+  <h1 class="text-secondary text-center my-3">
+    Donor Details
+  </h1>
+  <button type="button" 
+          class="btn btn-danger mb-3" 
+          (click)="onClickDonateBlood()"
+          *ngIf="userType==2">
+    Donate Blood
+  </button>
+  <div *ngIf="donateRequests.length == 0 && userType == 2">
+    <p class="text-danger h2 text-center">No Blood Donate Found.</p>
+  </div>
+  <div *ngIf="donateRequests.length == 0 && userType == 1">
+    <p class="text-danger h2 text-center">No Blood Donate Requests Found.</p>
+  </div>
+  <table class="table table-striped table-hover table-bordered table-responsive-lg"
+          *ngIf="donateRequests.length > 0">
+    <thead class="table-danger">
+      <tr>
+        <th scope="col">Donor</th>
+        <th scope="col">Disease</th>
+        <th scope="col">Age</th>
+        <th scope="col">Unit</th>
+        <th scope="col">Added</th>
+        <th scope="col">Blood Group</th>
+        <th scope="col">Status</th>
+        <th scope="col" *ngIf="userType==1">Action</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr *ngFor="let request of donateRequests">
+        <td>{{ request.donor.user.username }}</td>
+        <td>{{ request.disease }}</td>
+        <td>{{ request.age }}</td>
+        <td>{{ request.unit }}</td>
+        <td>{{ request.added | date }}</td>
+        <td>{{ request.blood_group | bloodGroup }}</td>
+        <td>{{ request.status | status}}</td>
+        <td *ngIf="userType==1">
+          <button type="button" 
+                  class="btn btn-success me-2" 
+                  (click)="onApproveRequest(request.id)">
+            Approve
+          </button>
+          <button type="button" 
+                  class="btn btn-danger"
+                  (click)="onRejectRequest(request.id)">
+            Reject
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <!-- <div class="text-center">
+    <button type="button" 
+            class="btn btn-outline-primary me-3" 
+            (click)="onPrev()"
+            [disabled]="!prevLink">
+      Prev
+    </button>
+    <button type="button" 
+            class="btn btn-outline-primary" 
+            (click)="onNext()" 
+            [disabled]="!nextLink">
+      Next
+    </button>
+  </div> -->
+</div>

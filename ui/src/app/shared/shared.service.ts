@@ -19,6 +19,7 @@ export class SharedService {
   get_blood_group(): Observable<BloodGroup[]> {
     return this.http.get<BloodGroup[]>(`${this.BLOOD_GROUP_API}`).pipe(
       tap((data: BloodGroup[]) => {
+        // console.log(data);
         this.blood_groups.next(data);
         this.blood_groups_array = data;
       })

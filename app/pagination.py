@@ -4,7 +4,7 @@ from rest_framework import status
 
 class CustomPagination(LimitOffsetPagination):
     offset = 0
-    default_limit = 24
+    default_limit = 50
     
     def get_paginated_response(self, data):
         return Response({

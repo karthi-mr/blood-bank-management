@@ -2,7 +2,7 @@ import { BloodGroup } from "../shared/shared.model";
 
 export interface Links {
   next: string;
-  prev: string;
+  previous: string;
 }
 
 export interface UserResult {
@@ -22,7 +22,7 @@ export interface Donor {
   user: UserResult;
   date_of_birth: Date;
   profile_pic: string | null;
-  blood_group: number;
+  blood_group: BloodGroup;
 }
 
 export interface Patient {
@@ -30,7 +30,7 @@ export interface Patient {
   user: UserResult;
   date_of_birth: Date;
   profile_pic: string | null;
-  blood_group: number;
+  blood_group: BloodGroup;
 }
 
 export interface DonorResult {

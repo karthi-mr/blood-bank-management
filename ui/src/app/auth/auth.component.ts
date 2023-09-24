@@ -63,7 +63,7 @@ export class AuthComponent implements OnInit, OnDestroy{
         user_type: new FormControl('', [Validators.required])
       }),
       date_of_birth: new FormControl('', [Validators.required]),
-      blood_group: new FormControl('', [Validators.required]),
+      blood_group_id: new FormControl('', [Validators.required]),
       // profile_pic: new FormControl('', [Validators.required]),
     })
   }
@@ -80,6 +80,7 @@ export class AuthComponent implements OnInit, OnDestroy{
     this.authService.register_user(this.registerForm.value).subscribe({
       next: (data: any) => {
         console.log(data);
+        this.changeAuthType();
       }
     })
   }

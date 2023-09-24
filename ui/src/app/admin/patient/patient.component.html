@@ -1,5 +1,43 @@
 <div class="container-fluid">
-  <h1 class="text-secondary text-center my-3">Donor Details</h1>
+  <h1 class="text-secondary text-center my-3">Patient Details</h1>
+  <nav>
+    <ul class="pagination justify-content-end me-5">
+      <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+        <a class="page-link" role="button" (click)="onFullPrev()">
+          <!-- <span aria-hidden="true">&laquo;</span> -->
+          <i class="fa-solid fa-angles-left"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+        <a class="page-link" role="button" (click)="onPrev()">
+          <!-- <span aria-hidden="true">&laquo;</span> -->
+          <i class="fa-solid fa-chevron-left"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <p class="page-link text-black">
+          Page {{ page }} of {{ total }}
+        </p>
+      </li>
+      <!-- <li class="page-item">
+        <p class="page-link text-black">
+          Data Count : {{ valueCount }} of {{ totalCount }}
+        </p>
+      </li> -->
+      <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+        <a class="page-link" role="button" (click)="onNext()">
+          <!-- <span aria-hidden="true">&raquo;</span> -->
+          <i class="fa-solid fa-chevron-right"></i>
+        </a>
+      </li>
+      <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+        <a class="page-link" role="button" (click)="onFullNext()">
+          <!-- <span aria-hidden="true">&raquo;</span> -->
+          <i class="fa-solid fa-angles-right"></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
   <table class="table table-striped table-hover table-bordered table-responsive-lg">
     <thead class="table-danger">
       <tr>
@@ -20,7 +58,7 @@
           {{ donor.user.last_login | customDate }}
         </td>
         <td *ngIf="!donor.user.last_login">Not Login</td>
-        <td>{{ donor.blood_group | bloodGroup }}</td>
+        <td>{{ donor.blood_group.blood_group }}</td>
         <td>
           <button type="button" class="btn btn-success me-2">
             <i class="fa-regular fa-pen-to-square"></i>
@@ -32,18 +70,4 @@
       </tr>
     </tbody>
   </table>
-  <div class="text-center">
-    <button type="button" 
-            class="btn btn-outline-primary me-3" 
-            (click)="onPrev()"
-            [disabled]="!prevLink">
-      Prev
-    </button>
-    <button type="button" 
-            class="btn btn-outline-primary" 
-            (click)="onNext()" 
-            [disabled]="!nextLink">
-      Next
-    </button>
-  </div>
 </div>

@@ -34,7 +34,7 @@
         <td>{{ request.patient_age }}</td>
         <td>{{ request.reason }}</td>
         <td>{{ request.unit }}</td>
-        <td>{{ request.added | date }}</td>
+        <td>{{ request.added | customDate }}</td>
         <td>{{ request.blood_group.blood_group }}</td>
         <td>{{ request.status | status }}</td>
         <td *ngIf="userType==1">

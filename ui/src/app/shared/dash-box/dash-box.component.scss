@@ -1,0 +1,26 @@
+.box {
+  position: relative;
+  width: auto;
+  height: 8rem;
+  border: 2px solid black;
+  
+  .text1 {
+    position: absolute;
+    bottom: 0;
+    
+    .name {
+      display: block;
+      margin-left: 1rem;
+      font-size: 1.3rem;
+      color: red;
+    }
+
+    .value {
+      display: block;
+      text-align: center !important;
+      margin-left: 1.3rem;
+      font-size: 1.2rem;
+    }
+  }
+
+}

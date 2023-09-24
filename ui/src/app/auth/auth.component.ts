@@ -31,9 +31,11 @@ export class AuthComponent implements OnInit, OnDestroy{
     this.initLoginForm();
     this.initRegisterForm();
 
+    this.sharedService.get_blood_group().subscribe()
+
     this.bloodGroupSubscription = 
         this.sharedService.blood_groups.subscribe((data: BloodGroup[]) => {
-      console.log(data);
+      // console.log(data);
       this.bloodGroups = data;
     })
   }
@@ -69,7 +71,7 @@ export class AuthComponent implements OnInit, OnDestroy{
   onSubmitLoginForm(): void {
     this.authService.login_user(this.loginForm.value).subscribe({
       next: (data: any) => {
-        this.router.navigate(['/home'], {relativeTo: this.route})
+        // this.router.navigate(['/home'], {relativeTo: this.route})
       }
     })
   }

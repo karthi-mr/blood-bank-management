@@ -10,14 +10,13 @@ export class DonorService {
 
   private readonly BLOOD_DONATE_HISTORY_API = 
         "http://127.0.0.1:8000/auth/donate-blood-history/";
-
   private readonly BLOOD_DONATE_REQUEST_API = 
         "http://127.0.0.1:8000/auth/donate-blood/";
-
   private readonly BLOOD_DONATE_API = "http://127.0.0.1:8000/auth/donate-blood/";
-
   private readonly BLOOD_STATUS_UPDATE = 
-        "http://127.0.0.1:8000/auth/donate-blood/update_status/"
+        "http://127.0.0.1:8000/auth/donate-blood/update_status/";
+
+
 
   constructor(private http: HttpClient) { }
 

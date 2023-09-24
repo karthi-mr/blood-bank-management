@@ -5,6 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ViewSet
 from rest_framework.validators import ValidationError
+from rest_framework.permissions import IsAuthenticated
 
 from donor.models import Donor
 from patient.models import Patient
@@ -130,6 +131,19 @@ class BloodRequestViewSet(ViewSet):
             return Response({'detail': "An Unknown error occurred."},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def total_request(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter(request_by_donor=donor)
+        elif request.user.user_type == 3:
+            patient = Patient.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter(request_by_patient=patient)
+        else:
+            queryset = BloodRequest.objects.all()
+        # print(len(queryset))
+        return Response({'total_request': len(queryset)})
+
 
 class BloodRequestHistoryViewSet(ViewSet):
     permission_classes = [BloodRequestPermission]
@@ -153,3 +167,4 @@ class BloodRequestHistoryViewSet(ViewSet):
             queryset = BloodRequest.objects.exclude(status=2)
             serializer = BloodRequestSerializer(queryset, many=True)
             return Response(serializer.data, status=status.HTTP_200_OK)
+    

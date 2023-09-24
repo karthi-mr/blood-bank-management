@@ -27,6 +27,8 @@ import { RequestEditComponent } from './patient/request-blood/request-edit/reque
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
 import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
+import { CustomDatePipe } from './shared/custom-date.pipe';
+import { DashBoxComponent } from './shared/dash-box/dash-box.component';
 
 @NgModule({
   declarations: [
@@ -52,6 +54,8 @@ import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard
     AdminDashboardComponent,
     PatientDashboardComponent,
     DonorDashboardComponent,
+    CustomDatePipe,
+    DashBoxComponent,
   ],
   imports: [
     BrowserModule,

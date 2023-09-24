@@ -15,6 +15,14 @@ export class AdminService {
   private readonly ADD_BLOOD_GROUP_API = "http://127.0.0.1:8000/api/blood-group/";
   private readonly CHECK_BLOOD_UNIT_AVAILABLE_API = 
         "http://127.0.0.1:8000/api/blood-stock/unit_available/";
+  private readonly TOTAL_BLOOD_DONATE_COUNT = 
+        "http://127.0.0.1:8000/auth/donate-blood/total_donate/";
+  private readonly TOTAL_BLOOD_REQUEST_COUNT = 
+        "http://127.0.0.1:8000/api/blood-request/total_request/";
+  private readonly TOTAL_DONOR = 
+        "http://127.0.0.1:8000/auth/donor/total_donor/";
+  private readonly TOTAL_PATIENT = 
+        "http://127.0.0.1:8000/auth/patient/total_patient/";
 
   constructor(private http: HttpClient) { }
 
@@ -48,5 +56,21 @@ export class AdminService {
 
   add_blood_group(data: {blood_group: string}): any {
     return this.http.post(`${this.ADD_BLOOD_GROUP_API}`, data);
+  }
+
+  get_total_donate_blood(): Observable<{total_donate: number}> {
+    return this.http.get<{total_donate: number}>(`${this.TOTAL_BLOOD_DONATE_COUNT}`);
+  }
+  
+  get_total_request_blood(): Observable<{total_request: number}> {
+    return this.http.get<{total_request: number}>(`${this.TOTAL_BLOOD_REQUEST_COUNT}`);
+  }
+  
+  get_total_donor(): Observable<{total_donor: number}> {
+    return this.http.get<{total_donor: number}>(`${this.TOTAL_DONOR}`);
+  }
+  
+  get_total_patient(): Observable<{total_patient: number}> {
+    return this.http.get<{total_patient: number}>(`${this.TOTAL_PATIENT}`);
   }
 }

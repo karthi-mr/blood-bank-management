@@ -1,11 +1,12 @@
 from rest_framework import status
+from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from app.pagination import CustomPagination
 
 from .models import Patient
-from .permissions import PatientPermission
+from .permissions import PatientPermission, TotalPatientPermission
 from .serializers import PatientSerializer
 
 
@@ -20,4 +21,9 @@ class PatientViewSet(ModelViewSet):
         patientSerializer = PatientSerializer(queryset, many=True)
         page = self.paginate_queryset(patientSerializer.data)
         return self.get_paginated_response(page)
-    
+
+    @action(detail=False, methods=['GET'], permission_classes=[TotalPatientPermission])
+    def total_patient(self, request):
+        queryset = Patient.objects.all()
+        # print(len(queryset))
+        return Response({'total_patient': len(queryset)})

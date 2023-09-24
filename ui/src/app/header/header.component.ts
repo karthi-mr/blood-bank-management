@@ -20,22 +20,24 @@ export class HeaderComponent implements OnInit{
    ) {}
    
    ngOnInit(): void {
-    this.getTabs()
+    this.getTabs(false);
     this.isUserLoggedIn = this.authService.auto_login();
     this.authService.isLoggedIn.subscribe({
       next: (data: boolean) => {
         this.isUserLoggedIn = data;
-        // console.log(data);
-        this.getTabs();
+        this.getTabs(true);
       }
     })
   }
 
-  getTabs(): void {
+  getTabs(activate: boolean): void {
     this.sharedService.get_tabs().subscribe({
       next: (data: any) => {
         this.tabs = data
-        // console.log(this.tabs);
+        if (this.isUserLoggedIn && activate) {
+          // console.log(this.tabs[0]);
+          this.router.navigate([this.tabs[0].link], {relativeTo: this.route})
+        }
       }
     })
   }

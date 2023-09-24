@@ -16,7 +16,9 @@
         <td>{{ donor.user.username }}</td>
         <td>{{ donor.user.email }}</td>
         <td>{{ donor.user.mobile }}</td>
-        <td *ngIf="donor.user.last_login">{{ donor.user.last_login | date }}</td>
+        <td *ngIf="donor.user.last_login">
+          {{ donor.user.last_login | customDate }}
+        </td>
         <td *ngIf="!donor.user.last_login">Not Login</td>
         <td>{{ donor.blood_group | bloodGroup }}</td>
         <td>

@@ -1,18 +1,20 @@
 <div class="container-fluid">
   <h1 class="text-secondary text-center my-3">
-    Donor Details
+    Blood Donate Details
   </h1>
   <div class="d-flex">
     <button type="button" 
           class="btn btn-danger mb-3" 
           (click)="onClickDonateBlood()"
           *ngIf="userType==2">
-    Donate Blood
-  </button>
+          <i class="fa-solid fa-hand-holding-medical"></i>
+          Donate Blood
+    </button>
   <button type="button" 
           class="btn btn-secondary mb-3 ms-auto"
           (click)="onViewHistory()">
-    View History
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          View History
   </button>
   </div>
   <div *ngIf="donateRequests.length == 0 && userType == 2">

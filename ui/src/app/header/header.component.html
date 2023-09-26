@@ -12,18 +12,22 @@
     <div class="collapse navbar-collapse" id="navbarContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         <li class="nav-item" *ngFor="let tab of tabs">
-          <a routerLink="{{tab.link}}" class="nav-link text-capitalize" routerLinkActive="active">
+          <a routerLink="{{tab.link}}" 
+             class="nav-link text-capitalize" 
+             routerLinkActive="active">
+             <i ngClass="{{ tab.icon }}"></i>
             {{ tab.name }}
           </a>
         </li>
       </ul>
-      <ul class="navbar-nav ms-auto me-4">
+      <ul class="navbar-nav ms-auto me-4" *ngIf="isUserLoggedIn">
         <li class="nav-item">
           <a data-bs-toggle="offcanvas" 
              href="#profileSettings" 
              role="button" 
-             class="nav-link">
-               {{ username }}
+             class="nav-link shadow-none active">
+             <i class="fa-regular fa-user"></i>
+             {{ username }}
           </a>
         </li>
       </ul>
@@ -37,8 +41,11 @@
     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
   </div>
   <div class="offcanvas-body">
-    <a routerLink="/profile-settings" class="link text-capitalize" data-bs-dismiss="offcanvas">
-      Profile settings
+    <a routerLink="/profile-settings" 
+       class="link text-capitalize text-black" 
+       data-bs-dismiss="offcanvas">
+       <i class="fa-solid fa-gear text-danger"></i>
+       Profile settings
     </a>
     <!-- <a routerLink="/profile/reset-password" class="link text-capitalize">
       reset password
@@ -48,7 +55,8 @@
               class="btn btn-danger" 
               (click)="on_logout_user()" 
               data-bs-dismiss="offcanvas">
-        Logout
+              <i class="fa-solid fa-right-to-bracket"></i>
+              Logout
       </button>
     </div>
   </div>

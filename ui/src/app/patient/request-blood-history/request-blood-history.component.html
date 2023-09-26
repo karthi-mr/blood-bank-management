@@ -1,12 +1,13 @@
 <div class="container-fluid">
   <h1 class="text-secondary text-center my-3 text-capitalize">
-    blood requests details
+    blood requests history details
   </h1>
   <button type="button" 
           class="btn btn-secondary mb-3"
           (click)="onClickBack()">
-    Back
-  </button>
+          <i class="fa-solid fa-circle-chevron-left"></i>
+          Back
+        </button>
   <div *ngIf="requestHistory.length == 0">
     <p class="text-danger h2 text-center">No Blood Requests Found.</p>
   </div>

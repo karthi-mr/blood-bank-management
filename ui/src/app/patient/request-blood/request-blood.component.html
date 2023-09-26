@@ -4,15 +4,17 @@
   </h1>
   <div class="d-flex">
     <button type="button" 
-          class="btn btn-success mb-3" 
+          class="btn btn-danger mb-3" 
           (click)="onClickRequestBlood()"
           *ngIf="userType!=1">
-    Request Blood
-  </button>
+          <i class="fa-solid fa-hand-holding-droplet"></i>
+          Request Blood
+    </button>
   <button type="button" 
           class="btn btn-secondary mb-3 ms-auto"
           (click)="onViewHistory()">
-    View History
+          <i class="fa-solid fa-clock-rotate-left"></i>
+          View History
   </button>
   </div>
   

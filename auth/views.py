@@ -74,38 +74,51 @@ class ResetPasswordView(APIView):  # password reset
 # @permission_classes([permissions.IsAuthenticated])
 def get_tab(request):
     if not request.user.is_authenticated:
-        response = [{'name': 'home', 'link': 'home'},
-                    {'name': 'login', 'link': 'auth'},
+        response = [{'name': 'home', 'link': 'home',
+                     'icon': 'fa-solid fa-house'},
+                    {'name': 'login', 'link': 'auth',
+                     'icon': 'fa-solid fa-arrow-right-to-bracket'},
                ]
     else:
         if request.user.user_type == 1:
-            response = [{'name': 'dashboard', 'link': 'admin/dashboard'},
-                        {'name': 'donor', 'link': 'admin/donor'},
-                        {'name': 'patient', 'link': 'admin/patient'},
+            response = [{'name': 'dashboard', 'link': 'admin/dashboard',
+                         'icon': 'fa-solid fa-chart-line'},
+                        {'name': 'donor', 'link': 'admin/donor',
+                         'icon': 'fa-solid fa-user'},
+                        {'name': 'patient', 'link': 'admin/patient',
+                         'icon': 'fa-solid fa-user-injured'},
                         {'name': 'blood donate details', 
-                         'link': 'admin/donate-blood'},
+                         'link': 'admin/donate-blood',
+                         'icon': 'fa-solid fa-hand-holding-medical'},
                         {'name': 'blood request details', 
-                         'link': 'admin/request-blood'},
+                         'link': 'admin/request-blood',
+                         'icon': 'fa-solid fa-rotate'},
                         # {'name': 'blood request history', 
                         #  'link': 'admin/request-blood-history'},
                         # {'name': 'blood donate history', 
                         #  'link': 'admin/donate-blood-history'},
-                        {'name': 'blood stock', 'link': 'admin/blood-stock'},
+                        {'name': 'blood stock', 'link': 'admin/blood-stock',
+                         'icon': 'fa-solid fa-hand-holding-droplet'},
                        ]
             if request.user.username == 'admin':
                 response.insert(1,{'name': 'admin', 'link': 'admin/admin'})
         elif request.user.user_type == 2:
-            response = [{'name': 'dashboard', 'link': 'donor/dashboard'},
-                        {'name': 'donate blood', 'link': 'donor/donate-blood'},
+            response = [{'name': 'dashboard', 'link': 'donor/dashboard',
+                         'icon': 'fa-solid fa-chart-line'},
+                        {'name': 'donate blood', 'link': 'donor/donate-blood',
+                         'icon': 'fa-solid fa-hand-holding-medical'},
                         # {'name': 'donate blood history', 
                         #  'link': 'donor/donate-blood-history'},
-                        {'name': 'request blood', 'link': 'donor/request-blood'},
+                        {'name': 'request blood', 'link': 'donor/request-blood',
+                         'icon': 'fa-solid fa-rotate'},
                         # {'name': 'request blood history', 
                         #  'link': 'donor/request-blood-history'},
                        ]
         elif request.user.user_type == 3:
-            response = [{'name': 'dashboard', 'link': 'patient/dashboard'},
-                        {'name': 'request blood', 'link': 'patient/request-blood'},
+            response = [{'name': 'dashboard', 'link': 'patient/dashboard',
+                         'icon': 'fa-solid fa-chart-line'},
+                        {'name': 'request blood', 'link': 'patient/request-blood',
+                         'icon': 'fa-solid fa-rotate'},
                         # {'name': 'request blood history', 
                         #  'link': 'patient/request-blood-history'},
                        ]

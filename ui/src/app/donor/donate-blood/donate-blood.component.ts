@@ -63,4 +63,8 @@ export class DonateBloodComponent implements OnInit{
       }
     });
   }
+
+  onViewHistory(): void {
+    this.router.navigate(['../donate-blood-history'], {relativeTo: this.route})
+  }
 }

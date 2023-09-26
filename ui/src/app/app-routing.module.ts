@@ -29,11 +29,11 @@ const routes: Routes = [
     {path: 'donor',component: DonorComponent},
     {path: 'patient',component: PatientComponent},
     {path: 'admin',component: AdminComponent},
-    {path: 'blood-donate-details', component: DonateBloodComponent},
+    {path: 'donate-blood', component: DonateBloodComponent},
     {path: 'donate-blood-history', component: DonateBloodHistoryComponent},
     {path: 'blood-stock', component: StockComponent},
     {path: 'add-blood-group', component: AddBloodComponent},
-    {path: 'blood-request-details', component: RequestBloodComponent},
+    {path: 'request-blood', component: RequestBloodComponent},
     {path: 'request-blood-history', component: RequestBloodHistoryComponent},
   ]},
   {path: 'donor', children: [

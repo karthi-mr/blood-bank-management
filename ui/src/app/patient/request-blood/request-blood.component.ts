@@ -75,4 +75,8 @@ export class RequestBloodComponent implements OnInit{
       }
     });
   }
+
+  onViewHistory(): void {
+    this.router.navigate(['../request-blood-history'], {relativeTo: this.route})
+  }
 }

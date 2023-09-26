@@ -85,6 +85,39 @@ class BloodDonateViewSet(ModelViewSet):
         print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
+    @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
+    def total_donate_approved(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodDonate.objects.filter \
+                        (Q(donor=donor) & Q(status=1))
+        else:
+            queryset = BloodDonate.objects.filter(status=1)
+        print(len(queryset))
+        return Response({'total_donate': len(queryset)})
+
+    @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
+    def total_donate_pending(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodDonate.objects.filter \
+                        (Q(donor=donor) & Q(status=2))
+        else:
+            queryset = BloodDonate.objects.filter(status=2)
+        print(len(queryset))
+        return Response({'total_donate': len(queryset)})
+
+    @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
+    def total_donate_rejected(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodDonate.objects.filter \
+                        (Q(donor=donor) & Q(status=3))
+        else:
+            queryset = BloodDonate.objects.filter(status=3)
+        print(len(queryset))
+        return Response({'total_donate': len(queryset)})
+
 
 class BloodDonateHistoryViewSet(ViewSet):
     permission_classes = [BloodDonateHistoryPermission]

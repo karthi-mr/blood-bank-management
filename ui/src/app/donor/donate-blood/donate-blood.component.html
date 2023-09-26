@@ -2,12 +2,19 @@
   <h1 class="text-secondary text-center my-3">
     Donor Details
   </h1>
-  <button type="button" 
+  <div class="d-flex">
+    <button type="button" 
           class="btn btn-danger mb-3" 
           (click)="onClickDonateBlood()"
           *ngIf="userType==2">
     Donate Blood
   </button>
+  <button type="button" 
+          class="btn btn-secondary mb-3 ms-auto"
+          (click)="onViewHistory()">
+    View History
+  </button>
+  </div>
   <div *ngIf="donateRequests.length == 0 && userType == 2">
     <p class="text-danger h2 text-center">No Blood Donate Found.</p>
   </div>

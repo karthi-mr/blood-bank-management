@@ -163,4 +163,9 @@ export class AuthService {
     const token = this.get_access_token();
     return this.decode_token(token)?.user_type;
   }
+
+  get_profile_name(): string | undefined {
+    const token = this.get_access_token();
+    return this.decode_token(token)?.username;
+  }
 }

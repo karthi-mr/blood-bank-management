@@ -144,6 +144,51 @@ class BloodRequestViewSet(ViewSet):
         # print(len(queryset))
         return Response({'total_request': len(queryset)})
 
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def total_request_approved(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_donor=donor) & Q(status=1))
+        elif request.user.user_type == 3:
+            patient = Patient.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_patient=patient) & Q(status=1))
+        else:
+            queryset = BloodRequest.objects.filter(status=1)
+        # print(len(queryset))
+        return Response({'total_request': len(queryset)})
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def total_request_pending(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_donor=donor) & Q(status=2))
+        elif request.user.user_type == 3:
+            patient = Patient.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_patient=patient) & Q(status=2))
+        else:
+            queryset = BloodRequest.objects.filter(status=2)
+        # print(len(queryset))
+        return Response({'total_request': len(queryset)})
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
+    def total_request_rejected(self, request):
+        if request.user.user_type == 2:
+            donor = Donor.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_donor=donor) & Q(status=3))
+        elif request.user.user_type == 3:
+            patient = Patient.objects.get(user=request.user)
+            queryset = BloodRequest.objects.filter \
+                        (Q(request_by_patient=patient) & Q(status=3))
+        else:
+            queryset = BloodRequest.objects.filter(status=3)
+        # print(len(queryset))
+        return Response({'total_request': len(queryset)})
+
 
 class BloodRequestHistoryViewSet(ViewSet):
     permission_classes = [BloodRequestPermission]

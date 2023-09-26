@@ -11,6 +11,7 @@ import { SharedService } from '../shared/shared.service';
 export class HeaderComponent implements OnInit{
 
   isUserLoggedIn: boolean = false;
+  username: string | undefined = undefined;
   tabs:any = [];
 
   constructor(private authService: AuthService,
@@ -21,9 +22,11 @@ export class HeaderComponent implements OnInit{
    
    ngOnInit(): void {
     this.getTabs(false);
+    this.username = this.authService.get_profile_name();
     this.isUserLoggedIn = this.authService.auto_login();
     this.authService.isLoggedIn.subscribe({
       next: (data: boolean) => {
+        this.username = this.authService.get_profile_name();
         this.isUserLoggedIn = data;
         this.getTabs(true);
       }
@@ -43,8 +46,7 @@ export class HeaderComponent implements OnInit{
   }
   
   on_logout_user(): void {
-    this.authService.logout_user();
-    this.router.navigate(['/auth'], 
+    this.router.navigate(['/logout'], 
           {queryParams: {mode: 'login'}, relativeTo: this.route});
   }
 }

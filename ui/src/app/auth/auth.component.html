@@ -17,7 +17,9 @@
                placeholder=""
                formControlName="password">
         <label for="password">Password</label>
-        <button type="submit" class="btn btn-outline-success mt-3" [disabled]="!loginForm.valid">
+        <button type="submit" 
+                class="btn btn-primary mt-3" 
+                [disabled]="!loginForm.valid">
           Login
         </button>
         <p class="mt-3">
@@ -129,7 +131,9 @@
         <label for="profile_pic">Profile Pic</label>
       </div> -->
       <!-- register button -->
-      <button type="submit" class="btn btn-outline-success mt-3" [disabled]="!registerForm.valid">
+      <button type="submit" 
+              class="btn btn-success mt-3" 
+              [disabled]="!registerForm.valid">
         Register
       </button>
       <p class="mt-3">

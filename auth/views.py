@@ -83,33 +83,30 @@ def get_tab(request):
                         {'name': 'donor', 'link': 'admin/donor'},
                         {'name': 'patient', 'link': 'admin/patient'},
                         {'name': 'blood donate details', 
-                         'link': 'admin/blood-donate-details'},
+                         'link': 'admin/donate-blood'},
                         {'name': 'blood request details', 
-                         'link': 'admin/blood-request-details'},
-                        {'name': 'blood request history', 
-                         'link': 'admin/request-blood-history'},
-                        {'name': 'blood donate history', 
-                         'link': 'admin/donate-blood-history'},
+                         'link': 'admin/request-blood'},
+                        # {'name': 'blood request history', 
+                        #  'link': 'admin/request-blood-history'},
+                        # {'name': 'blood donate history', 
+                        #  'link': 'admin/donate-blood-history'},
                         {'name': 'blood stock', 'link': 'admin/blood-stock'},
-                        {'name': 'logout', 'link': 'logout'},
                        ]
             if request.user.username == 'admin':
                 response.insert(1,{'name': 'admin', 'link': 'admin/admin'})
         elif request.user.user_type == 2:
             response = [{'name': 'dashboard', 'link': 'donor/dashboard'},
                         {'name': 'donate blood', 'link': 'donor/donate-blood'},
-                        {'name': 'donate blood history', 
-                         'link': 'donor/donate-blood-history'},
+                        # {'name': 'donate blood history', 
+                        #  'link': 'donor/donate-blood-history'},
                         {'name': 'request blood', 'link': 'donor/request-blood'},
-                        {'name': 'request blood history', 
-                         'link': 'donor/request-blood-history'},
-                        {'name': 'logout', 'link': 'logout'},
+                        # {'name': 'request blood history', 
+                        #  'link': 'donor/request-blood-history'},
                        ]
         elif request.user.user_type == 3:
             response = [{'name': 'dashboard', 'link': 'patient/dashboard'},
                         {'name': 'request blood', 'link': 'patient/request-blood'},
-                        {'name': 'request blood history', 
-                         'link': 'patient/request-blood-history'},
-                        {'name': 'logout', 'link': 'logout'},
+                        # {'name': 'request blood history', 
+                        #  'link': 'patient/request-blood-history'},
                        ]
     return Response(response, status=status.HTTP_200_OK)

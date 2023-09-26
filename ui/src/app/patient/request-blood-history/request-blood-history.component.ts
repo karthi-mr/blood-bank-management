@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../patient.service';
 import { PatientHistory } from '../patient.model';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-request-blood-history',
@@ -11,7 +12,9 @@ export class RequestBloodHistoryComponent implements OnInit {
 
   requestHistory: PatientHistory[] = [];
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
       this.getRequestHistory();
@@ -23,5 +26,9 @@ export class RequestBloodHistoryComponent implements OnInit {
         this.requestHistory = data;
       }
     })
+  }
+
+  onClickBack(): void {
+    this.router.navigate(['../request-blood'], {relativeTo: this.route});
   }
 }

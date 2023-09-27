@@ -40,7 +40,7 @@ export class RequestBloodComponent implements OnInit{
   }
 
   onClickRequestBlood(): void {
-    this.router.navigate(['../donate-request-add'], 
+    this.router.navigate(['../request-blood/add'], 
           {relativeTo: this.route})
   }
 
@@ -81,6 +81,6 @@ export class RequestBloodComponent implements OnInit{
   }
 
   onViewHistory(): void {
-    this.router.navigate(['../request-blood-history'], {relativeTo: this.route})
+    this.router.navigate(['history'], {relativeTo: this.route})
   }
 }

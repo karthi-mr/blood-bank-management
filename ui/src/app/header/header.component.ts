@@ -46,8 +46,7 @@ export class HeaderComponent implements OnInit{
   }
   
   on_logout_user(): void {
-    this.router.navigate(['/logout'], 
-          {queryParams: {mode: 'login'}, relativeTo: this.route});
+    this.router.navigate(['/logout']);
   }
 }
     

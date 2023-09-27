@@ -32,6 +32,6 @@ export class RequestBloodHistoryComponent implements OnInit {
   }
 
   onClickBack(): void {
-    this.router.navigate(['../request-blood'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

@@ -80,8 +80,8 @@ export class DonorComponent implements OnInit{
         this.valueCount -= data.count;
         if (this.valueCount % 50 != 0){
           this.valueCount = (this.page - 1) * 50;
-          this.isLoading = false;
         }
+        this.isLoading = false;
       }
     })
   }

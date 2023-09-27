@@ -41,7 +41,7 @@ export class DonateBloodComponent implements OnInit{
   }
 
   onClickDonateBlood(): void {
-    this.router.navigate(['../donate-blood-add'], {relativeTo: this.route})
+    this.router.navigate(['../donate-blood/add'], {relativeTo: this.route})
   }
 
   onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
@@ -68,6 +68,6 @@ export class DonateBloodComponent implements OnInit{
   }
 
   onViewHistory(): void {
-    this.router.navigate(['../donate-blood-history'], {relativeTo: this.route})
+    this.router.navigate(['history'], {relativeTo: this.route})
   }
 }

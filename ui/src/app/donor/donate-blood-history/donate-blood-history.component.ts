@@ -32,6 +32,6 @@ export class DonateBloodHistoryComponent implements OnInit {
   }
 
   onClickBack(): void {
-    this.router.navigate(['../donate-blood'], {relativeTo: this.route});
+    this.router.navigate(['../'], {relativeTo: this.route});
   }
 }

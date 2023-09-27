@@ -1,5 +1,5 @@
 import { DonorComponent } from './admin/donor/donor.component';
-import { NgModule, Component } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
 import { AuthComponent } from './auth/auth.component';
@@ -18,7 +18,6 @@ import { RequestEditComponent } from './patient/request-blood/request-edit/reque
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
 import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
-import { DashBoxComponent } from './shared/dash-box/dash-box.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -51,7 +50,6 @@ const routes: Routes = [
     {path: 'request-blood-history', component: RequestBloodHistoryComponent},
     {path: 'donate-request-add', component: RequestEditComponent},
   ]},
-  {path: 'dash', component: DashBoxComponent}, /* Just for Testing */
   {path: 'logout', component: LogoutComponent},
   {path: '**', component: PageNotFoundComponent}
 ];

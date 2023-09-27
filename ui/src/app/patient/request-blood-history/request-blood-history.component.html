@@ -2,52 +2,55 @@
   <h1 class="text-secondary text-center my-3 text-capitalize">
     blood requests history details
   </h1>
-  <button type="button" 
+  <app-loading *ngIf="isLoading"></app-loading>
+  <div class="data" *ngIf="!isLoading">
+    <button type="button" 
           class="btn btn-secondary mb-3"
           (click)="onClickBack()">
           <i class="fa-solid fa-circle-chevron-left"></i>
           Back
-        </button>
-  <div *ngIf="requestHistory.length == 0">
-    <p class="text-danger h2 text-center">No Blood Requests Found.</p>
+    </button>
+    <div *ngIf="requestHistory.length == 0">
+      <p class="text-danger h2 text-center">No Blood Requests Found.</p>
+    </div>
+    <table class="table table-striped table-hover table-bordered table-responsive-lg"
+            *ngIf="requestHistory.length > 0">
+      <thead class="table-danger">
+        <tr>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Patient Age</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Added</th>
+          <th scope="col">Blood Group</th>
+          <th scope="col">Status</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let request of requestHistory">
+          <td>{{ request.patient_name }}</td>
+          <td>{{ request.patient_age }}</td>
+          <td>{{ request.reason }}</td>
+          <td>{{ request.unit }}</td>
+          <td>{{ request.added | customDate }}</td>
+          <td>{{ request.blood_group.blood_group }}</td>
+          <td>{{ request.status | status }}</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="text-center">
+      <button type="button" 
+              class="btn btn-outline-primary me-3" 
+              (click)="onPrev()"
+              [disabled]="!prevLink">
+        Prev
+      </button>
+      <button type="button" 
+              class="btn btn-outline-primary" 
+              (click)="onNext()" 
+              [disabled]="!nextLink">
+        Next
+      </button>
+    </div> -->
   </div>
-  <table class="table table-striped table-hover table-bordered table-responsive-lg"
-          *ngIf="requestHistory.length > 0">
-    <thead class="table-danger">
-      <tr>
-        <th scope="col">Patient Name</th>
-        <th scope="col">Patient Age</th>
-        <th scope="col">Reason</th>
-        <th scope="col">Unit</th>
-        <th scope="col">Added</th>
-        <th scope="col">Blood Group</th>
-        <th scope="col">Status</th>
-      </tr>
-    </thead>
-    <tbody class="table-group-divider">
-      <tr *ngFor="let request of requestHistory">
-        <td>{{ request.patient_name }}</td>
-        <td>{{ request.patient_age }}</td>
-        <td>{{ request.reason }}</td>
-        <td>{{ request.unit }}</td>
-        <td>{{ request.added | customDate }}</td>
-        <td>{{ request.blood_group.blood_group }}</td>
-        <td>{{ request.status | status }}</td>
-      </tr>
-    </tbody>
-  </table>
-  <!-- <div class="text-center">
-    <button type="button" 
-            class="btn btn-outline-primary me-3" 
-            (click)="onPrev()"
-            [disabled]="!prevLink">
-      Prev
-    </button>
-    <button type="button" 
-            class="btn btn-outline-primary" 
-            (click)="onNext()" 
-            [disabled]="!nextLink">
-      Next
-    </button>
-  </div> -->
 </div>

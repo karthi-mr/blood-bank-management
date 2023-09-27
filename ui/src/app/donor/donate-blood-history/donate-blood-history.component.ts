@@ -10,18 +10,25 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class DonateBloodHistoryComponent implements OnInit {
 
-  donateHistory: DonateHistory[] = []
+  donateHistory: DonateHistory[] = [];
+  isLoading: boolean = false;
 
   constructor(private donorService: DonorService,
               private router: Router,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-      this.donorService.get_blood_donate_history().subscribe({
-        next: (data: DonateHistory[]) => {
-          this.donateHistory = data;
-        }
-      })
+    this.getBloodDonateHistory();
+  }
+
+  getBloodDonateHistory(): void {
+    this.isLoading = true;
+    this.donorService.get_blood_donate_history().subscribe({
+      next: (data: DonateHistory[]) => {
+        this.donateHistory = data;
+        this.isLoading = false;
+      }
+    });
   }
 
   onClickBack(): void {

@@ -11,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class StockComponent implements OnInit{
 
   stocks: BloodStock[] = [];
+  isLoading: boolean = false;
 
   constructor(private adminService: AdminService,
               private router: Router,
@@ -18,12 +19,18 @@ export class StockComponent implements OnInit{
              ) {}
 
   ngOnInit(): void {
-      this.adminService.get_stock().subscribe({
-        next: (data: BloodStock[]) => {
-          // console.log(data);
-          this.stocks = data;
-        }
-      })
+    this.getBloodStock();
+  }
+
+  getBloodStock(): void {
+    this.isLoading = true;
+    this.adminService.get_stock().subscribe({
+      next: (data: BloodStock[]) => {
+        // console.log(data);
+        this.stocks = data;
+        this.isLoading = false;
+      }
+    });
   }
 
   onAddBloodGroup(): void {

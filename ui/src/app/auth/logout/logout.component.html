@@ -2,7 +2,7 @@
   <p class="display-1 text-success">
     {{ message }}
   </p>
-  <p class="text-success h4">
+  <p class="h4" [ngClass]="time > 5? 'text-warning': 'text-danger'">
     It will be redirected to login page after {{ time }} seconds.
   </p>
   <p class="h3">

@@ -15,6 +15,7 @@ export class DonateBloodComponent implements OnInit{
 
   donateRequests: DonateHistory[] = [];
   userType: number | undefined = undefined;
+  isLoading: boolean = false;
 
   constructor(private donorService: DonorService, 
               private authService: AuthService,
@@ -28,12 +29,14 @@ export class DonateBloodComponent implements OnInit{
   }
 
   getAllBloodDonateRequests(): void {
+    this.isLoading = true;
     this.donorService.get_blood_donate_requests().subscribe({
       next: (data: DonateHistory[]) => {
         // console.log(data.length);
         this.donateRequests = data;
+        this.isLoading = false;
       }
-    })
+    });
     this.userType = this.authService.get_user_type();
   }
 

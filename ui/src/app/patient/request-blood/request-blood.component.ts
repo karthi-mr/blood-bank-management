@@ -15,6 +15,7 @@ export class RequestBloodComponent implements OnInit{
 
   bloodRequests: PatientHistory[] = [];
   userType: number | undefined = undefined;
+  isLoading: boolean = false;
 
   constructor(private patientService: PatientService,
               private authService: AuthService,
@@ -28,9 +29,11 @@ export class RequestBloodComponent implements OnInit{
   }
 
   getAllBloodRequestRequests(): void {
+    this.isLoading = true;
     this.patientService.get_blood_request_requests().subscribe({
       next: (data: PatientHistory[]) => {
         this.bloodRequests = data;
+        this.isLoading = false;
       }
     });
     this.userType = this.authService.get_user_type();
@@ -51,7 +54,8 @@ export class RequestBloodComponent implements OnInit{
           this.patientService.update_status_donate_requests({id: id, status: 1}).subscribe({
             next: (data: any) => {
               // console.log(data);
-              this.adminService.update_stock({blood_group: blood_group.id, unit: -unit}).subscribe({
+              this.adminService.update_stock({blood_group: blood_group.id, 
+                                    unit: -unit}).subscribe({
                 next: (data: any) => {
                   console.log(data)
                 }

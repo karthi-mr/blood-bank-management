@@ -16,6 +16,7 @@ export class DonorComponent implements OnInit{
   totalCount: number | null = null;
   page: number = 1;
   valueCount: number = 0;
+  isLoading: boolean = false;
 
   constructor(private adminService: AdminService) {}
 
@@ -32,6 +33,7 @@ export class DonorComponent implements OnInit{
   }
 
   loadData(): void {
+    this.isLoading = true;
     this.adminService.get_donor(null).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
@@ -42,11 +44,13 @@ export class DonorComponent implements OnInit{
         this.totalCount = data.total;
         this.page = 1;
         this.valueCount = data.count;
+        this.isLoading = false;
       }
     })
   }
 
   onNext(): void {
+    this.isLoading = true;
     this.adminService.get_donor(this.nextLink).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
@@ -57,11 +61,13 @@ export class DonorComponent implements OnInit{
         this.totalCount = data.total;
         this.page += 1;
         this.valueCount += data.count;
+        this.isLoading = false;
       }
     })
   }
 
   onPrev(): void {
+    this.isLoading = true;
     this.adminService.get_donor(this.prevLink).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
@@ -74,6 +80,7 @@ export class DonorComponent implements OnInit{
         this.valueCount -= data.count;
         if (this.valueCount % 50 != 0){
           this.valueCount = (this.page - 1) * 50;
+          this.isLoading = false;
         }
       }
     })
@@ -84,6 +91,7 @@ export class DonorComponent implements OnInit{
   }
 
   onFullNext(): void {
+    this.isLoading = true;
     // console.log(this.count);
     const count = 50;
     // console.log(this.totalCount);
@@ -113,6 +121,7 @@ export class DonorComponent implements OnInit{
           this.totalCount = data.total;
           this.page = this.calculateTotalPage(data.total);
           this.valueCount = dCount + data.count;
+          this.isLoading = false;
         }
       })
     }

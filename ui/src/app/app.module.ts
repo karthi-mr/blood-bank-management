@@ -28,6 +28,8 @@ import { PatientDashboardComponent } from './patient/patient-dashboard/patient-d
 import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
 import { CustomDatePipe } from './shared/custom-date.pipe';
 import { DashBoxComponent } from './shared/dash-box/dash-box.component';
+import { LoadingComponent } from './shared/loading/loading.component';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -54,13 +56,15 @@ import { DashBoxComponent } from './shared/dash-box/dash-box.component';
     DonorDashboardComponent,
     CustomDatePipe,
     DashBoxComponent,
+    LoadingComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgbModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}

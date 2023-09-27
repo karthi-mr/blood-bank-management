@@ -11,6 +11,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class RequestBloodHistoryComponent implements OnInit {
 
   requestHistory: PatientHistory[] = [];
+  isLoading: boolean = false;
 
   constructor(private patientService: PatientService,
               private router: Router,
@@ -21,11 +22,13 @@ export class RequestBloodHistoryComponent implements OnInit {
   }
 
   getRequestHistory(): void {
+    this.isLoading = true;
     this.patientService.get_blood_request_history().subscribe({
       next: (data: any) => {
         this.requestHistory = data;
+        this.isLoading = false;
       }
-    })
+    });
   }
 
   onClickBack(): void {

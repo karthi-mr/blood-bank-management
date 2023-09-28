@@ -1,4 +1,4 @@
-import { Donor } from "../admin/admin.model";
+import { Donor, Links } from "../admin/admin.model";
 import { BloodGroup } from "../shared/shared.model";
 
 export interface DonateHistory {
@@ -10,6 +10,13 @@ export interface DonateHistory {
   added: Date;
   donor: Donor;
   blood_group: BloodGroup;
+}
+
+export interface DonateHistoryView {
+  links: Links;
+  total: number;
+  count: number;
+  results: DonateHistory[];
 }
 
 export interface DonateBlood {

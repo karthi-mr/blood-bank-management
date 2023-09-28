@@ -3,12 +3,13 @@ from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from rest_framework.viewsets import ViewSet
+from rest_framework.viewsets import GenericViewSet
 from rest_framework.validators import ValidationError
 from rest_framework.permissions import IsAuthenticated
 
 from donor.models import Donor
 from patient.models import Patient
+from app.pagination import CustomPagination
 
 from .models import BloodGroup, BloodRequest, Stock
 from .permissions import (BloodGroupPermission, BloodRequestPermission,
@@ -17,7 +18,7 @@ from .serializers import (BloodGroupSerializer, BloodRequestSerializer,
                           StockSerializer)
 
 
-class BloodGroupViewSet(ViewSet):
+class BloodGroupViewSet(GenericViewSet):
     permission_classes = [BloodGroupPermission]
 
     def list(self, request, *args, **kwargs):
@@ -35,7 +36,7 @@ class BloodGroupViewSet(ViewSet):
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class StockViewSet(ViewSet):
+class StockViewSet(GenericViewSet):
     permission_classes = [StockPermission]
 
     def list(self, request, *args, **kwargs):
@@ -73,7 +74,7 @@ class StockViewSet(ViewSet):
             return Response({'detail': "An Unknown error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
-class BloodRequestViewSet(ViewSet):
+class BloodRequestViewSet(GenericViewSet):
     permission_classes = [BloodRequestPermission]
 
     def list(self, request, *args, **kwargs):
@@ -190,8 +191,9 @@ class BloodRequestViewSet(ViewSet):
         return Response({'total_request': len(queryset)})
 
 
-class BloodRequestHistoryViewSet(ViewSet):
+class BloodRequestHistoryViewSet(GenericViewSet):
     permission_classes = [BloodRequestPermission]
+    pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
         if request.user.user_type == 2:
@@ -199,17 +201,20 @@ class BloodRequestHistoryViewSet(ViewSet):
             queryset = BloodRequest.objects.filter(
                 request_by_donor=donor).exclude(status=2)
             serializer = BloodRequestSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            page = self.paginate_queryset(serializer.data)
+            return self.get_paginated_response(page)
 
         elif request.user.user_type == 3:
             patient = get_object_or_404(Patient, user=request.user)
             queryset = BloodRequest.objects.filter(
                 request_by_patient=patient).exclude(status=2)
             serializer = BloodRequestSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            page = self.paginate_queryset(serializer.data)
+            return self.get_paginated_response(page)
 
         elif request.user.user_type == 1:
             queryset = BloodRequest.objects.exclude(status=2)
             serializer = BloodRequestSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            page = self.paginate_queryset(serializer.data)
+            return self.get_paginated_response(page)
     

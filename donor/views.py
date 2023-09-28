@@ -4,7 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, ViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 
 from app.pagination import CustomPagination
 
@@ -119,8 +119,9 @@ class BloodDonateViewSet(ModelViewSet):
         return Response({'total_donate': len(queryset)})
 
 
-class BloodDonateHistoryViewSet(ViewSet):
+class BloodDonateHistoryViewSet(GenericViewSet):
     permission_classes = [BloodDonateHistoryPermission]
+    pagination_class = CustomPagination
 
     def list(self, request, *args, **kwargs):
         queryset = BloodDonate.objects.all()
@@ -129,10 +130,12 @@ class BloodDonateHistoryViewSet(ViewSet):
             queryset = BloodDonate.objects.filter(
                 Q(donor=donor)).exclude(status=2)
             serializer = BloodDonateSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            page = self.paginate_queryset(serializer.data)
+            return self.get_paginated_response(page)
         elif request.user.user_type == 1:
             queryset = BloodDonate.objects.exclude(status=2)
             serializer = BloodDonateSerializer(queryset, many=True)
-            return Response(serializer.data, status=status.HTTP_200_OK)
+            page = self.paginate_queryset(serializer.data)
+            return self.get_paginated_response(page)
         return Response({'detail': "Unknown error occurred in server."},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)

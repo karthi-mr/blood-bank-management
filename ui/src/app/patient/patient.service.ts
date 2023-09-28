@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { PatientHistory, RequestBlood } from './patient.model';
+import { BloodRequestHistoryView, PatientHistory, RequestBlood } from './patient.model';
 
 @Injectable({
   providedIn: 'root'
@@ -17,8 +17,11 @@ export class PatientService {
 
   constructor(private http: HttpClient) { }
 
-  get_blood_request_history(): Observable<PatientHistory[]> {
-    return this.http.get<PatientHistory[]>(`${this.BLOOD_REQUEST_HISTORY_API}`);
+  get_blood_request_history(link: string | null): Observable<BloodRequestHistoryView> {
+    if(link) {
+      return this.http.get<BloodRequestHistoryView>(`${link}`);
+    }
+    return this.http.get<BloodRequestHistoryView>(`${this.BLOOD_REQUEST_HISTORY_API}`);
   }
 
   get_blood_request_requests(): Observable<PatientHistory[]> {

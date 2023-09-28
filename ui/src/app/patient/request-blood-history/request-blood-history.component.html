@@ -11,46 +11,77 @@
           Back
     </button>
     <div *ngIf="requestHistory.length == 0">
-      <p class="text-danger h2 text-center">No Blood Requests Found.</p>
+      <p class="text-danger h2 text-center">No Blood Requests History Found.</p>
     </div>
-    <table class="table table-striped table-hover table-bordered table-responsive-lg"
-            *ngIf="requestHistory.length > 0">
-      <thead class="table-danger">
-        <tr>
-          <th scope="col">Patient Name</th>
-          <th scope="col">Patient Age</th>
-          <th scope="col">Reason</th>
-          <th scope="col">Unit</th>
-          <th scope="col">Added</th>
-          <th scope="col">Blood Group</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr *ngFor="let request of requestHistory">
-          <td>{{ request.patient_name }}</td>
-          <td>{{ request.patient_age }}</td>
-          <td>{{ request.reason }}</td>
-          <td>{{ request.unit }}</td>
-          <td>{{ request.added | customDate }}</td>
-          <td>{{ request.blood_group.blood_group }}</td>
-          <td>{{ request.status | status }}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <div class="text-center">
-      <button type="button" 
-              class="btn btn-outline-primary me-3" 
-              (click)="onPrev()"
-              [disabled]="!prevLink">
-        Prev
-      </button>
-      <button type="button" 
-              class="btn btn-outline-primary" 
-              (click)="onNext()" 
-              [disabled]="!nextLink">
-        Next
-      </button>
-    </div> -->
+    <div *ngIf="requestHistory.length > 0">
+      <nav>
+        <ul class="pagination justify-content-end me-5">
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-angles-left"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item">
+            <p class="page-link text-black">
+              Page {{ page }} of {{ total }}
+            </p>
+          </li>
+          <!-- <li class="page-item">
+            <p class="page-link text-black">
+              Data {{ valueCount }} of {{ totalCount }}
+            </p>
+          </li> -->
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-angles-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <table class="table 
+                  table-striped 
+                  table-hover 
+                  table-bordered 
+                  table-responsive-lg">
+        <thead class="table-danger">
+          <tr>
+            <th scope="col">Patient Name</th>
+            <th scope="col">Patient Age</th>
+            <th scope="col">Reason</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Added</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let request of requestHistory">
+            <td>{{ request.patient_name }}</td>
+            <td>{{ request.patient_age }}</td>
+            <td>{{ request.reason }}</td>
+            <td>{{ request.unit }}</td>
+            <td>{{ request.added | customDate }}</td>
+            <td>{{ request.blood_group.blood_group }}</td>
+            <td class="text-white" [ngClass]="request.status == 1? 'bg-success': 'bg-danger'">
+              {{ request.status | status }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

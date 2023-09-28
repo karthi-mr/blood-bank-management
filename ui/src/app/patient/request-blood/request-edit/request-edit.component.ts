@@ -47,7 +47,7 @@ export class RequestEditComponent {
     this.patientService.request_blood(this.requestBloodForm.value).subscribe({
       next: (data: any) => {
         // console.log(data);
-        this.router.navigate(['../request-blood'], {relativeTo: this.route});
+        this.router.navigate(['../'], {relativeTo: this.route});
       }
     });
   }

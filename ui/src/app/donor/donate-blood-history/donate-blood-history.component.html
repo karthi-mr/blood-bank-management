@@ -10,43 +10,74 @@
           <i class="fa-solid fa-circle-chevron-left"></i>
           Back
     </button>
-    <table class="table table-striped table-hover table-bordered table-responsive-lg">
-      <thead class="table-danger">
-        <tr>
-          <th scope="col">Donor</th>
-          <th scope="col">Disease</th>
-          <th scope="col">Age</th>
-          <th scope="col">Unit</th>
-          <th scope="col">Added</th>
-          <th scope="col">Blood Group</th>
-          <th scope="col">Status</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr *ngFor="let history of donateHistory">
-          <td>{{ history.donor.user.username }}</td>
-          <td>{{ history.disease }}</td>
-          <td>{{ history.age }}</td>
-          <td>{{ history.unit }}</td>
-          <td>{{ history.added | customDate }}</td>
-          <td>{{ history.blood_group.blood_group }}</td>
-          <td>{{ history.status | status}}</td>
-        </tr>
-      </tbody>
-    </table>
-    <!-- <div class="text-center">
-      <button type="button" 
-              class="btn btn-outline-primary me-3" 
-              (click)="onPrev()"
-              [disabled]="!prevLink">
-        Prev
-      </button>
-      <button type="button" 
-              class="btn btn-outline-primary" 
-              (click)="onNext()" 
-              [disabled]="!nextLink">
-        Next
-      </button>
-    </div> -->
+    <div *ngIf="donateHistory.length == 0">
+      <p class="text-danger h2 text-center">No Blood Donate History Found.</p>
+    </div>
+    <div *ngIf="donateHistory.length > 0">
+      <nav>
+        <ul class="pagination justify-content-end me-5">
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-angles-left"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item">
+            <p class="page-link text-black">
+              Page {{ page }} of {{ total }}
+            </p>
+          </li>
+          <!-- <li class="page-item">
+            <p class="page-link text-black">
+              Data {{ valueCount }} of {{ totalCount }}
+            </p>
+          </li> -->
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-angles-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <table class="table table-striped table-hover table-bordered table-responsive-lg">
+        <thead class="table-danger">
+          <tr>
+            <th scope="col">Donor</th>
+            <th scope="col">Disease</th>
+            <th scope="col">Age</th>
+            <th scope="col">Unit</th>
+            <th scope="col">Added</th>
+            <th scope="col">Blood Group</th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let history of donateHistory">
+            <td>{{ history.donor.user.username }}</td>
+            <td>{{ history.disease }}</td>
+            <td>{{ history.age }}</td>
+            <td>{{ history.unit }}</td>
+            <td>{{ history.added | customDate }}</td>
+            <td>{{ history.blood_group.blood_group }}</td>
+            <td class="text-white" [ngClass]="history.status == 1? 'bg-success': 'bg-danger'">
+              {{ history.status | status}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>

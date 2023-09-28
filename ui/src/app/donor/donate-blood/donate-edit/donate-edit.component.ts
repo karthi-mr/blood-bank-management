@@ -51,7 +51,7 @@ export class DonateEditComponent implements OnInit{
     this.donorService.donate_blood(this.donateBloodForm.value).subscribe({
       next: (data: any) => {
         console.log(data);
-        this.router.navigate(['../donate-blood'], {relativeTo: this.route})
+        this.router.navigate(['../'], {relativeTo: this.route})
       }
     });
   }

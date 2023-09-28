@@ -1,4 +1,4 @@
-import { Donor, Patient } from "../admin/admin.model";
+import { Donor, Links, Patient } from "../admin/admin.model";
 import { BloodGroup } from "../shared/shared.model";
 
 export interface PatientHistory {
@@ -12,6 +12,13 @@ export interface PatientHistory {
   request_by_patient: Patient | null;
   request_by_donor: Donor | null;
   blood_group: BloodGroup;
+}
+
+export interface BloodRequestHistoryView {
+  links: Links;
+  total: number;
+  count: number;
+  results: PatientHistory[];
 }
 
 export interface RequestBlood {

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { DonateBlood, DonateHistory } from './donor.model';
+import { DonateBlood, DonateHistory, DonateHistoryView } from './donor.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -20,8 +20,11 @@ export class DonorService {
 
   constructor(private http: HttpClient) { }
 
-  get_blood_donate_history(): Observable<DonateHistory[]> {
-    return this.http.get<DonateHistory[]>(`${this.BLOOD_DONATE_HISTORY_API}`);
+  get_blood_donate_history(link: string | null): Observable<DonateHistoryView> {
+    if(link) {
+      return this.http.get<DonateHistoryView>(`${link}`);  
+    }
+    return this.http.get<DonateHistoryView>(`${this.BLOOD_DONATE_HISTORY_API}`);
   }
 
   get_blood_donate_requests(): Observable<DonateHistory[]> {

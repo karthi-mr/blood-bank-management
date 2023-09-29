@@ -17,11 +17,13 @@ export class PatientService {
 
   constructor(private http: HttpClient) { }
 
-  get_blood_request_history(link: string | null): Observable<BloodRequestHistoryView> {
+  get_blood_request_history(link: string | null, order: string | null):       
+        Observable<BloodRequestHistoryView> {
     if(link) {
       return this.http.get<BloodRequestHistoryView>(`${link}`);
     }
-    return this.http.get<BloodRequestHistoryView>(`${this.BLOOD_REQUEST_HISTORY_API}`);
+    return this.http.get<BloodRequestHistoryView>
+          (`${this.BLOOD_REQUEST_HISTORY_API}?ordering=${order}`);
   }
 
   get_blood_request_requests(): Observable<PatientHistory[]> {

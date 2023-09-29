@@ -59,12 +59,177 @@
                   table-responsive-lg">
         <thead class="table-danger">
           <tr>
-            <th scope="col">Patient Name</th>
-            <th scope="col">Patient Age</th>
+            <th scope="col">
+              Patient Name
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('patient_name')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('patient_name')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='patient_name'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('-patient_name')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-patient_name'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              Patient Age
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('patient_age')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('patient_age')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='patient_age'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('-patient_age')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-patient_age'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
             <th scope="col">Reason</th>
-            <th scope="col">Unit</th>
-            <th scope="col">Added</th>
-            <th scope="col">Blood Group</th>
+            <th scope="col">
+              Unit
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('unit')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('unit')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='unit'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('-unit')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-unit'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              Added
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('added')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('added')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='added'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('-added')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-added'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              Blood Group
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('blood_group')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('blood_group')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='blood_group'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getRequestHistory('-blood_group')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-blood_group'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
             <th scope="col">Status</th>
           </tr>
         </thead>

@@ -12,6 +12,7 @@ from patient.models import Patient
 from app.pagination import CustomPagination
 
 from .models import BloodGroup, BloodRequest, Stock
+from .filters import SortBloodRequestHistoryFilter
 from .permissions import (BloodGroupPermission, BloodRequestPermission,
                           StockPermission, UpdateStockPermission, BloodRequestUpdatePermission)
 from .serializers import (BloodGroupSerializer, BloodRequestSerializer,
@@ -194,26 +195,27 @@ class BloodRequestViewSet(GenericViewSet):
 class BloodRequestHistoryViewSet(GenericViewSet):
     permission_classes = [BloodRequestPermission]
     pagination_class = CustomPagination
+    filter_backends = [SortBloodRequestHistoryFilter]
 
     def list(self, request, *args, **kwargs):
         if request.user.user_type == 2:
             donor = get_object_or_404(Donor, user=request.user)
-            queryset = BloodRequest.objects.filter(
-                request_by_donor=donor).exclude(status=2)
+            queryset = self.filter_queryset(BloodRequest.objects.filter(
+                request_by_donor=donor).exclude(status=2))
             serializer = BloodRequestSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
 
         elif request.user.user_type == 3:
             patient = get_object_or_404(Patient, user=request.user)
-            queryset = BloodRequest.objects.filter(
-                request_by_patient=patient).exclude(status=2)
+            queryset = self.filter_queryset(BloodRequest.objects.filter(
+                request_by_patient=patient).exclude(status=2))
             serializer = BloodRequestSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
 
         elif request.user.user_type == 1:
-            queryset = BloodRequest.objects.exclude(status=2)
+            queryset = self.filter_queryset(BloodRequest.objects.exclude(status=2))
             serializer = BloodRequestSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)

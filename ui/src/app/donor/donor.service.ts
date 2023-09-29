@@ -20,11 +20,13 @@ export class DonorService {
 
   constructor(private http: HttpClient) { }
 
-  get_blood_donate_history(link: string | null): Observable<DonateHistoryView> {
+  get_blood_donate_history(link: string | null, order: string | null): 
+        Observable<DonateHistoryView> {
     if(link) {
       return this.http.get<DonateHistoryView>(`${link}`);  
     }
-    return this.http.get<DonateHistoryView>(`${this.BLOOD_DONATE_HISTORY_API}`);
+    return this.http.get<DonateHistoryView>
+        (`${this.BLOOD_DONATE_HISTORY_API}?ordering=${order}`);
   }
 
   get_blood_donate_requests(): Observable<DonateHistory[]> {

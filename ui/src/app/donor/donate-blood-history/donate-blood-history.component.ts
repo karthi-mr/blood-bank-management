@@ -18,6 +18,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   page: number = 1;
   valueCount: number = 0;
   isLoading: boolean = false;
+  sortOrder: string = 'donor';
 
   constructor(private donorService: DonorService,
               private router: Router,
@@ -35,9 +36,10 @@ export class DonateBloodHistoryComponent implements OnInit {
     return a;
   }
 
-  getBloodDonateHistory(): void {
+  getBloodDonateHistory(order: string = 'donor'): void {
+    this.sortOrder = order;
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(null).subscribe({
+    this.donorService.get_blood_donate_history(null, order).subscribe({
       next: (data: DonateHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -53,7 +55,7 @@ export class DonateBloodHistoryComponent implements OnInit {
 
   onNext(): void {
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(this.nextLink).subscribe({
+    this.donorService.get_blood_donate_history(this.nextLink, null).subscribe({
       next: (data: DonateHistoryView) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -70,7 +72,7 @@ export class DonateBloodHistoryComponent implements OnInit {
 
   onPrev(): void {
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(this.prevLink).subscribe({
+    this.donorService.get_blood_donate_history(this.prevLink, null).subscribe({
       next: (data: DonateHistoryView) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -113,7 +115,7 @@ export class DonateBloodHistoryComponent implements OnInit {
       const link = 
           `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
       // console.log(link);
-      this.donorService.get_blood_donate_history(link).subscribe({
+      this.donorService.get_blood_donate_history(link, null).subscribe({
         next: (data: DonateHistoryView) => {
           // console.log(data);
           this.nextLink = data.links.next;

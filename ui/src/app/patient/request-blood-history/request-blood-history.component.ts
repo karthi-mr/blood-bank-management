@@ -18,6 +18,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   page: number = 1;
   valueCount: number = 0;
   isLoading: boolean = false;
+  sortOrder: string = 'patient_name';
 
   constructor(private patientService: PatientService,
               private router: Router,
@@ -35,9 +36,10 @@ export class RequestBloodHistoryComponent implements OnInit {
     return a;
   }
 
-  getRequestHistory(): void {
+  getRequestHistory(order: string = 'patient_name'): void {
+    this.sortOrder = order;
     this.isLoading = true;
-    this.patientService.get_blood_request_history(null).subscribe({
+    this.patientService.get_blood_request_history(null, order).subscribe({
       next: (data: BloodRequestHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -53,7 +55,8 @@ export class RequestBloodHistoryComponent implements OnInit {
 
   onNext(): void {
     this.isLoading = true;
-    this.patientService.get_blood_request_history(this.nextLink).subscribe({
+    this.patientService.get_blood_request_history(this.nextLink, null).
+              subscribe({
       next: (data: BloodRequestHistoryView) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -70,7 +73,8 @@ export class RequestBloodHistoryComponent implements OnInit {
 
   onPrev(): void {
     this.isLoading = true;
-    this.patientService.get_blood_request_history(this.prevLink).subscribe({
+    this.patientService.get_blood_request_history(this.prevLink, null).
+          subscribe({
       next: (data: BloodRequestHistoryView) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -113,7 +117,8 @@ export class RequestBloodHistoryComponent implements OnInit {
       const link = 
           `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
       // console.log(link);
-      this.patientService.get_blood_request_history(link).subscribe({
+      this.patientService.get_blood_request_history(link, null).
+            subscribe({
         next: (data: BloodRequestHistoryView) => {
           // console.log(data);
           this.nextLink = data.links.next;

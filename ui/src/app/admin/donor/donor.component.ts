@@ -17,6 +17,7 @@ export class DonorComponent implements OnInit{
   page: number = 1;
   valueCount: number = 0;
   isLoading: boolean = false;
+  sortOrder: string = 'username';
 
   constructor(private adminService: AdminService) {}
 
@@ -32,9 +33,10 @@ export class DonorComponent implements OnInit{
     return a;
   }
 
-  loadData(): void {
+  loadData(order = 'username'): void {
+    this.sortOrder = order;
     this.isLoading = true;
-    this.adminService.get_donor(null).subscribe({
+    this.adminService.get_donor(null, order).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -51,7 +53,7 @@ export class DonorComponent implements OnInit{
 
   onNext(): void {
     this.isLoading = true;
-    this.adminService.get_donor(this.nextLink).subscribe({
+    this.adminService.get_donor(this.nextLink, null).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -68,7 +70,7 @@ export class DonorComponent implements OnInit{
 
   onPrev(): void {
     this.isLoading = true;
-    this.adminService.get_donor(this.prevLink).subscribe({
+    this.adminService.get_donor(this.prevLink, null).subscribe({
       next: (data: DonorResult) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -111,7 +113,7 @@ export class DonorComponent implements OnInit{
       const link = 
           `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
       // console.log(link);
-      this.adminService.get_donor(link).subscribe({
+      this.adminService.get_donor(link, null).subscribe({
         next: (data: DonorResult) => {
           // console.log(data);
           this.nextLink = data.links.next;

@@ -2,12 +2,12 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework.viewsets import ModelViewSet, GenericViewSet
+from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from app.pagination import CustomPagination
 
+from .filters import SortFilter
 from .models import BloodDonate, Donor
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
                           BloodDonateUpdatePermission, DonorPermission,
@@ -20,9 +20,10 @@ class DonorViewSet(ModelViewSet):
     serializer_class = DonorSerializer
     permission_classes = [DonorPermission]
     pagination_class = CustomPagination
+    filter_backends = [SortFilter]
 
-    def list(self, request):
-        queryset = self.get_queryset()
+    def list(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
         donorSerializer = DonorSerializer(queryset, many=True)
         page = self.paginate_queryset(donorSerializer.data)
         return self.get_paginated_response(page)
@@ -89,8 +90,7 @@ class BloodDonateViewSet(ModelViewSet):
     def total_donate_approved(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodDonate.objects.filter \
-                        (Q(donor=donor) & Q(status=1))
+            queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=1))
         else:
             queryset = BloodDonate.objects.filter(status=1)
         print(len(queryset))
@@ -100,8 +100,7 @@ class BloodDonateViewSet(ModelViewSet):
     def total_donate_pending(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodDonate.objects.filter \
-                        (Q(donor=donor) & Q(status=2))
+            queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=2))
         else:
             queryset = BloodDonate.objects.filter(status=2)
         print(len(queryset))
@@ -111,8 +110,7 @@ class BloodDonateViewSet(ModelViewSet):
     def total_donate_rejected(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodDonate.objects.filter \
-                        (Q(donor=donor) & Q(status=3))
+            queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=3))
         else:
             queryset = BloodDonate.objects.filter(status=3)
         print(len(queryset))

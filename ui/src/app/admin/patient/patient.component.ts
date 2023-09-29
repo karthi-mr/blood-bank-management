@@ -18,6 +18,7 @@ export class PatientComponent implements OnInit{
   page: number = 1;
   valueCount: number = 0;
   isLoading: boolean = false;
+  sortOrder: string = 'username';
 
   constructor(private adminService: AdminService) {}
 
@@ -33,11 +34,12 @@ export class PatientComponent implements OnInit{
     return a;
   }
 
-  loadData(): void {
+  loadData(order = 'username'): void {
+    this.sortOrder = order;
     this.isLoading = true;
-    this.adminService.get_patient(null).subscribe({
+    this.adminService.get_patient(null, order).subscribe({
       next: (data: PatientResult) => {
-        console.log(data);
+        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
         this.patients = data.results;
@@ -52,7 +54,7 @@ export class PatientComponent implements OnInit{
 
   onNext(): void {
     this.isLoading = true;
-    this.adminService.get_patient(this.nextLink).subscribe({
+    this.adminService.get_patient(this.nextLink, null).subscribe({
       next: (data: PatientResult) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -69,7 +71,7 @@ export class PatientComponent implements OnInit{
 
   onPrev(): void {
     this.isLoading = true;
-    this.adminService.get_patient(this.prevLink).subscribe({
+    this.adminService.get_patient(this.prevLink, null).subscribe({
       next: (data: PatientResult) => {
         // console.log(data);
         this.nextLink = data.links.next;
@@ -112,7 +114,7 @@ export class PatientComponent implements OnInit{
       const link = 
           `http://127.0.0.1:8000/auth/patient/?limit=50&offset=${dCount}`;
       console.log(dCount);
-      this.adminService.get_patient(link).subscribe({
+      this.adminService.get_patient(link, null).subscribe({
         next: (data: PatientResult) => {
           // console.log(data);
           this.nextLink = data.links.next;

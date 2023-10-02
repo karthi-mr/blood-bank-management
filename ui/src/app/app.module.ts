@@ -34,6 +34,7 @@ import { DonorViewComponent } from './admin/donor/donor-view/donor-view.componen
 import { EmptyDataPipe } from './shared/empty-data.pipe';
 import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     EmptyDataPipe,
     PatientViewComponent,
     MyProfileComponent,
+    ReleaseNotesComponent,
   ],
   imports: [
     BrowserModule,

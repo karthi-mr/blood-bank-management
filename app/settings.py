@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -43,6 +44,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'corsheaders',
+    'auth.apps.AuthConfig',
+    'admin.apps.AdminConfig',
+    'blood.apps.BloodConfig',
+    'donor.apps.DonorConfig',
+    'patient.apps.PatientConfig',
 ]
 
 MIDDLEWARE = [
@@ -133,3 +139,29 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Custom User Model
+AUTH_USER_MODEL = 'auth1.User'
+
+# Allowing All Origins
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Django Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ]
+}
+
+# Custom settings for JWT token
+SIMPLE_JWT = {
+    "ACCESS_TOKEN_LIFETIME": timedelta(hours=12),
+    "REFRESH_TOKEN_LIFETIME": timedelta(days=3),
+    "UPDATE_LAST_LOGIN": True,
+
+    "ALGORITHM": "HS256",
+    "SIGNING_KEY": SECRET_KEY,
+    "AUTH_HEADER_TYPES": ("Bearer"),
+    "AUTH_HEADER_NAME": "HTTP_AUTHORIZATION",
+}

@@ -1,0 +1,43 @@
+<p class="h1 my-3 text-primary text-center text-uppercase" 
+   *ngIf="myProfile">
+    {{ myProfile.detail }}
+</p>
+
+<div class="container" *ngIf="myProfile">
+  <p class="h3 text-success">
+    <span class="text-capitalize">username : </span>
+    {{ myProfile.user.user.username }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">age : </span>
+    {{ myProfile.age }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">d.o.b : </span>
+    {{ myProfile.user.date_of_birth | date }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">blood group : </span>
+    {{ myProfile.user.blood_group.blood_group }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">first name : </span>
+    {{ myProfile.user.user.first_name | emptyData }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">last name : </span>
+    {{ myProfile.user.user.last_name | emptyData }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">email : </span>
+    {{ myProfile.user.user.email | emptyData }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">last_login : </span>
+    {{ myProfile.user.user.last_login | date }}
+  </p>
+  <p class="">
+    <span class="text-capitalize">mobile number : </span>
+    {{ myProfile.user.user.mobile }}
+  </p>
+</div>

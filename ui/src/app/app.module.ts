@@ -33,6 +33,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DonorViewComponent } from './admin/donor/donor-view/donor-view.component';
 import { EmptyDataPipe } from './shared/empty-data.pipe';
 import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
+import { MyProfileComponent } from './my-profile/my-profile.component';
 
 @NgModule({
   declarations: [
@@ -63,6 +64,7 @@ import { PatientViewComponent } from './admin/patient/patient-view/patient-view.
     DonorViewComponent,
     EmptyDataPipe,
     PatientViewComponent,
+    MyProfileComponent,
   ],
   imports: [
     BrowserModule,

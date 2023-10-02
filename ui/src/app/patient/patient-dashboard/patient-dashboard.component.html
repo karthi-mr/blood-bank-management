@@ -1,0 +1,27 @@
+<p class="display-5 text-primary text-center text-uppercase my-4">
+  {{ title }}
+</p>
+
+<div class="container">
+  <div class="row text-center">
+    <p class="text-danger h3 text-decoration-underline">Blood Request Details</p>
+    <div class="col-lg-3 col-md-4 col-12 mb-3">
+      <app-dash-box name="Total Blood Request" [value]="totalRequest"></app-dash-box>
+    </div>
+    <!--  -->
+    <div class="col-lg-3 col-md-4 col-12 mb-3">
+      <app-dash-box name="Total Blood Request Approved" [value]="totalRequestApproved">
+      </app-dash-box>
+    </div>
+    <!--  -->
+    <div class="col-lg-3 col-md-4 col-12 mb-3">
+      <app-dash-box name="Total Blood Request Pending" [value]="totalRequestPending">
+      </app-dash-box>
+    </div>
+    <!--  -->
+    <div class="col-lg-3 col-md-4 col-12 mb-3">
+      <app-dash-box name="Total Blood Request Rejected" [value]="totalRequestRejected">
+      </app-dash-box>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<div class="container">
+  <p class="display-1 text-success">
+    {{ message }}
+  </p>
+  <p class="h4" [ngClass]="time > 5? 'text-warning': 'text-danger'">
+    It will be redirected to login page after {{ time }} seconds.
+  </p>
+  <p class="h3">
+    <a class="link-primary text-decoration-none" role="button" (click)="onClickLogin()">
+      Click here
+    </a>
+    to login.
+  </p>
+</div>

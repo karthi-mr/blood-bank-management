@@ -12,3 +12,13 @@ class PatientPermission(BasePermission):
 
     def has_object_permission(self, request, view, obj):
         return obj.user == request.user or request.user.user_type == 1
+
+
+class TotalPatientPermission(BasePermission):
+
+    def has_permission(self, request, view):
+        if not request.user.is_authenticated:
+            return False
+        if request.user.user_type != 1:
+            return False
+        return True

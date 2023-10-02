@@ -1,0 +1,12 @@
+tr {
+
+  th {
+    position: relative;
+
+    .sort-dropdown {
+      position: absolute;
+      display: inline;
+      right: 10px;
+    }
+  }
+}

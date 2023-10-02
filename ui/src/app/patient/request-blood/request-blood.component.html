@@ -1,0 +1,82 @@
+<div class="container-fluid">
+  <h1 class="text-secondary text-center my-3">
+    Blood Request Details
+  </h1>
+  <app-loading *ngIf="isLoading"></app-loading>  
+  <div class="data" *ngIf="!isLoading">
+    <div class="d-flex">
+      <button type="button" 
+            class="btn btn-danger mb-3" 
+            (click)="onClickRequestBlood()"
+            *ngIf="userType!=1">
+            <i class="fa-solid fa-hand-holding-droplet"></i>
+            Request Blood
+      </button>
+    <button type="button" 
+            class="btn mb-3 ms-auto history-btn"
+            (click)="onViewHistory()">
+            <i class="fa-solid fa-clock-rotate-left"></i>
+            View History
+    </button>
+    </div>
+    
+    <div *ngIf="bloodRequests.length == 0">
+      <p class="text-danger h2 text-center">No Blood Request Found.</p>
+    </div>
+    <!-- <div *ngIf="bloodRequests.length == 0 && userType == 1">
+      <p class="text-danger h2 text-center">No Blood Request Requests Found.</p>
+    </div> -->
+    <table class="table table-striped table-hover table-bordered table-responsive-lg"
+            *ngIf="bloodRequests.length > 0">
+      <thead class="table-danger">
+        <tr>
+          <th scope="col">Patient Name</th>
+          <th scope="col">Patient Age</th>
+          <th scope="col">Reason</th>
+          <th scope="col">Unit</th>
+          <th scope="col">Added</th>
+          <th scope="col">Blood Group</th>
+          <th scope="col">Status</th>
+          <th scope="col" *ngIf="userType==1">Action</th>
+        </tr>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let request of bloodRequests">
+          <td>{{ request.patient_name }}</td>
+          <td>{{ request.patient_age }}</td>
+          <td>{{ request.reason }}</td>
+          <td>{{ request.unit }}</td>
+          <td>{{ request.added | customDate }}</td>
+          <td>{{ request.blood_group.blood_group }}</td>
+          <td>{{ request.status | status }}</td>
+          <td *ngIf="userType==1">
+            <button type="button" 
+                    class="btn btn-success me-2" 
+                    (click)="onApproveRequest(request.id, request.blood_group, request.unit)">
+              Approve
+            </button>
+            <button type="button" 
+                    class="btn btn-danger"
+                    (click)="onRejectRequest(request.id)">
+              Reject
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <div class="text-center">
+      <button type="button" 
+              class="btn btn-outline-primary me-3" 
+              (click)="onPrev()"
+              [disabled]="!prevLink">
+        Prev
+      </button>
+      <button type="button" 
+              class="btn btn-outline-primary" 
+              (click)="onNext()" 
+              [disabled]="!nextLink">
+        Next
+      </button>
+    </div> -->
+  </div>
+</div>

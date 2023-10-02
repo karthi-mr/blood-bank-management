@@ -1,0 +1,63 @@
+<nav class="navbar navbar-expand-xl bg-danger sticky-top" data-bs-theme="dark">
+  <div class="container-fluid">
+    <!-- navbar brand name -->
+    <a href="javascript:void(0)" class="navbar-brand">
+      Blood Bank Management System
+    </a>
+    <!-- navbar collapse button -->
+    <button type="button" class="navbar-toggler" data-bs-toggle="collapse" 
+            data-bs-target="#navbarContent" >
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarContent">
+      <ul class="navbar-nav me-auto mb-2 mb-xl-0">
+        <li class="nav-item" *ngFor="let tab of tabs">
+          <a routerLink="{{tab.link}}" 
+             class="nav-link text-capitalize" 
+             routerLinkActive="active">
+             <i ngClass="{{ tab.icon }}"></i>
+            {{ tab.name }}
+          </a>
+        </li>
+      </ul>
+      <ul class="navbar-nav ms-auto me-4" *ngIf="isUserLoggedIn">
+        <li class="nav-item">
+          <a data-bs-toggle="offcanvas" 
+             href="#profileSettings" 
+             role="button" 
+             class="nav-link shadow-none active">
+             <i class="fa-regular fa-user"></i>
+             {{ username }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="offcanvas offcanvas-end" tabindex="-1" id="profileSettings" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <h5 class="offcanvas-title" id="offcanvasExampleLabel">My Profile</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div>
+  <div class="offcanvas-body">
+    <a routerLink="/profile-settings" 
+       class="link text-capitalize text-black" 
+       data-bs-dismiss="offcanvas">
+       <i class="fa-solid fa-gear text-danger"></i>
+       Profile settings
+    </a>
+    <!-- <a routerLink="/profile/reset-password" class="link text-capitalize">
+      reset password
+    </a> -->
+    <div class="logout-btn">
+      <button type="button" 
+              class="btn btn-danger" 
+              (click)="on_logout_user()" 
+              data-bs-dismiss="offcanvas">
+              <i class="fa-solid fa-right-to-bracket"></i>
+              Logout
+      </button>
+    </div>
+  </div>
+</div>

@@ -5,12 +5,18 @@ from rest_framework import serializers
 from rest_framework.validators import ValidationError
 
 from auth.serializers import UserSerializer
+from blood.models import BloodGroup
+from blood.serializers import BloodGroupSerializer
 
 from .models import BloodDonate, Donor
 
 
 class DonorSerializer(serializers.ModelSerializer):
     user = UserSerializer()
+    blood_group = BloodGroupSerializer(read_only=True)
+    blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
+                                                  slug_field='id',
+                                                  write_only=True)
 
     class Meta:
         model = Donor
@@ -20,20 +26,26 @@ class DonorSerializer(serializers.ModelSerializer):
         """ creating user """
         user_data = validated_data.pop('user')
         user_data['password'] = make_password(user_data.get('password'))
-        userSerializer = UserSerializer(data=user_data, context={'user_type': 2})
+        userSerializer = UserSerializer(
+            data=user_data, context={'user_type': 2})
         if userSerializer.is_valid(raise_exception=True):
             user = userSerializer.save()
 
         """ creating donor """
         validated_data['user'] = user
+        validated_data['blood_group'] = validated_data.pop('blood_group_id')
         instance = Donor.objects.create(**validated_data)
-        
+
         return instance
 
 
 class BloodDonateSerializer(serializers.ModelSerializer):
-    # donor = DonorSerializer(read_only=True)
-    
+    donor = DonorSerializer(read_only=True)
+    blood_group = BloodGroupSerializer(read_only=True)
+    blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
+                                                  slug_field='id',
+                                                  write_only=True)
+
     class Meta:
         model = BloodDonate
         fields = '__all__'
@@ -52,8 +64,14 @@ class BloodDonateSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = self.context.get('user')
         donor = Donor.objects.get(user=user)
-        validated_data['donor'] = donor
-        instance = BloodDonate.objects.create(**validated_data)
+        # validated_data['donor'] = donor
 
-        return instance
-        
+        instance = BloodDonate.objects.create(donor=donor,
+                                              disease=validated_data.get(
+                                                  'disease')
+                                              or "Nothing",
+                                              age=validated_data.get('age'),
+                                              unit=validated_data.get('unit'),
+                                              blood_group=validated_data.get('blood_group_id'))
+
+        return "instance"

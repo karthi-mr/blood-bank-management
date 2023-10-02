@@ -1,0 +1,17 @@
+<div class="container mt-5" id="bloodDonateForm">
+  <h1 class="text-primary mb-4 text-capitalize">
+    Please Fill the form to add blood group
+  </h1>
+  <form [formGroup]="addBloodForm" (ngSubmit)="onSubmitForm()">
+    <!-- blood_group -->
+    <div class="form-floating mb-3">
+      <input type="text" 
+             class="form-control shadow-none" 
+             id="blood_group" 
+             placeholder=""
+             formControlName="blood_group">
+      <label for="blood_group">Blood Group</label>
+    </div>
+    <button type="submit" class="btn btn-success">Donate Blood</button>
+  </form>
+</div>

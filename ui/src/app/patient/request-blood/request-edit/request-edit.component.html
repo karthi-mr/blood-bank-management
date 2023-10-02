@@ -1,0 +1,58 @@
+<!-- <div class="mt-3">
+  <h1 class="text-secondary text-center">
+    Thanks for Requesting your blood.
+    <i class="fa-regular fa-face-grin-beam ms-2"></i>
+  </h1>
+</div> -->
+
+<div class="container mt-4" id="bloodDonateForm">
+  <h1 class="text-primary text-capitalize">
+    Please Fill the form to request blood
+  </h1>
+  <form [formGroup]="requestBloodForm" (ngSubmit)="onSubmitBloodRequestForm()">
+    <!-- patient_name -->
+    <div class="form-floating mb-3">
+      <input type="text" 
+             class="form-control shadow-none" 
+             id="patient_name" 
+             placeholder=""
+             formControlName="patient_name">
+      <label for="patient_name">Patient Name</label>
+    </div>
+    <!-- patient_age -->
+    <div class="form-floating mb-3">
+      <input type="number" 
+             class="form-control shadow-none" 
+             id="patient_age" 
+             placeholder=""
+             formControlName="patient_age">
+      <label for="patient_age">Patient Age</label>
+    </div>
+    <!-- reason -->
+    <div class="form-floating mb-3">
+      <input type="text" 
+             class="form-control shadow-none" 
+             id="reason" 
+             placeholder=""
+             formControlName="reason">
+      <label for="reason">Reason</label>
+    </div>
+    <!-- unit -->
+    <div class="form-floating mb-3">
+      <input type="number" 
+             class="form-control shadow-none" 
+             id="unit" 
+             placeholder=""
+             formControlName="unit">
+      <label for="unit">Unit</label>
+    </div>
+    <!-- blood_group -->
+    <select class="form-select shadow-none mb-3" formControlName="blood_group_id">
+      <option value="" selected disabled>Select Blood Group</option>
+      <option *ngFor="let blood_group of bloodGroups" [value]="blood_group.id">
+        {{ blood_group.blood_group }}
+      </option>
+    </select>
+    <button type="submit" class="btn btn-success">Request Blood</button>
+  </form>
+</div>

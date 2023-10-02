@@ -1,0 +1,17 @@
+#profileSettings {
+  .link {
+    display: block;
+    width: 100%;
+    margin: 0.5rem 0;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    color: #000;
+    background-color: lightcyan;
+    text-align: center;
+  }
+
+  .logout-btn {
+    margin-top: 2rem;
+    display: grid;
+  }
+}

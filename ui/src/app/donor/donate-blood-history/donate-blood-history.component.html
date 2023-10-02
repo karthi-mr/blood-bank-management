@@ -1,0 +1,215 @@
+<div class="container-fluid">
+  <h1 class="text-secondary text-center my-3 text-capitalize">
+    blood donate history Details
+  </h1>
+  <app-loading *ngIf="isLoading"></app-loading>
+  <div class="data" *ngIf="!isLoading">
+    <button type="button" 
+          class="btn btn-back mb-3"
+          (click)="onClickBack()">
+          <i class="fa-solid fa-circle-chevron-left"></i>
+          Back
+    </button>
+    <div *ngIf="donateHistory.length == 0">
+      <p class="text-danger h2 text-center">No Blood Donate History Found.</p>
+    </div>
+    <div *ngIf="donateHistory.length > 0">
+      <nav>
+        <ul class="pagination justify-content-end me-5">
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-angles-left"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onPrev()">
+              <!-- <span aria-hidden="true">&laquo;</span> -->
+              <i class="fa-solid fa-chevron-left"></i>
+            </a>
+          </li>
+          <li class="page-item">
+            <p class="page-link text-black">
+              Page {{ page }} of {{ total }}
+            </p>
+          </li>
+          <!-- <li class="page-item">
+            <p class="page-link text-black">
+              Data {{ valueCount }} of {{ totalCount }}
+            </p>
+          </li> -->
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-chevron-right"></i>
+            </a>
+          </li>
+          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
+            <a class="page-link" role="button" (click)="onFullNext()">
+              <!-- <span aria-hidden="true">&raquo;</span> -->
+              <i class="fa-solid fa-angles-right"></i>
+            </a>
+          </li>
+        </ul>
+      </nav>
+      <table class="table table-striped table-hover table-bordered table-responsive-lg">
+        <thead class="table-danger">
+          <tr>
+            <th scope="col">
+              Donor
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('donor')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('donor')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='donor'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('-donor')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-donor'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">Disease</th>
+            <th scope="col">
+              Age
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('age')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('age')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='age'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('-age')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-age'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">Unit</th>
+            <th scope="col">
+              Added
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('added')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('added')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='added'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('-added')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-added'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">
+              Blood Group
+              <div class="sort-dropdown" 
+                  [ngClass]="sortOrder.includes('blood_group')? 'text-success': ''">
+                <i class="fa-solid fa-caret-down"
+                    role="button"
+                    data-bs-toggle="dropdown">
+                </i>
+                <ul class="dropdown-menu">
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('blood_group')">
+                      Sort By Asc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='blood_group'">
+                      </i>
+                    </a>
+                  </li>
+                  <li>
+                    <a class="dropdown-item" 
+                      href="javascript:void(0)"
+                      role="button"
+                      (click)="getBloodDonateHistory('-blood_group')">
+                      Sort By Desc
+                      <i class="fa-solid fa-check text-success"
+                          *ngIf="sortOrder=='-blood_group'">
+                      </i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </th>
+            <th scope="col">Status</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          <tr *ngFor="let history of donateHistory">
+            <td>{{ history.donor.user.username }}</td>
+            <td>{{ history.disease }}</td>
+            <td>{{ history.age }}</td>
+            <td>{{ history.unit }}</td>
+            <td>{{ history.added | customDate }}</td>
+            <td>{{ history.blood_group.blood_group }}</td>
+            <td class="text-white" [ngClass]="history.status == 1? 'bg-success': 'bg-danger'">
+              {{ history.status | status}}
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

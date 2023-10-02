@@ -21,6 +21,7 @@ import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard
 import { DonorViewComponent } from './admin/donor/donor-view/donor-view.component';
 import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -70,6 +71,7 @@ const routes: Routes = [
     ]},
   ]},
   {path: 'profile-settings', component: MyProfileComponent},
+  {path: 'release-notes', component: ReleaseNotesComponent},
   {path: 'logout', component: LogoutComponent},
   {path: '**', component: PageNotFoundComponent}
 ];

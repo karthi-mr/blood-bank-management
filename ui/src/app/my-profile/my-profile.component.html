@@ -12,13 +12,13 @@
     <span class="text-capitalize">age : </span>
     {{ myProfile.age }}
   </p>
-  <p class="">
+  <p class="" *ngIf="myProfile.user.date_of_birth">
     <span class="text-capitalize">d.o.b : </span>
     {{ myProfile.user.date_of_birth | date }}
   </p>
-  <p class="">
+  <p class="" *ngIf="myProfile.user.blood_group?.blood_group">
     <span class="text-capitalize">blood group : </span>
-    {{ myProfile.user.blood_group.blood_group }}
+    {{ myProfile.user.blood_group?.blood_group }}
   </p>
   <p class="">
     <span class="text-capitalize">first name : </span>

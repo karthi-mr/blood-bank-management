@@ -14,8 +14,8 @@ interface User2 {
 interface User1 {
   id: number;
   user: User2;
-  blood_group: BloodGroup;
-  date_of_birth: Date;
+  blood_group?: BloodGroup;
+  date_of_birth?: Date;
   profile_pic: string | null;
 }
 

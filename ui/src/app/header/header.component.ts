@@ -14,6 +14,8 @@ export class HeaderComponent implements OnInit{
   username: string | undefined = undefined;
   tabs:any = [];
 
+  private URL_PATH = "http://127.0.0.1:4200/home";
+
   constructor(private authService: AuthService,
     private sharedService: SharedService,
     private router: Router,
@@ -39,10 +41,13 @@ export class HeaderComponent implements OnInit{
         this.tabs = data
         if (this.isUserLoggedIn && activate) {
           // console.log(this.tabs[0]);
-          this.router.navigate([this.tabs[0].link], {relativeTo: this.route})
+          this.router.navigate([this.tabs[0].link], {relativeTo: this.route});
+        }
+        if(this.isUserLoggedIn && window.location.href == this.URL_PATH) {
+          this.router.navigate([this.tabs[0].link], {relativeTo: this.route});
         }
       }
-    })
+    });
   }
   
   on_logout_user(): void {

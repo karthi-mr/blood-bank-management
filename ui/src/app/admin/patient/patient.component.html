@@ -175,17 +175,19 @@
         </tr>
       </thead>
       <tbody class="table-group-divider">
-        <tr *ngFor="let donor of patients">
-          <td>{{ donor.user.username }}</td>
-          <td>{{ donor.user.email }}</td>
-          <td>{{ donor.user.mobile }}</td>
-          <td *ngIf="donor.user.last_login">
-            {{ donor.user.last_login | customDate }}
+        <tr *ngFor="let patient of patients">
+          <td>{{ patient.user.username }}</td>
+          <td>{{ patient.user.email }}</td>
+          <td>{{ patient.user.mobile }}</td>
+          <td *ngIf="patient.user.last_login">
+            {{ patient.user.last_login | customDate }}
           </td>
-          <td *ngIf="!donor.user.last_login">Not Login</td>
-          <td>{{ donor.blood_group.blood_group }}</td>
+          <td *ngIf="!patient.user.last_login">Not Login</td>
+          <td>{{ patient.blood_group.blood_group }}</td>
           <td>
-            <button type="button" class="btn btn-success me-2">
+            <button type="button" 
+                    class="btn btn-success me-2"
+                    (click)="onViewPatient(patient.id)">
               <i class="fa-solid fa-eye"></i>
             </button>
           </td>

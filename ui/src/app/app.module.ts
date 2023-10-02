@@ -30,6 +30,9 @@ import { CustomDatePipe } from './shared/custom-date.pipe';
 import { DashBoxComponent } from './shared/dash-box/dash-box.component';
 import { LoadingComponent } from './shared/loading/loading.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { DonorViewComponent } from './admin/donor/donor-view/donor-view.component';
+import { EmptyDataPipe } from './shared/empty-data.pipe';
+import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 
 @NgModule({
   declarations: [
@@ -57,6 +60,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     CustomDatePipe,
     DashBoxComponent,
     LoadingComponent,
+    DonorViewComponent,
+    EmptyDataPipe,
+    PatientViewComponent,
   ],
   imports: [
     BrowserModule,

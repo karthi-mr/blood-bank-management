@@ -6,7 +6,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-request-blood-history',
   templateUrl: './request-blood-history.component.html',
-  styleUrls: ['./request-blood-history.component.scss']
+  styleUrls: ['./request-blood-history.component.scss',
+              '../../app.component.scss']
 })
 export class RequestBloodHistoryComponent implements OnInit {
 

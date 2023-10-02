@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Donor, DonorResult } from '../admin.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-donor',
@@ -19,7 +20,9 @@ export class DonorComponent implements OnInit{
   isLoading: boolean = false;
   sortOrder: string = 'username';
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
       this.loadData();
@@ -126,5 +129,9 @@ export class DonorComponent implements OnInit{
           this.isLoading = false;
         }
       })
+    }
+
+    onViewDonor(id: number): void {
+      this.router.navigate([id], {relativeTo: this.route});      
     }
 }

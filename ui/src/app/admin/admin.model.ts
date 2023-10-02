@@ -8,11 +8,11 @@ export interface Links {
 export interface UserResult {
   id: number;
   username: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  mobile: string;
-  user_type: number;
+  first_name: string | null;
+  last_name: string | null;
+  email: string | null;
+  mobile: string | null;
+  user_type: number | null;
   address: string | null;
   last_login: Date | null;
 }

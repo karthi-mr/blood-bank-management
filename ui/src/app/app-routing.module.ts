@@ -18,6 +18,8 @@ import { RequestEditComponent } from './patient/request-blood/request-edit/reque
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { PatientDashboardComponent } from './patient/patient-dashboard/patient-dashboard.component';
 import { DonorDashboardComponent } from './donor/donor-dashboard/donor-dashboard.component';
+import { DonorViewComponent } from './admin/donor/donor-view/donor-view.component';
+import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -26,7 +28,9 @@ const routes: Routes = [
   {path: 'admin', children: [
     {path: 'dashboard',component: AdminDashboardComponent},
     {path: 'donor',component: DonorComponent},
+    {path: 'donor/:id',component: DonorViewComponent},
     {path: 'patient',component: PatientComponent},
+    {path: 'patient/:id',component: PatientViewComponent},
     {path: 'admin',component: AdminComponent},
     {path: 'donate-blood', component: DonateBloodComponent},
     {path: 'donate-blood/history', component: DonateBloodHistoryComponent},

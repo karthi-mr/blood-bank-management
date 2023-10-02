@@ -185,7 +185,9 @@
           <td *ngIf="!donor.user.last_login">Not Login</td>
           <td>{{ donor.blood_group.blood_group }}</td>
           <td>
-            <button type="button" class="btn btn-success me-2">
+            <button type="button" 
+                    class="btn btn-success me-2"
+                    (click)="onViewDonor(donor.id)">
               <i class="fa-solid fa-eye"></i>
             </button>
           </td>

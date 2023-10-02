@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BloodStock, DonorResult, PatientResult } from './admin.model';
+import { BloodStock, Donor, DonorResult, Patient, PatientResult } from './admin.model';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -107,5 +107,13 @@ export class AdminService {
   get_total_request_blood_rejected(): Observable<{total_request: number}> {
     return this.http.get<{total_request: number}>
           (`${this.BLOOD_REQUEST_COUNT}total_request_rejected/`);
+  }
+
+  get_donor_detail(id: number): Observable<Donor> {
+    return this.http.get<Donor>(`${this.USER_API}donor/${id}`);
+  }
+  
+  get_patient_detail(id: number): Observable<Patient> {
+    return this.http.get<Patient>(`${this.USER_API}patient/${id}`);
   }
 }

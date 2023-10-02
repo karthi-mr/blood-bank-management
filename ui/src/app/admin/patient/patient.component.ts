@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Subscription } from 'rxjs';
 import { Patient, PatientResult } from '../admin.model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient',
@@ -20,7 +21,9 @@ export class PatientComponent implements OnInit{
   isLoading: boolean = false;
   sortOrder: string = 'username';
 
-  constructor(private adminService: AdminService) {}
+  constructor(private adminService: AdminService,
+              private router: Router,
+              private route: ActivatedRoute) {}
 
   ngOnInit(): void {
    this.loadData();   
@@ -127,5 +130,9 @@ export class PatientComponent implements OnInit{
           this.isLoading = false;
         }
       });
+    }
+
+    onViewPatient(id: number): void {
+      this.router.navigate([id], {relativeTo: this.route});      
     }
 }

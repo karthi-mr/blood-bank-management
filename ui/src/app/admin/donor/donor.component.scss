@@ -1,5 +1,4 @@
 tr {
-
   th {
     position: relative;
 
@@ -8,5 +7,11 @@ tr {
       display: inline;
       right: 10px;
     }
+  }
+}
+
+.filter {
+  i {
+    font-size: 2rem;
   }
 }

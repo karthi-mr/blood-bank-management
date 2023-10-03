@@ -110,3 +110,32 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
                     order_by('blood_group__blood_group')
             # print(f"New Query : {new_query}")
             return new_query
+
+class DonorSearchFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        new_query = Donor.objects.all()
+
+        usernameFilter = request.query_params.get('username')
+        emailFilter = request.query_params.get('email')
+        mobileFilter = request.query_params.get('mobile')
+        bloodGroupFilter = request.query_params.get('blood_group')
+
+        print(request.query_params)
+        # print(usernameFilter)
+
+
+        if usernameFilter:
+            new_query = new_query.filter(user__username__icontains=usernameFilter)
+        if emailFilter:
+            new_query = new_query.filter(user__email__icontains=emailFilter)
+        if mobileFilter:
+            new_query = new_query.filter(user__mobile__icontains=mobileFilter)
+        if bloodGroupFilter:
+            if '-' not in bloodGroupFilter:
+                bloodGroupFilter = bloodGroupFilter.strip() + '+'
+            new_query = new_query.filter \
+                (blood_group__blood_group__iexact=bloodGroupFilter)
+
+        return new_query

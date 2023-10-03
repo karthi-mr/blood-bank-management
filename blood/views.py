@@ -41,7 +41,8 @@ class StockViewSet(GenericViewSet):
     permission_classes = [StockPermission]
 
     def list(self, request, *args, **kwargs):
-        queryset = Stock.objects.all()
+        queryset = Stock.objects.all(). \
+                    order_by("blood_group__blood_group")
         serializer = StockSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 

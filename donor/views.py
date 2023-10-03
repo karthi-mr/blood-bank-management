@@ -7,7 +7,7 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from app.pagination import CustomPagination
 
-from .filters import SortFilter, SortBloodDonateHistoryFilter
+from .filters import SortFilter, SortBloodDonateHistoryFilter, DonorSearchFilter
 from .models import BloodDonate, Donor
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
                           BloodDonateUpdatePermission, DonorPermission,
@@ -20,7 +20,7 @@ class DonorViewSet(ModelViewSet):
     serializer_class = DonorSerializer
     permission_classes = [DonorPermission]
     pagination_class = CustomPagination
-    filter_backends = [SortFilter]
+    filter_backends = [SortFilter, DonorSearchFilter]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())

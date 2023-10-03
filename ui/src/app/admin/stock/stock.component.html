@@ -7,20 +7,49 @@
           (click)="onAddBloodGroup()">
           Add Blood Group
     </button>
-    <table class="table table-striped table-hover table-bordered 
-                table-responsive-lg w-25 mx-auto">
-      <thead class="table-danger">
-        <tr>
-          <th scope="col" class="w-50">Blood Group</th>
-          <th scope="col" class="w-50">Unit</th>
-        </tr>
-      </thead>
-      <tbody class="table-group-divider">
-        <tr *ngFor="let stock of stocks">
-          <td>{{ stock.blood_group.blood_group }}</td>
-          <td>{{ stock.unit }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3 col-md-6 col-12 blood-stocks" 
+              *ngFor="let stock of stocks">
+          <div class="blood-stock" (click)="onClickBloodStock(stock)">
+            <h4>{{ stock.blood_group.blood_group }}</h4>
+            <p>{{ stock.unit }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="container" *ngIf="isEditMode">
+      <div class="alert alert-danger" *ngIf="errorMessage">
+        <p>{{ errorMessage }}</p>
+        <button type="button" class="btn btn-danger" (click)="onCloseErrorMessage()">
+          Close
+        </button>
+      </div>
+      <form (ngSubmit)="onSubmit(bloodStockForm)" #bloodStockForm="ngForm">
+        <div class="row">
+          <div class="col-md-5 col-12">
+            <input type="text" 
+                   id="blood_group" 
+                   class="form-control"
+                   name="blood_group" 
+                   [(ngModel)] = blood_group.blood_group
+                   disabled>
+          </div>
+          <div class="col-md-5 col-12">
+            <input type="number" 
+            name="unit" 
+            id="unit" 
+            class="form-control"
+            [(ngModel)]="blood_unit">
+          </div>
+          <div class="col-md-2 col-12">
+            <button type="submit" class="btn btn-success">
+              Update Stock
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

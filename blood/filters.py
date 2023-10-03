@@ -61,3 +61,35 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
                     order_by('blood_group__blood_group')
             # print(f"New Query : {new_query}")
             return new_query
+
+
+class BloodRequestSearchFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        new_query = BloodRequest.objects.all()
+
+        nameFilter = request.query_params.get('name')
+        ageFilter = request.query_params.get('age')
+        reasonFilter = request.query_params.get('reason')
+        unitFilter = request.query_params.get('unit')
+        bloodGroupFilter = request.query_params.get('blood_group')
+
+        print(request.query_params)
+        # print(usernameFilter)
+
+        if nameFilter:
+            new_query = new_query.filter(patient_name__icontains=nameFilter)
+        if ageFilter:
+            new_query = new_query.filter(patient_age__icontains=ageFilter)
+        if reasonFilter:
+            new_query = new_query.filter(reason__icontains=reasonFilter)
+        if unitFilter:
+            new_query = new_query.filter(unit__icontains=unitFilter)
+        if bloodGroupFilter:
+            if '-' not in bloodGroupFilter:
+                bloodGroupFilter = bloodGroupFilter.strip() + '+'
+            new_query = new_query.filter(
+                blood_group__blood_group__iexact=bloodGroupFilter)
+
+        return new_query

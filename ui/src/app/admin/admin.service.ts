@@ -48,7 +48,7 @@ export class AdminService {
     if(link) {
       return this.http.get<PatientResult>(`${link}`);
     }
-    return this.http.get<PatientResult>(`${this.USER_API}patient/?ordering=${order}`);
+    return this.http.get<PatientResult>(`${this.USER_API}patient/?${order}`);
   }
 
   get_stock(): Observable<BloodStock[]> {

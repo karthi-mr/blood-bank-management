@@ -20,13 +20,19 @@ export class PatientComponent implements OnInit{
   valueCount: number = 0;
   isLoading: boolean = false;
   sortOrder: string = 'username';
+  isFilterEnabled: boolean = false;
+
+  inputUsername: string = '';
+  inputEmail: string = '';
+  inputMobile: string = '';
+  inputBloodGroup: string = '';
 
   constructor(private adminService: AdminService,
               private router: Router,
               private route: ActivatedRoute) {}
 
   ngOnInit(): void {
-   this.loadData();   
+    this.loadData('ordering=username');
   }
 
   calculateTotalPage(data: number): number {
@@ -37,7 +43,7 @@ export class PatientComponent implements OnInit{
     return a;
   }
 
-  loadData(order = 'username'): void {
+  loadData(order: string): void {
     this.sortOrder = order;
     this.isLoading = true;
     this.adminService.get_patient(null, order).subscribe({
@@ -93,7 +99,7 @@ export class PatientComponent implements OnInit{
   }
 
   onFullPrev(): void {
-    this.loadData();
+    this.loadData('ordering=username');
   }
 
   onFullNext(): void {
@@ -134,5 +140,33 @@ export class PatientComponent implements OnInit{
 
     onViewPatient(id: number): void {
       this.router.navigate([id], {relativeTo: this.route});      
+    }
+
+    onEnableFilter() {
+      this.isFilterEnabled = !this.isFilterEnabled;
+      if(!this.isFilterEnabled) {
+        this.loadData('ordering=username');
+        this.inputUsername = '';
+        this.inputEmail = '';
+        this.inputMobile = '';
+        this.inputBloodGroup = '';
+      }
+    }
+
+    testInput(): void {
+      let order = "ordering=username";
+      if(this.inputUsername) {
+        order += `&username=${this.inputUsername}`
+      }      
+      if(this.inputEmail) {
+        order += `&email=${this.inputEmail}`
+      }      
+      if(this.inputMobile) {
+        order += `&mobile=${this.inputMobile}`
+      }
+      if(this.inputBloodGroup) {
+        order += `&blood_group=${this.inputBloodGroup}`
+      }
+      this.loadData(order)
     }
 }

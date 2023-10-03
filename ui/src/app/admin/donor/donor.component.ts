@@ -145,22 +145,29 @@ export class DonorComponent implements OnInit{
 
     onEnableFilter(): void {
       this.isFilterEnabled = !this.isFilterEnabled;
+      if(!this.isFilterEnabled) {
+        this.loadData('ordering=username');
+        this.inputUsername = '';
+        this.inputEmail = '';
+        this.inputMobile = '';
+        this.inputBloodGroup = '';
+      }
     }
 
     testInput(): void {
       let order = "ordering=username";
       if(this.inputUsername) {
-        order += `&username=${this.inputUsername}`
-      }      
+        order += `&username=${this.inputUsername}`;
+      }
       if(this.inputEmail) {
-        order += `&email=${this.inputEmail}`
-      }      
+        order += `&email=${this.inputEmail}`;
+      }
       if(this.inputMobile) {
-        order += `&mobile=${this.inputMobile}`
+        order += `&mobile=${this.inputMobile}`;
       }
       if(this.inputBloodGroup) {
-        order += `&blood_group=${this.inputBloodGroup}`
+        order += `&blood_group=${this.inputBloodGroup}`;
       }
-      this.loadData(order)
+      this.loadData(order);
     }
 }

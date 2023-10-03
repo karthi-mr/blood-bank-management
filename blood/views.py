@@ -2,19 +2,20 @@ from django.db.models import Q
 from django.shortcuts import get_object_or_404
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.response import Response
-from rest_framework.viewsets import GenericViewSet
-from rest_framework.validators import ValidationError
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.validators import ValidationError
+from rest_framework.viewsets import GenericViewSet
 
+from app.pagination import CustomPagination
 from donor.models import Donor
 from patient.models import Patient
-from app.pagination import CustomPagination
 
+from .filters import BloodRequestSearchFilter, SortBloodRequestHistoryFilter
 from .models import BloodGroup, BloodRequest, Stock
-from .filters import SortBloodRequestHistoryFilter
 from .permissions import (BloodGroupPermission, BloodRequestPermission,
-                          StockPermission, UpdateStockPermission, BloodRequestUpdatePermission)
+                          BloodRequestUpdatePermission, StockPermission,
+                          UpdateStockPermission)
 from .serializers import (BloodGroupSerializer, BloodRequestSerializer,
                           StockSerializer)
 
@@ -42,7 +43,7 @@ class StockViewSet(GenericViewSet):
 
     def list(self, request, *args, **kwargs):
         queryset = Stock.objects.all(). \
-                    order_by("blood_group__blood_group")
+            order_by("blood_group__blood_group")
         serializer = StockSerializer(queryset, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
 
@@ -151,12 +152,12 @@ class BloodRequestViewSet(GenericViewSet):
     def total_request_approved(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_donor=donor) & Q(status=1))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_donor=donor) & Q(status=1))
         elif request.user.user_type == 3:
             patient = Patient.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_patient=patient) & Q(status=1))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_patient=patient) & Q(status=1))
         else:
             queryset = BloodRequest.objects.filter(status=1)
         # print(len(queryset))
@@ -166,12 +167,12 @@ class BloodRequestViewSet(GenericViewSet):
     def total_request_pending(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_donor=donor) & Q(status=2))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_donor=donor) & Q(status=2))
         elif request.user.user_type == 3:
             patient = Patient.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_patient=patient) & Q(status=2))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_patient=patient) & Q(status=2))
         else:
             queryset = BloodRequest.objects.filter(status=2)
         # print(len(queryset))
@@ -181,12 +182,12 @@ class BloodRequestViewSet(GenericViewSet):
     def total_request_rejected(self, request):
         if request.user.user_type == 2:
             donor = Donor.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_donor=donor) & Q(status=3))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_donor=donor) & Q(status=3))
         elif request.user.user_type == 3:
             patient = Patient.objects.get(user=request.user)
-            queryset = BloodRequest.objects.filter \
-                        (Q(request_by_patient=patient) & Q(status=3))
+            queryset = BloodRequest.objects.filter(
+                Q(request_by_patient=patient) & Q(status=3))
         else:
             queryset = BloodRequest.objects.filter(status=3)
         # print(len(queryset))
@@ -196,7 +197,7 @@ class BloodRequestViewSet(GenericViewSet):
 class BloodRequestHistoryViewSet(GenericViewSet):
     permission_classes = [BloodRequestPermission]
     pagination_class = CustomPagination
-    filter_backends = [SortBloodRequestHistoryFilter]
+    filter_backends = [SortBloodRequestHistoryFilter, BloodRequestSearchFilter]
 
     def list(self, request, *args, **kwargs):
         if request.user.user_type == 2:
@@ -216,8 +217,8 @@ class BloodRequestHistoryViewSet(GenericViewSet):
             return self.get_paginated_response(page)
 
         elif request.user.user_type == 1:
-            queryset = self.filter_queryset(BloodRequest.objects.exclude(status=2))
+            queryset = self.filter_queryset(
+                BloodRequest.objects.exclude(status=2))
             serializer = BloodRequestSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
-    

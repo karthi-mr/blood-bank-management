@@ -3,13 +3,12 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
-
 from app.pagination import CustomPagination
 
+from .filters import SortFilter, PatientSearchFilter
 from .models import Patient
 from .permissions import PatientPermission, TotalPatientPermission
 from .serializers import PatientSerializer
-from .filters import SortFilter
 
 
 class PatientViewSet(ModelViewSet):
@@ -17,7 +16,7 @@ class PatientViewSet(ModelViewSet):
     serializer_class = PatientSerializer
     permission_classes = [PatientPermission]
     pagination_class = CustomPagination
-    filter_backends = [SortFilter]
+    filter_backends = [SortFilter, PatientSearchFilter]
 
     def list(self, request):
         queryset = self.filter_queryset(self.get_queryset())

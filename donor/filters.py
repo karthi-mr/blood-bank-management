@@ -1,6 +1,6 @@
 from rest_framework.filters import BaseFilterBackend
 
-from .models import Donor, BloodDonate
+from .models import BloodDonate, Donor
 
 
 class SortFilter(BaseFilterBackend):
@@ -111,6 +111,7 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
             # print(f"New Query : {new_query}")
             return new_query
 
+
 class DonorSearchFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
@@ -125,9 +126,9 @@ class DonorSearchFilter(BaseFilterBackend):
         print(request.query_params)
         # print(usernameFilter)
 
-
         if usernameFilter:
-            new_query = new_query.filter(user__username__icontains=usernameFilter)
+            new_query = new_query.filter(
+                user__username__icontains=usernameFilter)
         if emailFilter:
             new_query = new_query.filter(user__email__icontains=emailFilter)
         if mobileFilter:
@@ -135,7 +136,40 @@ class DonorSearchFilter(BaseFilterBackend):
         if bloodGroupFilter:
             if '-' not in bloodGroupFilter:
                 bloodGroupFilter = bloodGroupFilter.strip() + '+'
-            new_query = new_query.filter \
-                (blood_group__blood_group__iexact=bloodGroupFilter)
+            new_query = new_query.filter(
+                blood_group__blood_group__iexact=bloodGroupFilter)
+
+        return new_query
+
+
+class BloodDonateSearchFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        new_query = BloodDonate.objects.all()
+
+        donorFilter = request.query_params.get('donor')
+        diseaseFilter = request.query_params.get('disease')
+        ageFilter = request.query_params.get('age')
+        unitFilter = request.query_params.get('unit')
+        bloodGroupFilter = request.query_params.get('blood_group')
+
+        print(request.query_params)
+        # print(usernameFilter)
+
+        if donorFilter:
+            new_query = new_query.filter(
+                donor__user__username__icontains=donorFilter)
+        if ageFilter:
+            new_query = new_query.filter(age__icontains=ageFilter)
+        if diseaseFilter:
+            new_query = new_query.filter(disease__icontains=diseaseFilter)
+        if unitFilter:
+            new_query = new_query.filter(unit__icontains=unitFilter)
+        if bloodGroupFilter:
+            if '-' not in bloodGroupFilter:
+                bloodGroupFilter = bloodGroupFilter.strip() + '+'
+            new_query = new_query.filter(
+                blood_group__blood_group__iexact=bloodGroupFilter)
 
         return new_query

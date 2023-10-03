@@ -1,17 +1,23 @@
 tr {
-  th {
-    position: relative;
+	th {
+		position: relative;
 
-    .sort-dropdown {
-      position: absolute;
-      display: inline;
-      right: 10px;
-    }
-  }
+		.sort-dropdown {
+			position: absolute;
+			display: inline;
+			right: 10px;
+		}
+	}
 }
 
 .filter {
-  i {
-    font-size: 2rem;
-  }
+	i {
+		font-size: 2rem;
+	}
+}
+
+.head {
+	th {
+		border: 0px;
+	}
 }

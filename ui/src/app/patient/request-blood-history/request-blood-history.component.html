@@ -4,89 +4,113 @@
   </h1>
   <app-loading *ngIf="isLoading"></app-loading>
   <div class="data" *ngIf="!isLoading">
-    <button type="button" 
-          class="btn btn-back mb-3"
-          (click)="onClickBack()">
-          <i class="fa-solid fa-circle-chevron-left"></i>
-          Back
+    <button type="button" class="btn btn-back mb-3" (click)="onClickBack()">
+      <i class="fa-solid fa-circle-chevron-left"></i>
+      Back
     </button>
     <div *ngIf="requestHistory.length == 0">
       <p class="text-danger h2 text-center">No Blood Requests History Found.</p>
+      <div class="text-center" *ngIf="isFilterEnabled">
+        <a class="link-danger h4" role="button" (click)="onEnableFilter()">
+          Clear filter
+        </a>
+      </div>
     </div>
     <div *ngIf="requestHistory.length > 0">
-      <nav>
-        <ul class="pagination justify-content-end me-5">
-          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
-            <a class="page-link" role="button" (click)="onFullPrev()">
-              <!-- <span aria-hidden="true">&laquo;</span> -->
-              <i class="fa-solid fa-angles-left"></i>
-            </a>
-          </li>
-          <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
-            <a class="page-link" role="button" (click)="onPrev()">
-              <!-- <span aria-hidden="true">&laquo;</span> -->
-              <i class="fa-solid fa-chevron-left"></i>
-            </a>
-          </li>
-          <li class="page-item">
-            <p class="page-link text-black">
-              Page {{ page }} of {{ total }}
-            </p>
-          </li>
-          <!-- <li class="page-item">
-            <p class="page-link text-black">
-              Data {{ valueCount }} of {{ totalCount }}
-            </p>
-          </li> -->
-          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
-            <a class="page-link" role="button" (click)="onNext()">
-              <!-- <span aria-hidden="true">&raquo;</span> -->
-              <i class="fa-solid fa-chevron-right"></i>
-            </a>
-          </li>
-          <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
-            <a class="page-link" role="button" (click)="onFullNext()">
-              <!-- <span aria-hidden="true">&raquo;</span> -->
-              <i class="fa-solid fa-angles-right"></i>
-            </a>
-          </li>
-        </ul>
-      </nav>
-      <table class="table 
-                  table-striped 
-                  table-hover 
-                  table-bordered 
-                  table-responsive-lg">
+      <table
+        class="table table-striped table-hover table-bordered table-responsive-lg"
+      >
         <thead class="table-danger">
+          <tr class="">
+            <th colspan="5">
+              <div class="filter">
+                <i
+                  [ngClass]="
+                    isFilterEnabled
+                      ? 'fa-solid fa-filter-circle-xmark'
+                      : 'fa-solid fa-filter'
+                  "
+                  role="button"
+                  (click)="onEnableFilter()"
+                >
+                </i>
+              </div>
+            </th>
+            <th colspan="2">
+              <nav>
+                <ul class="pagination justify-content-end mb-0">
+                  <li class="page-item" [ngClass]="!prevLink ? 'disabled' : ''">
+                    <a class="page-link" role="button" (click)="onFullPrev()">
+                      <i class="fa-solid fa-angles-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item" [ngClass]="!prevLink ? 'disabled' : ''">
+                    <a class="page-link" role="button" (click)="onPrev()">
+                      <i class="fa-solid fa-chevron-left"></i>
+                    </a>
+                  </li>
+                  <li class="page-item">
+                    <p class="page-link text-black">
+                      Page {{ page }} of {{ total }}
+                    </p>
+                  </li>
+                  <li class="page-item" [ngClass]="!nextLink ? 'disabled' : ''">
+                    <a class="page-link" role="button" (click)="onNext()">
+                      <i class="fa-solid fa-chevron-right"></i>
+                    </a>
+                  </li>
+                  <li class="page-item" [ngClass]="!nextLink ? 'disabled' : ''">
+                    <a class="page-link" role="button" (click)="onFullNext()">
+                      <i class="fa-solid fa-angles-right"></i>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </th>
+          </tr>
           <tr>
             <th scope="col">
               Patient Name
-              <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('patient_name')? 'text-success': ''">
-                <i class="fa-solid fa-caret-down"
-                    role="button"
-                    data-bs-toggle="dropdown">
+              <div
+                class="sort-dropdown"
+                [ngClass]="
+                  sortOrder.includes('patient_name') ? 'text-success' : ''
+                "
+              >
+                <i
+                  class="fa-solid fa-caret-down"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
                 </i>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('patient_name')">
+                      (click)="getRequestHistory('patient_name')"
+                    >
                       Sort By Asc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='patient_name'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == 'patient_name'"
+                      >
                       </i>
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('-patient_name')">
+                      (click)="getRequestHistory('-patient_name')"
+                    >
                       Sort By Desc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='-patient_name'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == '-patient_name'"
+                      >
                       </i>
                     </a>
                   </li>
@@ -95,32 +119,46 @@
             </th>
             <th scope="col">
               Patient Age
-              <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('patient_age')? 'text-success': ''">
-                <i class="fa-solid fa-caret-down"
-                    role="button"
-                    data-bs-toggle="dropdown">
+              <div
+                class="sort-dropdown"
+                [ngClass]="
+                  sortOrder.includes('patient_age') ? 'text-success' : ''
+                "
+              >
+                <i
+                  class="fa-solid fa-caret-down"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
                 </i>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('patient_age')">
+                      (click)="getRequestHistory('patient_age')"
+                    >
                       Sort By Asc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='patient_age'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == 'patient_age'"
+                      >
                       </i>
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('-patient_age')">
+                      (click)="getRequestHistory('-patient_age')"
+                    >
                       Sort By Desc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='-patient_age'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == '-patient_age'"
+                      >
                       </i>
                     </a>
                   </li>
@@ -130,32 +168,44 @@
             <th scope="col">Reason</th>
             <th scope="col">
               Unit
-              <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('unit')? 'text-success': ''">
-                <i class="fa-solid fa-caret-down"
-                    role="button"
-                    data-bs-toggle="dropdown">
+              <div
+                class="sort-dropdown"
+                [ngClass]="sortOrder.includes('unit') ? 'text-success' : ''"
+              >
+                <i
+                  class="fa-solid fa-caret-down"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
                 </i>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('unit')">
+                      (click)="getRequestHistory('unit')"
+                    >
                       Sort By Asc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='unit'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == 'unit'"
+                      >
                       </i>
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('-unit')">
+                      (click)="getRequestHistory('-unit')"
+                    >
                       Sort By Desc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='-unit'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == '-unit'"
+                      >
                       </i>
                     </a>
                   </li>
@@ -164,32 +214,44 @@
             </th>
             <th scope="col">
               Added
-              <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('added')? 'text-success': ''">
-                <i class="fa-solid fa-caret-down"
-                    role="button"
-                    data-bs-toggle="dropdown">
+              <div
+                class="sort-dropdown"
+                [ngClass]="sortOrder.includes('added') ? 'text-success' : ''"
+              >
+                <i
+                  class="fa-solid fa-caret-down"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
                 </i>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('added')">
+                      (click)="getRequestHistory('added')"
+                    >
                       Sort By Asc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='added'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == 'added'"
+                      >
                       </i>
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('-added')">
+                      (click)="getRequestHistory('-added')"
+                    >
                       Sort By Desc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='-added'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == '-added'"
+                      >
                       </i>
                     </a>
                   </li>
@@ -198,32 +260,46 @@
             </th>
             <th scope="col">
               Blood Group
-              <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('blood_group')? 'text-success': ''">
-                <i class="fa-solid fa-caret-down"
-                    role="button"
-                    data-bs-toggle="dropdown">
+              <div
+                class="sort-dropdown"
+                [ngClass]="
+                  sortOrder.includes('blood_group') ? 'text-success' : ''
+                "
+              >
+                <i
+                  class="fa-solid fa-caret-down"
+                  role="button"
+                  data-bs-toggle="dropdown"
+                >
                 </i>
                 <ul class="dropdown-menu">
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('blood_group')">
+                      (click)="getRequestHistory('blood_group')"
+                    >
                       Sort By Asc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='blood_group'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == 'blood_group'"
+                      >
                       </i>
                     </a>
                   </li>
                   <li>
-                    <a class="dropdown-item" 
+                    <a
+                      class="dropdown-item"
                       href="javascript:void(0)"
                       role="button"
-                      (click)="getRequestHistory('-blood_group')">
+                      (click)="getRequestHistory('-blood_group')"
+                    >
                       Sort By Desc
-                      <i class="fa-solid fa-check text-success"
-                          *ngIf="sortOrder=='-blood_group'">
+                      <i
+                        class="fa-solid fa-check text-success"
+                        *ngIf="sortOrder == '-blood_group'"
+                      >
                       </i>
                     </a>
                   </li>
@@ -231,6 +307,68 @@
               </div>
             </th>
             <th scope="col">Status</th>
+          </tr>
+          <tr *ngIf="isFilterEnabled">
+            <th>
+              <input
+                type="text"
+                name="donor"
+                id="donor"
+                class="form-control"
+                [(ngModel)]="inputName"
+              />
+            </th>
+            <th>
+              <input
+                type="number"
+                name="age"
+                id="age"
+                class="form-control"
+                min="0"
+                [(ngModel)]="inputAge"
+              />
+            </th>
+            <th>
+              <input
+                type="text"
+                name="disease"
+                id="disease"
+                class="form-control"
+                [(ngModel)]="inputReason"
+              />
+            </th>
+            <th>
+              <input
+                type="number"
+                name="unit"
+                id="unit"
+                class="form-control"
+                min="0"
+                max="2"
+                [(ngModel)]="inputUnit"
+              />
+            </th>
+            <th>
+              <!-- <input type="text" name="username" id="username" class="form-control"> -->
+            </th>
+            <th>
+              <input
+                type="text"
+                name="blood_group"
+                id="blood_group"
+                class="form-control"
+                [(ngModel)]="inputBloodGroup"
+              />
+            </th>
+            <th>
+              <button
+                type="button"
+                class="btn btn-success"
+                (click)="testInput()"
+              >
+                Search
+              </button>
+            </th>
           </tr>
         </thead>
         <tbody class="table-group-divider">
@@ -241,7 +379,10 @@
             <td>{{ request.unit }}</td>
             <td>{{ request.added | customDate }}</td>
             <td>{{ request.blood_group.blood_group }}</td>
-            <td class="text-white" [ngClass]="request.status == 1? 'bg-success': 'bg-danger'">
+            <td
+              class="text-white"
+              [ngClass]="request.status == 1 ? 'bg-success' : 'bg-danger'"
+            >
               {{ request.status | status }}
             </td>
           </tr>

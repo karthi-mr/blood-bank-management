@@ -19,7 +19,6 @@ class SortFilter(BaseFilterBackend):
                 new_query = Patient.objects.order_by('-user__email')
             else:
                 new_query = Patient.objects.order_by('user__email')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # username
@@ -28,17 +27,7 @@ class SortFilter(BaseFilterBackend):
                 new_query = Patient.objects.order_by('-user__username')
             else:
                 new_query = Patient.objects.order_by('user__username')
-            # print(f"New Query : {new_query}")
             return new_query
-
-        # mobile
-        # if 'mobile' in sort_order:
-        #     if '-' in sort_order:
-        #         new_query = Patient.objects.order_by('-user__mobile')
-        #     else:
-        #         new_query = Patient.objects.order_by('user__mobile')
-        #     # print(f"New Query : {new_query}")
-        #     return new_query
 
         # last login
         if 'last_login' in sort_order:
@@ -46,16 +35,43 @@ class SortFilter(BaseFilterBackend):
                 new_query = Patient.objects.order_by('-user__last_login')
             else:
                 new_query = Patient.objects.order_by('user__last_login')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # blood group
         if 'blood_group' in sort_order:
             if '-' in sort_order:
                 new_query = Patient.objects. \
-                        order_by('-blood_group__blood_group')
+                    order_by('-blood_group__blood_group')
             else:
                 new_query = Patient.objects. \
-                        order_by('blood_group__blood_group')
-            # print(f"New Query : {new_query}")
+                    order_by('blood_group__blood_group')
             return new_query
+
+
+class PatientSearchFilter(BaseFilterBackend):
+
+    def filter_queryset(self, request, queryset, view):
+
+        new_query = Patient.objects.all()
+
+        usernameFilter = request.query_params.get('username')
+        emailFilter = request.query_params.get('email')
+        mobileFilter = request.query_params.get('mobile')
+        bloodGroupFilter = request.query_params.get('blood_group')
+
+        print(request.query_params)
+
+        if usernameFilter:
+            new_query = new_query.filter(
+                user__username__icontains=usernameFilter)
+        if emailFilter:
+            new_query = new_query.filter(user__email__icontains=emailFilter)
+        if mobileFilter:
+            new_query = new_query.filter(user__mobile__icontains=mobileFilter)
+        if bloodGroupFilter:
+            if '-' not in bloodGroupFilter:
+                bloodGroupFilter = bloodGroupFilter.strip() + '+'
+            new_query = new_query.filter(
+                blood_group__blood_group__iexact=bloodGroupFilter)
+
+        return new_query

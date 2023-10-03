@@ -2,66 +2,98 @@
   <h1 class="text-secondary text-center my-3">Patient Details</h1>
   <app-loading *ngIf="isLoading"></app-loading>
   <div class="data" *ngIf="!isLoading">
-    <nav>
-      <ul class="pagination justify-content-end me-5">
-        <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
-          <a class="page-link" role="button" (click)="onFullPrev()">
-            <i class="fa-solid fa-angles-left"></i>
-          </a>
-        </li>
-        <li class="page-item" [ngClass]="!prevLink? 'disabled': ''">
-          <a class="page-link" role="button" (click)="onPrev()">
-            <i class="fa-solid fa-chevron-left"></i>
-          </a>
-        </li>
-        <li class="page-item">
-          <p class="page-link text-black">
-            Page {{ page }} of {{ total }}
-          </p>
-        </li>
-        <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
-          <a class="page-link" role="button" (click)="onNext()">
-            <i class="fa-solid fa-chevron-right"></i>
-          </a>
-        </li>
-        <li class="page-item" [ngClass]="!nextLink? 'disabled': ''">
-          <a class="page-link" role="button" (click)="onFullNext()">
-            <i class="fa-solid fa-angles-right"></i>
-          </a>
-        </li>
-      </ul>
-    </nav>
-    <table class="table table-striped table-hover table-bordered table-responsive-lg">
+    <table
+      class="table table-striped table-hover table-bordered table-responsive-lg"
+    >
       <thead class="table-danger">
+        <tr class="head">
+          <th colspan="4">
+            <div class="filter">
+              <i
+                [ngClass]="
+                  isFilterEnabled
+                    ? 'fa-solid fa-filter-circle-xmark'
+                    : 'fa-solid fa-filter'
+                "
+                role="button"
+                (click)="onEnableFilter()"
+              >
+              </i>
+            </div>
+          </th>
+          <th colspan="2">
+            <nav>
+              <ul class="pagination justify-content-end mb-0">
+                <li class="page-item" [ngClass]="!prevLink ? 'disabled' : ''">
+                  <a class="page-link" role="button" (click)="onFullPrev()">
+                    <i class="fa-solid fa-angles-left"></i>
+                  </a>
+                </li>
+                <li class="page-item" [ngClass]="!prevLink ? 'disabled' : ''">
+                  <a class="page-link" role="button" (click)="onPrev()">
+                    <i class="fa-solid fa-chevron-left"></i>
+                  </a>
+                </li>
+                <li class="page-item">
+                  <p class="page-link text-black">
+                    Page {{ page }} of {{ total }}
+                  </p>
+                </li>
+                <li class="page-item" [ngClass]="!nextLink ? 'disabled' : ''">
+                  <a class="page-link" role="button" (click)="onNext()">
+                    <i class="fa-solid fa-chevron-right"></i>
+                  </a>
+                </li>
+                <li class="page-item" [ngClass]="!nextLink ? 'disabled' : ''">
+                  <a class="page-link" role="button" (click)="onFullNext()">
+                    <i class="fa-solid fa-angles-right"></i>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </th>
+        </tr>
         <tr>
           <th scope="col">
             Username
-            <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('username')? 'text-success': ''">
-              <i class="fa-solid fa-caret-down"
-                  role="button"
-                  data-bs-toggle="dropdown">
+            <div
+              class="sort-dropdown"
+              [ngClass]="sortOrder.includes('username') ? 'text-success' : ''"
+            >
+              <i
+                class="fa-solid fa-caret-down"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
               </i>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('username')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('username')"
+                  >
                     Sort By Asc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='username'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == 'username'"
+                    >
                     </i>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('-username')">
-                     Sort By Desc
-                     <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='-username'">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('-username')"
+                  >
+                    Sort By Desc
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == '-username'"
+                    >
                     </i>
                   </a>
                 </li>
@@ -70,32 +102,44 @@
           </th>
           <th scope="col">
             Email
-            <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('email')? 'text-success': ''">
-              <i class="fa-solid fa-caret-down"
-                  role="button"
-                  data-bs-toggle="dropdown">
+            <div
+              class="sort-dropdown"
+              [ngClass]="sortOrder.includes('email') ? 'text-success' : ''"
+            >
+              <i
+                class="fa-solid fa-caret-down"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
               </i>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('email')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('email')"
+                  >
                     Sort By Asc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='email'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == 'email'"
+                    >
                     </i>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('-email')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('-email')"
+                  >
                     Sort By Desc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='-email'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == '-email'"
+                    >
                     </i>
                   </a>
                 </li>
@@ -105,32 +149,44 @@
           <th scope="col">Mobile Number</th>
           <th scope="col">
             Last Login
-            <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('last_login')? 'text-success': ''">
-              <i class="fa-solid fa-caret-down"
-                  role="button"
-                  data-bs-toggle="dropdown">
+            <div
+              class="sort-dropdown"
+              [ngClass]="sortOrder.includes('last_login') ? 'text-success' : ''"
+            >
+              <i
+                class="fa-solid fa-caret-down"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
               </i>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('last_login')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('last_login')"
+                  >
                     Sort By Asc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='last_login'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == 'last_login'"
+                    >
                     </i>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('-last_login')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('-last_login')"
+                  >
                     Sort By Desc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='-last_login'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == '-last_login'"
+                    >
                     </i>
                   </a>
                 </li>
@@ -139,32 +195,46 @@
           </th>
           <th scope="col">
             Blood Group
-            <div class="sort-dropdown" 
-                  [ngClass]="sortOrder.includes('blood_group')? 'text-success': ''">
-              <i class="fa-solid fa-caret-down"
-                  role="button"
-                  data-bs-toggle="dropdown">
+            <div
+              class="sort-dropdown"
+              [ngClass]="
+                sortOrder.includes('blood_group') ? 'text-success' : ''
+              "
+            >
+              <i
+                class="fa-solid fa-caret-down"
+                role="button"
+                data-bs-toggle="dropdown"
+              >
               </i>
               <ul class="dropdown-menu">
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('blood_group')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('blood_group')"
+                  >
                     Sort By Asc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='blood_group'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == 'blood_group'"
+                    >
                     </i>
                   </a>
                 </li>
                 <li>
-                  <a class="dropdown-item" 
-                     href="javascript:void(0)"
-                     role="button"
-                     (click)="loadData('-blood_group')">
+                  <a
+                    class="dropdown-item"
+                    href="javascript:void(0)"
+                    role="button"
+                    (click)="loadData('-blood_group')"
+                  >
                     Sort By Desc
-                    <i class="fa-solid fa-check text-success"
-                        *ngIf="sortOrder=='-blood_group'">
+                    <i
+                      class="fa-solid fa-check text-success"
+                      *ngIf="sortOrder == '-blood_group'"
+                    >
                     </i>
                   </a>
                 </li>
@@ -172,6 +242,52 @@
             </div>
           </th>
           <th scope="col"></th>
+        </tr>
+        <tr *ngIf="isFilterEnabled">
+          <th>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              [(ngModel)]="inputUsername"
+            />
+          </th>
+          <th>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              [(ngModel)]="inputEmail"
+            />
+          </th>
+          <th>
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="form-control"
+              [(ngModel)]="inputMobile"
+            />
+          </th>
+          <th>
+            <!-- <input type="text" name="username" id="username" class="form-control"> -->
+          </th>
+          <th>
+            <input
+              type="text"
+              name="blood_group"
+              id="blood_group"
+              class="form-control"
+              [(ngModel)]="inputBloodGroup"
+            />
+          </th>
+          <th>
+            <button type="button" class="btn btn-success" (click)="testInput()">
+              Search
+            </button>
+          </th>
         </tr>
       </thead>
       <tbody class="table-group-divider">
@@ -185,9 +301,11 @@
           <td *ngIf="!patient.user.last_login">Not Login</td>
           <td>{{ patient.blood_group.blood_group }}</td>
           <td>
-            <button type="button" 
-                    class="btn btn-success me-2"
-                    (click)="onViewPatient(patient.id)">
+            <button
+              type="button"
+              class="btn btn-success me-2"
+              (click)="onViewPatient(patient.id)"
+            >
               <i class="fa-solid fa-eye"></i>
             </button>
           </td>

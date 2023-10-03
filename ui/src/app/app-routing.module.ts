@@ -24,60 +24,90 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'auth', component: AuthComponent},
-  {path: 'admin', children: [
-    {path: 'dashboard', component: AdminDashboardComponent},
-    {path: 'donor', children: [
-      {path: '', component: DonorComponent},
-      {path: ':id', component: DonorViewComponent},
-    ]},
-    {path: 'patient', children: [
-      {path: '', component: PatientComponent},
-      {path: ':id',component: PatientViewComponent},
-    ]},
-    {path: 'admin', component: AdminComponent},
-    {path: 'donate-blood', children : [
-      {path: '', component: DonateBloodComponent},
-      {path: 'history', component: DonateBloodHistoryComponent},
-    ]},
-    {path: 'request-blood', children: [
-      {path: '', component: RequestBloodComponent},
-      {path: 'history', component: RequestBloodHistoryComponent},
-    ]},
-    {path: 'blood-stock', component: StockComponent},
-    {path: 'add-blood-group', component: AddBloodComponent},
-  ]},
-  {path: 'donor', children: [
-    {path: 'dashboard',component: DonorDashboardComponent},
-    {path: 'donate-blood', children: [
-      {path: '', component: DonateBloodComponent},
-      {path: 'history', component: DonateBloodHistoryComponent},
-      {path: 'add', component: DonateEditComponent},
-    ]},
-    {path: 'request-blood', children: [
-      {path: '', component: RequestBloodComponent},
-      {path: 'history', component: RequestBloodHistoryComponent},
-      {path: 'add', component: RequestEditComponent},
-    ]},
-  ]},
-  {path: 'patient', children: [
-    {path: 'dashboard',component: PatientDashboardComponent},
-    {path: 'request-blood', children: [
-      {path: '', component: RequestBloodComponent},
-      {path: 'history', component: RequestBloodHistoryComponent},
-      {path: 'add', component: RequestEditComponent},
-    ]},
-  ]},
-  {path: 'profile-settings', component: MyProfileComponent},
-  {path: 'release-notes', component: ReleaseNotesComponent},
-  {path: 'logout', component: LogoutComponent},
-  {path: '**', component: PageNotFoundComponent}
+  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: 'auth', component: AuthComponent },
+  {
+    path: 'admin',
+    children: [
+      { path: 'dashboard', component: AdminDashboardComponent },
+      {
+        path: 'donor',
+        children: [
+          { path: '', component: DonorComponent },
+          { path: ':id', component: DonorViewComponent },
+        ],
+      },
+      {
+        path: 'patient',
+        children: [
+          { path: '', component: PatientComponent },
+          { path: ':id', component: PatientViewComponent },
+        ],
+      },
+      { path: 'admin', component: AdminComponent },
+      {
+        path: 'donate-blood',
+        children: [
+          { path: '', component: DonateBloodComponent },
+          { path: 'history', component: DonateBloodHistoryComponent },
+        ],
+      },
+      {
+        path: 'request-blood',
+        children: [
+          { path: '', component: RequestBloodComponent },
+          { path: 'history', component: RequestBloodHistoryComponent },
+        ],
+      },
+      { path: 'blood-stock', component: StockComponent },
+      { path: 'add-blood-group', component: AddBloodComponent },
+    ],
+  },
+  {
+    path: 'donor',
+    children: [
+      { path: 'dashboard', component: DonorDashboardComponent },
+      {
+        path: 'donate-blood',
+        children: [
+          { path: '', component: DonateBloodComponent },
+          { path: 'history', component: DonateBloodHistoryComponent },
+          { path: 'add', component: DonateEditComponent },
+        ],
+      },
+      {
+        path: 'request-blood',
+        children: [
+          { path: '', component: RequestBloodComponent },
+          { path: 'history', component: RequestBloodHistoryComponent },
+          { path: 'add', component: RequestEditComponent },
+        ],
+      },
+    ],
+  },
+  {
+    path: 'patient',
+    children: [
+      { path: 'dashboard', component: PatientDashboardComponent },
+      {
+        path: 'request-blood',
+        children: [
+          { path: '', component: RequestBloodComponent },
+          { path: 'history', component: RequestBloodHistoryComponent },
+          { path: 'add', component: RequestEditComponent },
+        ],
+      },
+    ],
+  },
+  { path: 'profile-settings', component: MyProfileComponent },
+  { path: 'release-notes', component: ReleaseNotesComponent },
+  { path: 'logout', component: LogoutComponent },
+  { path: '**', component: PageNotFoundComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

@@ -237,3 +237,8 @@ class BloodRequestHistoryViewSet(GenericViewSet):
             serializer = BloodRequestSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
+
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodRequest, pk=pk)
+        serializer = BloodRequestSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)

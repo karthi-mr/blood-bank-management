@@ -1,11 +1,12 @@
-import { Donor, Links, Patient } from "../admin/admin.model";
-import { BloodGroup } from "../shared/shared.model";
+import { Donor, Links, Patient } from '../admin/admin.model';
+import { BloodGroup } from '../shared/shared.model';
 
 export interface PatientHistory {
   id: number;
   patient_name: string;
   patient_age: string;
   reason: string;
+  reject_reason: string;
   unit: number;
   status: number;
   added: Date;

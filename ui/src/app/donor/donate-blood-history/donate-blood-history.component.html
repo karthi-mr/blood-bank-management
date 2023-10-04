@@ -21,8 +21,8 @@
         class="table table-striped table-hover table-bordered table-responsive-lg"
       >
         <thead class="table-danger">
-          <tr class="">
-            <th colspan="5">
+          <tr class="head">
+            <th colspan="6">
               <div class="filter">
                 <i
                   [ngClass]="
@@ -258,6 +258,7 @@
               </div>
             </th>
             <th scope="col">Status</th>
+            <th></th>
           </tr>
           <tr *ngIf="isFilterEnabled">
             <th>
@@ -311,6 +312,7 @@
                 [(ngModel)]="inputBloodGroup"
               />
             </th>
+            <th></th>
             <th>
               <button
                 type="button"
@@ -335,6 +337,15 @@
               [ngClass]="history.status == 1 ? 'bg-success' : 'bg-danger'"
             >
               {{ history.status | status }}
+            </td>
+            <td>
+              <button
+                type="button"
+                class="btn btn-outline-success me-2 text-capitalize"
+                (click)="onViewDetail(history.id)"
+              >
+                view details
+              </button>
             </td>
           </tr>
         </tbody>

@@ -50,4 +50,12 @@ export class DonorService {
   }): any {
     return this.http.patch(`${this.BLOOD_DONATE_REJECT_REASON_UPDATE}`, data);
   }
+
+  get_blood_donate_history_detail(
+    id: number
+  ): Observable<{ result: DonateHistory }> {
+    return this.http.get<{ result: DonateHistory }>(
+      `${this.BLOOD_DONATE_HISTORY_API}${id}/`
+    );
+  }
 }

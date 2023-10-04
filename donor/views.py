@@ -154,3 +154,8 @@ class BloodDonateHistoryViewSet(GenericViewSet):
             return self.get_paginated_response(page)
         return Response({'detail': "Unknown error occurred in server."},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodDonate, pk=pk)
+        serializer = BloodDonateSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)

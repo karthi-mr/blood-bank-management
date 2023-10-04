@@ -2,6 +2,10 @@ from rest_framework import serializers
 
 from .models import BloodGroup, BloodRequest, Stock
 
+from donor.models import Donor
+from patient.models import Patient
+from auth.serializers import UserSerializer
+
 
 class BloodGroupSerializer(serializers.ModelSerializer):
 
@@ -25,11 +29,34 @@ class StockSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class SimpleDonorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    blood_group = BloodGroupSerializer(read_only=True)
+    blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
+                                                  slug_field='id',
+                                                  write_only=True)
+
+    class Meta:
+        model = Donor
+        fields = '__all__'
+
+
+class SimplePatientSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    blood_group = BloodGroupSerializer(read_only=True)
+
+    class Meta:
+        model = Patient
+        fields = '__all__'
+
+
 class BloodRequestSerializer(serializers.ModelSerializer):
     blood_group = BloodGroupSerializer(read_only=True)
     blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
                                                   slug_field='id',
                                                   write_only=True)
+    request_by_donor = SimpleDonorSerializer(read_only=True)
+    request_by_patient = SimplePatientSerializer(read_only=True)
 
     class Meta:
         model = BloodRequest

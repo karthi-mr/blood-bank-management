@@ -6,7 +6,7 @@ from .models import BloodDonate, Donor
 class SortFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
-        new_query = None
+        new_query = queryset
 
         sort_order = request.query_params.get('ordering')
 
@@ -16,42 +16,40 @@ class SortFilter(BaseFilterBackend):
         # email
         if 'email' in sort_order:
             if '-' in sort_order:
-                new_query = Donor.objects.order_by('-user__email')
+                new_query = new_query.order_by('-user__email')
             else:
-                new_query = Donor.objects.order_by('user__email')
+                new_query = new_query.order_by('user__email')
             return new_query
 
         # username
         if 'username' in sort_order:
             if '-' in sort_order:
-                new_query = Donor.objects.order_by('-user__username')
+                new_query = new_query.order_by('-user__username')
             else:
-                new_query = Donor.objects.order_by('user__username')
+                new_query = new_query.order_by('user__username')
             return new_query
 
         # last login
         if 'last_login' in sort_order:
             if '-' in sort_order:
-                new_query = Donor.objects.order_by('-user__last_login')
+                new_query = new_query.order_by('-user__last_login')
             else:
-                new_query = Donor.objects.order_by('user__last_login')
+                new_query = new_query.order_by('user__last_login')
             return new_query
 
         # blood group
         if 'blood_group' in sort_order:
             if '-' in sort_order:
-                new_query = Donor.objects. \
-                    order_by('-blood_group__blood_group')
+                new_query = new_query.order_by('-blood_group__blood_group')
             else:
-                new_query = Donor.objects. \
-                    order_by('blood_group__blood_group')
+                new_query = new_query.order_by('blood_group__blood_group')
             return new_query
 
 
 class SortBloodDonateHistoryFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
-        new_query = None
+        new_query = queryset
 
         sort_order = request.query_params.get('ordering')
 
@@ -61,37 +59,33 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
         # donor
         if 'donor' in sort_order:
             if '-' in sort_order:
-                new_query = BloodDonate.objects. \
-                    order_by('-donor__user__username')
+                new_query = new_query.order_by('-donor__user__username')
             else:
-                new_query = BloodDonate.objects. \
-                    order_by('donor__user__username')
+                new_query = new_query.order_by('donor__user__username')
             return new_query
 
         # age
         if 'age' in sort_order:
             if '-' in sort_order:
-                new_query = BloodDonate.objects.order_by('-age')
+                new_query = new_query.order_by('-age')
             else:
-                new_query = BloodDonate.objects.order_by('age')
+                new_query = new_query.order_by('age')
             return new_query
 
         # added
         if 'added' in sort_order:
             if '-' in sort_order:
-                new_query = BloodDonate.objects.order_by('-added')
+                new_query = new_query.order_by('-added')
             else:
-                new_query = BloodDonate.objects.order_by('added')
+                new_query = new_query.order_by('added')
             return new_query
 
         # blood group
         if 'blood_group' in sort_order:
             if '-' in sort_order:
-                new_query = BloodDonate.objects. \
-                    order_by('-blood_group__blood_group')
+                new_query = new_query.order_by('-blood_group__blood_group')
             else:
-                new_query = BloodDonate.objects. \
-                    order_by('blood_group__blood_group')
+                new_query = new_query.order_by('blood_group__blood_group')
             return new_query
 
 

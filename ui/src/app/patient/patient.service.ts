@@ -52,4 +52,12 @@ export class PatientService {
   }): any {
     return this.http.patch(`${this.BLOOD_REJECT_REASON_UPDATE_API}`, data);
   }
+
+  get_blood_request_history_detail(
+    id: number
+  ): Observable<{ result: PatientHistory }> {
+    return this.http.get<{ result: PatientHistory }>(
+      `${this.BLOOD_REQUEST_HISTORY_API}${id}/`
+    );
+  }
 }

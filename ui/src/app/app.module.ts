@@ -36,6 +36,8 @@ import { PatientViewComponent } from './admin/patient/patient-view/patient-view.
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
 import { RejectRequestComponent } from './shared/reject-request/reject-request.component';
+import { RequestDetailViewComponent } from './patient/request-blood-history/request-detail-view/request-detail-view.component';
+import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-detail-view/donate-detail-view.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +71,8 @@ import { RejectRequestComponent } from './shared/reject-request/reject-request.c
     MyProfileComponent,
     ReleaseNotesComponent,
     RejectRequestComponent,
+    RequestDetailViewComponent,
+    DonateDetailViewComponent,
   ],
   imports: [
     BrowserModule,

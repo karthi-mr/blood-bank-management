@@ -37,7 +37,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getRequestHistory('ordering=patient_name');
+    this.getRequestHistory('ordering=-added');
   }
 
   calculateTotalPage(data: number): number {
@@ -105,7 +105,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   }
 
   onFullPrev(): void {
-    this.getRequestHistory('ordering=patient_name');
+    this.getRequestHistory('ordering=-added');
   }
 
   onFullNext(): void {
@@ -143,7 +143,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   onEnableFilter(): void {
     this.isFilterEnabled = !this.isFilterEnabled;
     if (!this.isFilterEnabled) {
-      this.getRequestHistory('ordering=username');
+      this.getRequestHistory('ordering=-added');
       this.inputName = '';
       this.inputAge = '';
       this.inputReason = '';
@@ -153,7 +153,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   }
 
   testInput(): void {
-    let order = 'ordering=donor';
+    let order = 'ordering=-added';
     if (this.inputName) {
       order += `&name=${this.inputName}`;
     }
@@ -170,5 +170,9 @@ export class RequestBloodHistoryComponent implements OnInit {
       order += `&blood_group=${this.inputBloodGroup}`;
     }
     this.getRequestHistory(order);
+  }
+
+  onViewDetail(id: number): void {
+    this.router.navigate([id], { relativeTo: this.route });
   }
 }

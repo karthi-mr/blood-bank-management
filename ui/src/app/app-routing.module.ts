@@ -23,6 +23,8 @@ import { PatientViewComponent } from './admin/patient/patient-view/patient-view.
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
 import { RejectRequestComponent } from './shared/reject-request/reject-request.component';
+import { RequestDetailViewComponent } from './patient/request-blood-history/request-detail-view/request-detail-view.component';
+import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-detail-view/donate-detail-view.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -52,7 +54,13 @@ const routes: Routes = [
         children: [
           { path: '', component: DonateBloodComponent },
           { path: 'reject/:id', component: RejectRequestComponent },
-          { path: 'history', component: DonateBloodHistoryComponent },
+          {
+            path: 'history',
+            children: [
+              { path: '', component: DonateBloodHistoryComponent },
+              { path: ':id', component: DonateDetailViewComponent },
+            ],
+          },
         ],
       },
       {
@@ -60,7 +68,13 @@ const routes: Routes = [
         children: [
           { path: '', component: RequestBloodComponent },
           { path: 'reject/:id', component: RejectRequestComponent },
-          { path: 'history', component: RequestBloodHistoryComponent },
+          {
+            path: 'history',
+            children: [
+              { path: '', component: RequestBloodHistoryComponent },
+              { path: ':id', component: RequestDetailViewComponent },
+            ],
+          },
         ],
       },
       { path: 'blood-stock', component: StockComponent },
@@ -75,7 +89,13 @@ const routes: Routes = [
         path: 'donate-blood',
         children: [
           { path: '', component: DonateBloodComponent },
-          { path: 'history', component: DonateBloodHistoryComponent },
+          {
+            path: 'history',
+            children: [
+              { path: '', component: DonateBloodHistoryComponent },
+              { path: ':id', component: DonateDetailViewComponent },
+            ],
+          },
           { path: 'add', component: DonateEditComponent },
         ],
       },
@@ -83,7 +103,13 @@ const routes: Routes = [
         path: 'request-blood',
         children: [
           { path: '', component: RequestBloodComponent },
-          { path: 'history', component: RequestBloodHistoryComponent },
+          {
+            path: 'history',
+            children: [
+              { path: '', component: RequestBloodHistoryComponent },
+              { path: ':id', component: RequestDetailViewComponent },
+            ],
+          },
           { path: 'add', component: RequestEditComponent },
         ],
       },
@@ -97,7 +123,13 @@ const routes: Routes = [
         path: 'request-blood',
         children: [
           { path: '', component: RequestBloodComponent },
-          { path: 'history', component: RequestBloodHistoryComponent },
+          {
+            path: 'history',
+            children: [
+              { path: '', component: RequestBloodHistoryComponent },
+              { path: ':id', component: RequestDetailViewComponent },
+            ],
+          },
           { path: 'add', component: RequestEditComponent },
         ],
       },

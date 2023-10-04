@@ -37,7 +37,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.getBloodDonateHistory('ordering=donor');
+    this.getBloodDonateHistory('ordering=-added');
   }
 
   calculateTotalPage(data: number): number {
@@ -101,7 +101,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   }
 
   onFullPrev(): void {
-    this.getBloodDonateHistory('ordering=donor');
+    this.getBloodDonateHistory('ordering=-added');
   }
 
   onFullNext(): void {
@@ -139,7 +139,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   onEnableFilter(): void {
     this.isFilterEnabled = !this.isFilterEnabled;
     if (!this.isFilterEnabled) {
-      this.getBloodDonateHistory('ordering=username');
+      this.getBloodDonateHistory('ordering=-added');
       this.inputDonor = '';
       this.inputAge = '';
       this.inputDisease = '';
@@ -149,7 +149,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   }
 
   testInput(): void {
-    let order = 'ordering=donor';
+    let order = 'ordering=-added';
     if (this.inputDonor) {
       order += `&donor=${this.inputDonor}`;
     }
@@ -166,5 +166,9 @@ export class DonateBloodHistoryComponent implements OnInit {
       order += `&blood_group=${this.inputBloodGroup}`;
     }
     this.getBloodDonateHistory(order);
+  }
+
+  onViewDetail(id: number): void {
+    this.router.navigate([id], { relativeTo: this.route });
   }
 }

@@ -1,0 +1,51 @@
+<button type="button" class="btn btn-back mt-4 mx-3" (click)="onBack()">
+  <i class="fa-solid fa-circle-chevron-left"></i>
+  Back
+</button>
+
+<div class="container my-3" *ngIf="patientHistoryDetail">
+  <p class="h1 text-primary">
+    <span class="text-capitalize">patient name</span> :
+    {{ patientHistoryDetail.patient_name }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">patient age</span> :
+    {{ patientHistoryDetail.patient_age }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">reason</span> :
+    {{ patientHistoryDetail.reason }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">status</span> :
+    <span
+      class="text-white"
+      [ngClass]="patientHistoryDetail.status == 3 ? 'bg-danger' : 'bg-success'"
+      >{{ patientHistoryDetail.status | status }}</span
+    >
+  </p>
+  <p class="mt-3" *ngIf="patientHistoryDetail.status == 3">
+    <span class="text-capitalize">reason for rejection</span> :
+    {{ patientHistoryDetail.reject_reason }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">blood group</span> :
+    {{ patientHistoryDetail.blood_group.blood_group }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">unit of blood</span> :
+    {{ patientHistoryDetail.unit }}
+  </p>
+  <p class="mt-3">
+    <span class="text-capitalize">added on</span> :
+    {{ patientHistoryDetail.added | customDate }}
+  </p>
+  <p class="mt-3" *ngIf="patientHistoryDetail.request_by_donor != null">
+    <span class="text-capitalize">requested by</span> :
+    {{ patientHistoryDetail.request_by_donor.user.username }}
+  </p>
+  <p class="mt-3" *ngIf="patientHistoryDetail.request_by_patient != null">
+    <span class="text-capitalize">requested by</span> :
+    {{ patientHistoryDetail.request_by_patient.user.username }}
+  </p>
+</div>

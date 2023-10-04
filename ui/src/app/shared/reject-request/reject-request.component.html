@@ -1,0 +1,17 @@
+<div class="container my-4">
+  <p class="h2 text-primary">Kindly update the reason for rejecting request</p>
+  <textarea
+    class="form-control shadow-none border-3 border-danger mt-4"
+    name="reason"
+    id="reason"
+    rows="6"
+    [(ngModel)]="reason"
+  ></textarea>
+  <button
+    type="button"
+    class="btn btn-danger text-capitalize mt-4"
+    (click)="onRejectRequest()"
+  >
+    reject request
+  </button>
+</div>

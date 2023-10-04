@@ -15,6 +15,8 @@ export class DonorService {
     'http://127.0.0.1:8000/auth/donate-blood/';
   private readonly BLOOD_STATUS_UPDATE =
     'http://127.0.0.1:8000/auth/donate-blood/update_status/';
+  private readonly BLOOD_DONATE_REJECT_REASON_UPDATE =
+    'http://127.0.0.1:8000/auth/donate-blood/update_reason/';
 
   constructor(private http: HttpClient) {}
 
@@ -40,5 +42,12 @@ export class DonorService {
 
   update_status_donate_requests(data: { id: number; status: number }): any {
     return this.http.patch(`${this.BLOOD_STATUS_UPDATE}`, data);
+  }
+
+  update_reject_reason_requests(data: {
+    id: number;
+    reject_reason: string;
+  }): any {
+    return this.http.patch(`${this.BLOOD_DONATE_REJECT_REASON_UPDATE}`, data);
   }
 }

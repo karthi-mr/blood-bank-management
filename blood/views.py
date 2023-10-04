@@ -121,6 +121,11 @@ class BloodRequestViewSet(GenericViewSet):
 
         return Response({'detail': "An Unknown error occurred."}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodRequest, pk=pk)
+        serializer = BloodRequestSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['PATCH'], permission_classes=[BloodRequestUpdatePermission])
     def update_status(self, request, *args, **kwargs):
         id = request.data.get('id')
@@ -130,6 +135,20 @@ class BloodRequestViewSet(GenericViewSet):
             queryset.status = status_update
             queryset.save()
             return Response({'detail': "Status updated successfully."},
+                            status=status.HTTP_200_OK)
+        except Exception:
+            return Response({'detail': "An Unknown error occurred."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=['PATCH'], permission_classes=[BloodRequestUpdatePermission])
+    def update_reason(self, request, *args, **kwargs):
+        id = request.data.get('id')
+        reason_update = request.data.get('reject_reason')
+        queryset = get_object_or_404(BloodRequest, id=id)
+        try:
+            queryset.reject_reason = reason_update
+            queryset.save()
+            return Response({'detail': "Reject reason updated successfully."},
                             status=status.HTTP_200_OK)
         except Exception:
             return Response({'detail': "An Unknown error occurred."},

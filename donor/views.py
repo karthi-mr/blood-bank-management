@@ -63,6 +63,11 @@ class BloodDonateViewSet(ModelViewSet):
         return Response({'detail': "Donate request created successfully."},
                         status=status.HTTP_201_CREATED)
 
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodDonate, pk=pk)
+        serializer = BloodDonateSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['PATCH'], permission_classes=[BloodDonateUpdatePermission])
     def update_status(self, request):
         id = request.data.get('id')
@@ -72,6 +77,20 @@ class BloodDonateViewSet(ModelViewSet):
             queryset.status = status_update
             queryset.save()
             return Response({'detail': "Status updated successfully."},
+                            status=status.HTTP_200_OK)
+        except Exception:
+            return Response({'detail': "An Unknown error occurred."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    @action(detail=False, methods=['PATCH'], permission_classes=[BloodDonateUpdatePermission])
+    def update_reason(self, request):
+        id = request.data.get('id')
+        reason_update = request.data.get('reject_reason')
+        queryset = get_object_or_404(BloodDonate, id=id)
+        try:
+            queryset.reject_reason = reason_update
+            queryset.save()
+            return Response({'detail': "Reject reason updated successfully."},
                             status=status.HTTP_200_OK)
         except Exception:
             return Response({'detail': "An Unknown error occurred."},

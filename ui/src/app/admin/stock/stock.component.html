@@ -2,15 +2,19 @@
   <h1 class="text-secondary text-center my-3">Blood Stock Details</h1>
   <app-loading *ngIf="isLoading"></app-loading>
   <div class="data" *ngIf="!isLoading">
-    <button type="button" 
-          class="btn btn-danger mb-3" 
-          (click)="onAddBloodGroup()">
-          Add Blood Group
+    <button
+      type="button"
+      class="btn btn-danger mb-3"
+      (click)="onAddBloodGroup()"
+    >
+      Add Blood Group
     </button>
     <div class="container">
       <div class="row">
-        <div class="col-lg-3 col-md-6 col-12 blood-stocks" 
-              *ngFor="let stock of stocks">
+        <div
+          class="col-lg-3 col-md-6 col-12 blood-stocks"
+          *ngFor="let stock of stocks"
+        >
           <div class="blood-stock" (click)="onClickBloodStock(stock)">
             <h4>{{ stock.blood_group.blood_group }}</h4>
             <p>{{ stock.unit }}</p>
@@ -22,30 +26,43 @@
     <div class="container" *ngIf="isEditMode">
       <div class="alert alert-danger" *ngIf="errorMessage">
         <p>{{ errorMessage }}</p>
-        <button type="button" class="btn btn-danger" (click)="onCloseErrorMessage()">
+        <button
+          type="button"
+          class="btn btn-danger"
+          (click)="onCloseErrorMessage()"
+        >
           Close
         </button>
       </div>
       <form (ngSubmit)="onSubmit(bloodStockForm)" #bloodStockForm="ngForm">
         <div class="row">
-          <div class="col-md-5 col-12">
-            <input type="text" 
-                   id="blood_group" 
-                   class="form-control"
-                   name="blood_group" 
-                   [(ngModel)] = blood_group.blood_group
-                   disabled>
+          <div class="col-md-4 col-12">
+            <input
+              type="text"
+              id="blood_group"
+              class="form-control"
+              name="blood_group"
+              [(ngModel)]="blood_group.blood_group"
+              disabled
+            />
           </div>
-          <div class="col-md-5 col-12">
-            <input type="number" 
-            name="unit" 
-            id="unit" 
-            class="form-control"
-            [(ngModel)]="blood_unit">
+          <div class="col-md-4 col-12">
+            <input
+              type="number"
+              name="unit"
+              id="unit"
+              class="form-control"
+              [(ngModel)]="blood_unit"
+            />
           </div>
-          <div class="col-md-2 col-12">
-            <button type="submit" class="btn btn-success">
-              Update Stock
+          <div class="col-md-4 col-12">
+            <button type="submit" class="btn btn-success">Update Stock</button>
+            <button
+              type="button"
+              class="btn btn-danger text-capitalize ms-3"
+              (click)="onClickCancel()"
+            >
+              cancel
             </button>
           </div>
         </div>

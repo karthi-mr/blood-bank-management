@@ -22,6 +22,7 @@ import { DonorViewComponent } from './admin/donor/donor-view/donor-view.componen
 import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
+import { RejectRequestComponent } from './shared/reject-request/reject-request.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -50,6 +51,7 @@ const routes: Routes = [
         path: 'donate-blood',
         children: [
           { path: '', component: DonateBloodComponent },
+          { path: 'reject/:id', component: RejectRequestComponent },
           { path: 'history', component: DonateBloodHistoryComponent },
         ],
       },
@@ -57,6 +59,7 @@ const routes: Routes = [
         path: 'request-blood',
         children: [
           { path: '', component: RequestBloodComponent },
+          { path: 'reject/:id', component: RejectRequestComponent },
           { path: 'history', component: RequestBloodHistoryComponent },
         ],
       },

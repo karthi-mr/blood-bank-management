@@ -9,10 +9,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 @Component({
   selector: 'app-stock',
   templateUrl: './stock.component.html',
-  styleUrls: ['./stock.component.scss']
+  styleUrls: ['./stock.component.scss'],
 })
-export class StockComponent implements OnInit{
-
+export class StockComponent implements OnInit {
   stocks: BloodStock[] = [];
   isLoading: boolean = false;
   isEditMode: boolean = false;
@@ -20,10 +19,11 @@ export class StockComponent implements OnInit{
   blood_unit: number = 0;
   errorMessage: string | null = null;
 
-  constructor(private adminService: AdminService,
-              private router: Router,
-              private route: ActivatedRoute
-             ) {}
+  constructor(
+    private adminService: AdminService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.getBloodStock();
@@ -37,12 +37,12 @@ export class StockComponent implements OnInit{
         // console.log(data);
         this.stocks = data;
         this.isLoading = false;
-      }
+      },
     });
   }
 
   onAddBloodGroup(): void {
-    this.router.navigate(['../add-blood-group'], {relativeTo: this.route});
+    this.router.navigate(['../add-blood-group'], { relativeTo: this.route });
   }
 
   onClickBloodStock(stock: BloodStock): void {
@@ -53,22 +53,29 @@ export class StockComponent implements OnInit{
   }
 
   onSubmit(formData: NgForm): void {
-    this.adminService.update_stock({blood_group: this.blood_group.id, 
-              unit: formData.value.unit})
-    .subscribe({
-      next: (data: any) => {
-        this.getBloodStock();
-        this.isEditMode = false;
-      },
-      error: (errorData: HttpErrorResponse) => {
-        // console.log(errorData);
-        // console.log(errorData.error.detail);
-        this.errorMessage = errorData.error.detail;
-      }
-    });
+    this.adminService
+      .update_stock({
+        blood_group: this.blood_group.id,
+        unit: formData.value.unit,
+      })
+      .subscribe({
+        next: (data: any) => {
+          this.getBloodStock();
+          this.isEditMode = false;
+        },
+        error: (errorData: HttpErrorResponse) => {
+          // console.log(errorData);
+          // console.log(errorData.error.detail);
+          this.errorMessage = errorData.error.detail;
+        },
+      });
   }
 
   onCloseErrorMessage(): void {
     this.errorMessage = null;
+  }
+
+  onClickCancel(): void {
+    this.isEditMode = false;
   }
 }

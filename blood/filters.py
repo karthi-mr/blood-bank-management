@@ -75,9 +75,6 @@ class BloodRequestSearchFilter(BaseFilterBackend):
         unitFilter = request.query_params.get('unit')
         bloodGroupFilter = request.query_params.get('blood_group')
 
-        print(request.query_params)
-        # print(usernameFilter)
-
         if nameFilter:
             new_query = new_query.filter(patient_name__icontains=nameFilter)
         if ageFilter:

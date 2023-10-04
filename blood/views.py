@@ -164,7 +164,6 @@ class BloodRequestViewSet(GenericViewSet):
             queryset = BloodRequest.objects.filter(request_by_patient=patient)
         else:
             queryset = BloodRequest.objects.all()
-        # print(len(queryset))
         return Response({'total_request': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
@@ -179,7 +178,6 @@ class BloodRequestViewSet(GenericViewSet):
                 Q(request_by_patient=patient) & Q(status=1))
         else:
             queryset = BloodRequest.objects.filter(status=1)
-        # print(len(queryset))
         return Response({'total_request': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
@@ -194,7 +192,6 @@ class BloodRequestViewSet(GenericViewSet):
                 Q(request_by_patient=patient) & Q(status=2))
         else:
             queryset = BloodRequest.objects.filter(status=2)
-        # print(len(queryset))
         return Response({'total_request': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated])
@@ -209,7 +206,6 @@ class BloodRequestViewSet(GenericViewSet):
                 Q(request_by_patient=patient) & Q(status=3))
         else:
             queryset = BloodRequest.objects.filter(status=3)
-        # print(len(queryset))
         return Response({'total_request': len(queryset)})
 
 

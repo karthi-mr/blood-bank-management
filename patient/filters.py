@@ -52,14 +52,12 @@ class PatientSearchFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        new_query = Patient.objects.all()
+        new_query = queryset
 
         usernameFilter = request.query_params.get('username')
         emailFilter = request.query_params.get('email')
         mobileFilter = request.query_params.get('mobile')
         bloodGroupFilter = request.query_params.get('blood_group')
-
-        print(request.query_params)
 
         if usernameFilter:
             new_query = new_query.filter(

@@ -19,7 +19,7 @@ class StockSerializer1(serializers.ModelSerializer):
 
 class StockSerializer(serializers.ModelSerializer):
     blood_group = BloodGroupSerializer()
-    
+
     class Meta:
         model = Stock
         fields = '__all__'
@@ -40,7 +40,6 @@ class BloodRequestSerializer(serializers.ModelSerializer):
         validated_data['request_by_donor'] = self.context.get('donor')
         validated_data['request_by_patient'] = self.context.get('patient')
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
-        print(validated_data)
 
         instance = BloodRequest.objects.create(**validated_data)
 

@@ -4,22 +4,20 @@ import { BloodGroup } from './shared.model';
 import { Observable, Subject, Subscription, tap } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class SharedService {
+  private readonly BLOOD_GROUP_API = 'http://127.0.0.1:8000/api/blood-group/';
+  private readonly TABS_API = 'http://127.0.0.1:8000/auth/tab/';
 
-  private readonly BLOOD_GROUP_API = "http://127.0.0.1:8000/api/blood-group/";
-  private readonly TABS_API = "http://127.0.0.1:8000/auth/tab/";
+  blood_groups: Subject<BloodGroup[]> = new Subject<BloodGroup[]>();
+  blood_groups_array: BloodGroup[] = [];
 
-  blood_groups: Subject<BloodGroup[]> = new Subject<BloodGroup[]>
-  blood_groups_array: BloodGroup[] = []
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   get_blood_group(): Observable<BloodGroup[]> {
     return this.http.get<BloodGroup[]>(`${this.BLOOD_GROUP_API}`).pipe(
       tap((data: BloodGroup[]) => {
-        // console.log(data);
         this.blood_groups.next(data);
         this.blood_groups_array = data;
       })

@@ -6,15 +6,16 @@ import { AdminService } from '../../admin.service';
 @Component({
   selector: 'app-donor-view',
   templateUrl: './donor-view.component.html',
-  styleUrls: ['./donor-view.component.scss']
+  styleUrls: ['./donor-view.component.scss'],
 })
-export class DonorViewComponent implements OnInit{
-
+export class DonorViewComponent implements OnInit {
   donor!: Donor;
 
-  constructor(private adminService: AdminService,
-              private router: Router,
-              private route: ActivatedRoute){}
+  constructor(
+    private adminService: AdminService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.loadDonorData();
@@ -23,22 +24,20 @@ export class DonorViewComponent implements OnInit{
   private loadDonorData(): void {
     this.route.params.subscribe({
       next: (data: Params) => {
-        // console.log(data);
         this.getDonorDetail(data['id']);
-      }
+      },
     });
   }
 
   private getDonorDetail(id: number): void {
     this.adminService.get_donor_detail(id).subscribe({
       next: (data: Donor) => {
-        // console.log(data);
         this.donor = data;
-      }
-    })
+      },
+    });
   }
 
   onBack(): void {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

@@ -5,7 +5,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from app.pagination import CustomPagination
 
-from .filters import SortFilter, PatientSearchFilter
+from .filters import PatientSearchFilter, SortFilter
 from .models import Patient
 from .permissions import PatientPermission, TotalPatientPermission
 from .serializers import PatientSerializer
@@ -27,5 +27,4 @@ class PatientViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[TotalPatientPermission])
     def total_patient(self, request):
         queryset = Patient.objects.all()
-        # print(len(queryset))
         return Response({'total_patient': len(queryset)})

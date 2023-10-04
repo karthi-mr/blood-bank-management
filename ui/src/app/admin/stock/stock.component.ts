@@ -34,7 +34,6 @@ export class StockComponent implements OnInit {
     this.isLoading = true;
     this.adminService.get_stock().subscribe({
       next: (data: BloodStock[]) => {
-        // console.log(data);
         this.stocks = data;
         this.isLoading = false;
       },
@@ -46,7 +45,6 @@ export class StockComponent implements OnInit {
   }
 
   onClickBloodStock(stock: BloodStock): void {
-    // alert(`Blood Stock with ${stock.id}, ${stock.blood_group.blood_group} Clicked...`);
     this.blood_group = stock.blood_group;
     this.blood_unit = 0;
     this.isEditMode = true;
@@ -64,8 +62,6 @@ export class StockComponent implements OnInit {
           this.isEditMode = false;
         },
         error: (errorData: HttpErrorResponse) => {
-          // console.log(errorData);
-          // console.log(errorData.error.detail);
           this.errorMessage = errorData.error.detail;
         },
       });

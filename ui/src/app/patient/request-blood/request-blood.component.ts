@@ -48,21 +48,15 @@ export class RequestBloodComponent implements OnInit {
       .unit_available({ blood_group: blood_group.id, unit: -unit })
       .subscribe({
         next: (data: { unit_available: boolean }) => {
-          console.log(blood_group);
-          console.log(unit);
-          console.log(data.unit_available);
           if (data.unit_available) {
             this.patientService
               .update_status_donate_requests({ id: id, status: 1 })
               .subscribe({
                 next: (data: any) => {
-                  // console.log(data);
                   this.adminService
                     .update_stock({ blood_group: blood_group.id, unit: -unit })
                     .subscribe({
-                      next: (data: any) => {
-                        console.log(data);
-                      },
+                      next: (data: any) => {},
                     });
                   this.getAllBloodRequestRequests();
                 },
@@ -75,12 +69,6 @@ export class RequestBloodComponent implements OnInit {
   }
 
   onRejectRequest(id: number): void {
-    // this.patientService.update_status_donate_requests({id: id, status: 3}).subscribe({
-    //   next: (data: any) => {
-    //     // console.log(data);
-    //     this.getAllBloodRequestRequests();
-    //   }
-    // });
     this.router.navigate(['reject', id], {
       relativeTo: this.route,
       fragment: 'blood-request',

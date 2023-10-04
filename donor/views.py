@@ -32,7 +32,6 @@ class DonorViewSet(ModelViewSet):
     @action(detail=False, methods=['GET'], permission_classes=[TotalDonorPermission])
     def total_donor(self, request):
         queryset = Donor.objects.all()
-        # print(len(queryset))
         return Response({'total_donor': len(queryset)})
 
 
@@ -103,7 +102,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(donor=donor)
         else:
             queryset = BloodDonate.objects.all()
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -113,7 +111,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=1))
         else:
             queryset = BloodDonate.objects.filter(status=1)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -123,7 +120,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=2))
         else:
             queryset = BloodDonate.objects.filter(status=2)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -133,7 +129,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=3))
         else:
             queryset = BloodDonate.objects.filter(status=3)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
 

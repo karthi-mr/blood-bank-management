@@ -9,46 +9,46 @@ import { Subscription } from 'rxjs';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.scss']
+  styleUrls: ['./auth.component.scss'],
 })
-export class AuthComponent implements OnInit, OnDestroy{
-
+export class AuthComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
-  registerForm !: FormGroup;
+  registerForm!: FormGroup;
 
   authType: string = 'login';
 
-  bloodGroups: BloodGroup[] = []
+  bloodGroups: BloodGroup[] = [];
   bloodGroupSubscription!: Subscription;
 
-  constructor(private authService: AuthService,
-              private sharedService: SharedService,
-              private router: Router,
-              private route: ActivatedRoute
-             ) {}
+  constructor(
+    private authService: AuthService,
+    private sharedService: SharedService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.initLoginForm();
     this.initRegisterForm();
 
-    this.sharedService.get_blood_group().subscribe()
+    this.sharedService.get_blood_group().subscribe();
 
-    this.bloodGroupSubscription = 
-        this.sharedService.blood_groups.subscribe((data: BloodGroup[]) => {
-      // console.log(data);
-      this.bloodGroups = data;
-    })
+    this.bloodGroupSubscription = this.sharedService.blood_groups.subscribe(
+      (data: BloodGroup[]) => {
+        this.bloodGroups = data;
+      }
+    );
   }
 
   ngOnDestroy(): void {
-      this.bloodGroupSubscription.unsubscribe()
+    this.bloodGroupSubscription.unsubscribe();
   }
 
   initLoginForm(): void {
     this.loginForm = new FormGroup({
       username: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
-    })
+    });
   }
 
   initRegisterForm(): void {
@@ -60,32 +60,30 @@ export class AuthComponent implements OnInit, OnDestroy{
         email: new FormControl('', [Validators.required]),
         mobile: new FormControl('', [Validators.required]),
         password: new FormControl('', [Validators.required]),
-        user_type: new FormControl('', [Validators.required])
+        user_type: new FormControl('', [Validators.required]),
       }),
       date_of_birth: new FormControl('', [Validators.required]),
       blood_group_id: new FormControl('', [Validators.required]),
-      // profile_pic: new FormControl('', [Validators.required]),
-    })
+    });
   }
 
   onSubmitLoginForm(): void {
     this.authService.login_user(this.loginForm.value).subscribe({
       next: (data: any) => {
         // this.router.navigate(['/home'], {relativeTo: this.route})
-      }
-    })
+      },
+    });
   }
 
   onSubmitRegisterForm(): void {
     this.authService.register_user(this.registerForm.value).subscribe({
       next: (data: any) => {
-        console.log(data);
         this.changeAuthType();
-      }
-    })
+      },
+    });
   }
 
   changeAuthType(): void {
-    this.authType = (this.authType == 'login')? 'register': 'login';
+    this.authType = this.authType == 'login' ? 'register' : 'login';
   }
 }

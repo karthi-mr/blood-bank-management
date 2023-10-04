@@ -9,36 +9,36 @@ import { RequestBlood } from '../../patient.model';
 @Component({
   selector: 'app-request-edit',
   templateUrl: './request-edit.component.html',
-  styleUrls: ['./request-edit.component.scss']
+  styleUrls: ['./request-edit.component.scss'],
 })
 export class RequestEditComponent {
-
   requestBloodForm!: FormGroup;
   bloodGroups: BloodGroup[] = [];
 
-  constructor(private sharedService: SharedService,
-              private patientService: PatientService,
-              private router: Router,
-              private route: ActivatedRoute) {}
+  constructor(
+    private sharedService: SharedService,
+    private patientService: PatientService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-      this.initRequestForm();
-      this.sharedService.get_blood_group().subscribe({
-        next: (data: any) => {
-          // console.log(data);
-          this.bloodGroups = data;
-        }
-      });
+    this.initRequestForm();
+    this.sharedService.get_blood_group().subscribe({
+      next: (data: any) => {
+        this.bloodGroups = data;
+      },
+    });
   }
 
   initRequestForm(): void {
     this.requestBloodForm = new FormGroup({
       patient_name: new FormControl('', [Validators.required]),
-      patient_age: new FormControl('' , [Validators.required]),
+      patient_age: new FormControl('', [Validators.required]),
       reason: new FormControl('', [Validators.required]),
       unit: new FormControl('', [Validators.required]),
       blood_group_id: new FormControl('', [Validators.required]),
-    })
+    });
   }
 
   onSubmitBloodRequestForm(): void {
@@ -46,9 +46,8 @@ export class RequestEditComponent {
 
     this.patientService.request_blood(this.requestBloodForm.value).subscribe({
       next: (data: any) => {
-        // console.log(data);
-        this.router.navigate(['../'], {relativeTo: this.route});
-      }
+        this.router.navigate(['../'], { relativeTo: this.route });
+      },
     });
   }
 }

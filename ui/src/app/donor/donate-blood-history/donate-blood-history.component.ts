@@ -69,7 +69,6 @@ export class DonateBloodHistoryComponent implements OnInit {
     this.isLoading = true;
     this.donorService.get_blood_donate_history(this.nextLink, null).subscribe({
       next: (data: DonateHistoryView) => {
-        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
         this.donateHistory = data.results;
@@ -86,7 +85,6 @@ export class DonateBloodHistoryComponent implements OnInit {
     this.isLoading = true;
     this.donorService.get_blood_donate_history(this.prevLink, null).subscribe({
       next: (data: DonateHistoryView) => {
-        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
         this.donateHistory = data.results;
@@ -108,9 +106,7 @@ export class DonateBloodHistoryComponent implements OnInit {
 
   onFullNext(): void {
     this.isLoading = true;
-    // console.log(this.count);
     const count = 50;
-    // console.log(this.totalCount);
     let dataCount = 0,
       dCount = 0;
     if (this.totalCount) {
@@ -121,13 +117,9 @@ export class DonateBloodHistoryComponent implements OnInit {
     } else {
       if (this.totalCount) dCount = this.totalCount - 50;
     }
-    // const link =
-    //     `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${this.totalCount - dataCount}`;
     const link = `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
-    // console.log(link);
     this.donorService.get_blood_donate_history(link, null).subscribe({
       next: (data: DonateHistoryView) => {
-        // console.log(data);
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
         this.donateHistory = data.results;

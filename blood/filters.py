@@ -21,7 +21,6 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
             else:
                 new_query = BloodRequest.objects. \
                     order_by('patient_name')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # patient age
@@ -30,7 +29,6 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
                 new_query = BloodRequest.objects.order_by('-patient_age')
             else:
                 new_query = BloodRequest.objects.order_by('patient_age')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # unit
@@ -39,7 +37,6 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
                 new_query = BloodRequest.objects.order_by('-unit')
             else:
                 new_query = BloodRequest.objects.order_by('unit')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # added
@@ -48,7 +45,6 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
                 new_query = BloodRequest.objects.order_by('-added')
             else:
                 new_query = BloodRequest.objects.order_by('added')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # blood group
@@ -59,7 +55,6 @@ class SortBloodRequestHistoryFilter(BaseFilterBackend):
             else:
                 new_query = BloodRequest.objects. \
                     order_by('blood_group__blood_group')
-            # print(f"New Query : {new_query}")
             return new_query
 
 
@@ -67,7 +62,7 @@ class BloodRequestSearchFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        new_query = BloodRequest.objects.all()
+        new_query = queryset
 
         nameFilter = request.query_params.get('name')
         ageFilter = request.query_params.get('age')

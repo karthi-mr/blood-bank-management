@@ -19,7 +19,6 @@ class SortFilter(BaseFilterBackend):
                 new_query = Donor.objects.order_by('-user__email')
             else:
                 new_query = Donor.objects.order_by('user__email')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # username
@@ -28,17 +27,7 @@ class SortFilter(BaseFilterBackend):
                 new_query = Donor.objects.order_by('-user__username')
             else:
                 new_query = Donor.objects.order_by('user__username')
-            # print(f"New Query : {new_query}")
             return new_query
-
-        # mobile
-        # if 'mobile' in sort_order:
-        #     if '-' in sort_order:
-        #         new_query = Donor.objects.order_by('-user__mobile')
-        #     else:
-        #         new_query = Donor.objects.order_by('user__mobile')
-        #     # print(f"New Query : {new_query}")
-        #     return new_query
 
         # last login
         if 'last_login' in sort_order:
@@ -46,7 +35,6 @@ class SortFilter(BaseFilterBackend):
                 new_query = Donor.objects.order_by('-user__last_login')
             else:
                 new_query = Donor.objects.order_by('user__last_login')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # blood group
@@ -57,7 +45,6 @@ class SortFilter(BaseFilterBackend):
             else:
                 new_query = Donor.objects. \
                     order_by('blood_group__blood_group')
-            # print(f"New Query : {new_query}")
             return new_query
 
 
@@ -79,7 +66,6 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
             else:
                 new_query = BloodDonate.objects. \
                     order_by('donor__user__username')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # age
@@ -88,7 +74,6 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
                 new_query = BloodDonate.objects.order_by('-age')
             else:
                 new_query = BloodDonate.objects.order_by('age')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # added
@@ -97,7 +82,6 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
                 new_query = BloodDonate.objects.order_by('-added')
             else:
                 new_query = BloodDonate.objects.order_by('added')
-            # print(f"New Query : {new_query}")
             return new_query
 
         # blood group
@@ -108,23 +92,18 @@ class SortBloodDonateHistoryFilter(BaseFilterBackend):
             else:
                 new_query = BloodDonate.objects. \
                     order_by('blood_group__blood_group')
-            # print(f"New Query : {new_query}")
             return new_query
 
 
 class DonorSearchFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
-
-        new_query = Donor.objects.all()
+        new_query = queryset
 
         usernameFilter = request.query_params.get('username')
         emailFilter = request.query_params.get('email')
         mobileFilter = request.query_params.get('mobile')
         bloodGroupFilter = request.query_params.get('blood_group')
-
-        print(request.query_params)
-        # print(usernameFilter)
 
         if usernameFilter:
             new_query = new_query.filter(
@@ -146,16 +125,13 @@ class BloodDonateSearchFilter(BaseFilterBackend):
 
     def filter_queryset(self, request, queryset, view):
 
-        new_query = BloodDonate.objects.all()
+        new_query = queryset
 
         donorFilter = request.query_params.get('donor')
         diseaseFilter = request.query_params.get('disease')
         ageFilter = request.query_params.get('age')
         unitFilter = request.query_params.get('unit')
         bloodGroupFilter = request.query_params.get('blood_group')
-
-        print(request.query_params)
-        # print(usernameFilter)
 
         if donorFilter:
             new_query = new_query.filter(

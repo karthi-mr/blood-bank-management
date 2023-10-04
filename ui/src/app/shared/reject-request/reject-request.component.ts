@@ -22,20 +22,14 @@ export class RejectRequestComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.fragment.subscribe((data: any) => {
-      // console.log(data);
       this.type = data;
     });
     this.route.params.subscribe((data: any) => {
-      // console.log(data);
       this.id = data['id'];
     });
   }
 
   onRejectRequest(): void {
-    // alert(this.reason);
-    // alert(this.type);
-    // alert(this.id);
-
     if (this.type == 'blood-request') {
       // update status
       this.patientService

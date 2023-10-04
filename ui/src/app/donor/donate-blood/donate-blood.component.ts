@@ -32,7 +32,6 @@ export class DonateBloodComponent implements OnInit {
     this.isLoading = true;
     this.donorService.get_blood_donate_requests().subscribe({
       next: (data: DonateHistory[]) => {
-        // console.log(data.length);
         this.donateRequests = data;
         this.isLoading = false;
       },
@@ -49,13 +48,10 @@ export class DonateBloodComponent implements OnInit {
       .update_status_donate_requests({ id: id, status: 1 })
       .subscribe({
         next: (data: any) => {
-          // console.log(data);
           this.adminService
             .update_stock({ blood_group: blood_group.id, unit: unit })
             .subscribe({
-              next: (data: any) => {
-                console.log(data);
-              },
+              next: (data: any) => {},
             });
           this.getAllBloodDonateRequests();
         },
@@ -63,12 +59,6 @@ export class DonateBloodComponent implements OnInit {
   }
 
   onRejectRequest(id: number): void {
-    // this.donorService.update_status_donate_requests({id: id, status: 3}).subscribe({
-    //   next: (data: any) => {
-    //     // console.log(data);
-    //     this.getAllBloodDonateRequests();
-    //   }
-    // });
     this.router.navigate(['reject', id], {
       relativeTo: this.route,
       fragment: 'blood-donate',

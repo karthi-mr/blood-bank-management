@@ -2,31 +2,38 @@
 	position: relative;
 	width: auto;
 	height: 8rem;
-	border: 2px solid green;
+	border: 2px solid orangered;
+	background-color: white;
 	border-radius: 15px;
 
 	.text1 {
-		bottom: 0;
+		i {
+			font-size: 2rem !important;
+			position: absolute;
+			top: 20px;
+			left: 20px;
+			color: red;
+		}
 
 		.name {
-			font-size: 1.5rem !important;
 			position: absolute;
+			font-size: 1.5rem !important;
 			top: 10px;
 			right: 8px;
 			margin-left: 1rem;
 			font-size: 1.3rem;
-			color: red;
+			color: blue;
 		}
 
 		.value {
-			font-size: 1.5rem !important;
 			position: absolute;
+			font-size: 1.5rem !important;
 			bottom: 0;
 			left: 3px;
 			text-align: center !important;
 			margin-left: 1.3rem;
 			font-size: 1.2rem;
-			color: blue;
+			color: red;
 		}
 	}
 }

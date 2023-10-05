@@ -1,25 +1,30 @@
 .loadDiv {
-  margin-top: 10vh;
-  margin-left: 40%;
+	margin-top: 10vh;
+	margin-left: 40%;
 
-  .loadIcon {
-    border: 3rem solid orange; /* Light grey */
-    border-top: 3rem solid red; /* Blue */
-    border-bottom: 3rem solid green; /* Blue */
-    border-radius: 50%;
-    width: 8rem;
-    height: 8rem;
-    animation: spin 3s linear infinite;
-  }
+	.loadIcon {
+		border: 1rem solid orange;
+		border-top: 1rem solid red;
+		border-bottom: 1rem solid green;
+		border-radius: 50%;
+		width: 8rem;
+		height: 8rem;
+		animation: spin 3s linear infinite;
+	}
 
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
 
-  .loadText {
-    font-size: 5rem;
-    color: red;
-    text-shadow: 2px 2px 2px green;
-  }
+		100% {
+			transform: rotate(360deg);
+		}
+	}
+
+	.loadText {
+		font-size: 5rem;
+		color: red;
+		text-shadow: 2px 2px 2px green;
+	}
 }

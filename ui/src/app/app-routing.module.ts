@@ -25,6 +25,8 @@ import { ReleaseNotesComponent } from './shared/release-notes/release-notes.comp
 import { RejectRequestComponent } from './shared/reject-request/reject-request.component';
 import { RequestDetailViewComponent } from './patient/request-blood-history/request-detail-view/request-detail-view.component';
 import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-detail-view/donate-detail-view.component';
+import { AboutUsComponent } from './shared/about-us/about-us.component';
+import { HelpDocsComponent } from './shared/help-docs/help-docs.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -137,6 +139,8 @@ const routes: Routes = [
   },
   { path: 'profile-settings', component: MyProfileComponent },
   { path: 'release-notes', component: ReleaseNotesComponent },
+  { path: 'about-us', component: AboutUsComponent },
+  { path: 'help-docs', component: HelpDocsComponent },
   { path: 'logout', component: LogoutComponent },
   { path: '**', component: PageNotFoundComponent },
 ];

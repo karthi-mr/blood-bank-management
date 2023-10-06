@@ -30,18 +30,25 @@ export class AdminService {
 
   constructor(private http: HttpClient) { }
 
-  get_donor(link: string | null, order: string | null): Observable<DonorResult> {
+  /* get_donor(link: string | null, order: string | null): Observable<DonorResult> {
     if(link) {
       return this.http.get<DonorResult>(`${link}`);
     }
     return this.http.get<DonorResult>(`${this.USER_API}donor/?ordering=${order}`);
+  } */
+  
+  get_donor(link: string | null, order: string | null): Observable<DonorResult> {
+    if(link) {
+      return this.http.get<DonorResult>(`${link}`);
+    }
+    return this.http.get<DonorResult>(`${this.USER_API}donor/?${order}`);
   }
   
   get_patient(link: string | null, order: string | null): Observable<PatientResult> {
     if(link) {
       return this.http.get<PatientResult>(`${link}`);
     }
-    return this.http.get<PatientResult>(`${this.USER_API}patient/?ordering=${order}`);
+    return this.http.get<PatientResult>(`${this.USER_API}patient/?${order}`);
   }
 
   get_stock(): Observable<BloodStock[]> {

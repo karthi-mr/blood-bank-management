@@ -1,26 +1,32 @@
 .box {
-  position: relative;
-  width: auto;
-  height: 8rem;
-  border: 2px solid black;
-  
-  .text1 {
-    position: absolute;
-    bottom: 0;
-    
-    .name {
-      display: block;
-      margin-left: 1rem;
-      font-size: 1.3rem;
-      color: red;
-    }
+	position: relative;
+	width: auto;
+	height: 8rem;
+	border: 2px solid green;
+	border-radius: 15px;
 
-    .value {
-      display: block;
-      text-align: center !important;
-      margin-left: 1.3rem;
-      font-size: 1.2rem;
-    }
-  }
+	.text1 {
+		bottom: 0;
 
+		.name {
+			font-size: 1.5rem !important;
+			position: absolute;
+			top: 10px;
+			right: 8px;
+			margin-left: 1rem;
+			font-size: 1.3rem;
+			color: red;
+		}
+
+		.value {
+			font-size: 1.5rem !important;
+			position: absolute;
+			bottom: 0;
+			left: 3px;
+			text-align: center !important;
+			margin-left: 1.3rem;
+			font-size: 1.2rem;
+			color: blue;
+		}
+	}
 }

@@ -7,9 +7,10 @@ USER_TYPE = [
     (3, 'patient')
 ]
 
+
 class User(AbstractUser):
-    email = models.EmailField(unique=True)
-    mobile = models.CharField(max_length=10, unique=True)
+    email = models.EmailField()
+    mobile = models.CharField(max_length=10)
     user_type = models.IntegerField(choices=USER_TYPE)
     address = models.TextField(max_length=500, null=True, blank=True)
 

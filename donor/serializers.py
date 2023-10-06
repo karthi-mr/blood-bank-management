@@ -38,6 +38,20 @@ class DonorSerializer(serializers.ModelSerializer):
 
         return instance
 
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+
+        userSerializer = UserSerializer(
+            instance=instance.user, data=user_data, partial=True)
+
+        if userSerializer.is_valid(raise_exception=True):
+            userSerializer.save()
+
+        instance.date_of_birth = validated_data.get('date_of_birth')
+        instance.save()
+
+        return instance
+
 
 class BloodDonateSerializer(serializers.ModelSerializer):
     donor = DonorSerializer(read_only=True)

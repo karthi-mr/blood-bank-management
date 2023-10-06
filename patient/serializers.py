@@ -12,7 +12,7 @@ from .models import Patient
 
 class PatientSerializer(serializers.ModelSerializer):
     user = UserSerializer()
-    blood_group = BloodGroupSerializer(read_only = True)
+    blood_group = BloodGroupSerializer(read_only=True)
     blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
                                                   slug_field='id',
                                                   write_only=True)
@@ -34,5 +34,19 @@ class PatientSerializer(serializers.ModelSerializer):
         validated_data['user'] = user
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
         instance = Patient.objects.create(**validated_data)
+
+        return instance
+
+    def update(self, instance, validated_data):
+        user_data = validated_data.pop('user')
+
+        userSerializer = UserSerializer(
+            instance=instance.user, data=user_data, partial=True)
+
+        if userSerializer.is_valid(raise_exception=True):
+            userSerializer.save()
+
+        instance.date_of_birth = validated_data.get('date_of_birth')
+        instance.save()
 
         return instance

@@ -8,7 +8,7 @@ import { HeaderComponent } from './header/header.component';
 import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { DonorComponent } from './admin/donor/donor.component';
@@ -34,6 +34,13 @@ import { DonorViewComponent } from './admin/donor/donor-view/donor-view.componen
 import { EmptyDataPipe } from './shared/empty-data.pipe';
 import { PatientViewComponent } from './admin/patient/patient-view/patient-view.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
+import { ReleaseNotesComponent } from './shared/release-notes/release-notes.component';
+import { RejectRequestComponent } from './shared/reject-request/reject-request.component';
+import { RequestDetailViewComponent } from './patient/request-blood-history/request-detail-view/request-detail-view.component';
+import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-detail-view/donate-detail-view.component';
+import { AboutUsComponent } from './shared/about-us/about-us.component';
+import { HelpDocsComponent } from './shared/help-docs/help-docs.component';
+import { BloodGroupComponent } from './shared/dash-box/blood-group/blood-group.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +72,13 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     EmptyDataPipe,
     PatientViewComponent,
     MyProfileComponent,
+    ReleaseNotesComponent,
+    RejectRequestComponent,
+    RequestDetailViewComponent,
+    DonateDetailViewComponent,
+    AboutUsComponent,
+    HelpDocsComponent,
+    BloodGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,11 +86,11 @@ import { MyProfileComponent } from './my-profile/my-profile.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    NgbModule
+    NgbModule,
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

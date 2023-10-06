@@ -1,13 +1,14 @@
-import { BloodGroup } from "../shared/shared.model";
+import { BloodGroup } from '../shared/shared.model';
 
 interface User2 {
+  id: number;
   first_name: string;
   last_name: string;
   username: string;
   email: string;
   mobile: string;
-  password: string;
   user_type: number;
+  address: string;
   last_login: Date;
 }
 

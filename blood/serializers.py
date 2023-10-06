@@ -2,6 +2,10 @@ from rest_framework import serializers
 
 from .models import BloodGroup, BloodRequest, Stock
 
+from donor.models import Donor
+from patient.models import Patient
+from auth.serializers import UserSerializer
+
 
 class BloodGroupSerializer(serializers.ModelSerializer):
 
@@ -19,9 +23,30 @@ class StockSerializer1(serializers.ModelSerializer):
 
 class StockSerializer(serializers.ModelSerializer):
     blood_group = BloodGroupSerializer()
-    
+
     class Meta:
         model = Stock
+        fields = '__all__'
+
+
+class SimpleDonorSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    blood_group = BloodGroupSerializer(read_only=True)
+    blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
+                                                  slug_field='id',
+                                                  write_only=True)
+
+    class Meta:
+        model = Donor
+        fields = '__all__'
+
+
+class SimplePatientSerializer(serializers.ModelSerializer):
+    user = UserSerializer()
+    blood_group = BloodGroupSerializer(read_only=True)
+
+    class Meta:
+        model = Patient
         fields = '__all__'
 
 
@@ -30,6 +55,8 @@ class BloodRequestSerializer(serializers.ModelSerializer):
     blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
                                                   slug_field='id',
                                                   write_only=True)
+    request_by_donor = SimpleDonorSerializer(read_only=True)
+    request_by_patient = SimplePatientSerializer(read_only=True)
 
     class Meta:
         model = BloodRequest
@@ -40,7 +67,6 @@ class BloodRequestSerializer(serializers.ModelSerializer):
         validated_data['request_by_donor'] = self.context.get('donor')
         validated_data['request_by_patient'] = self.context.get('patient')
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
-        print(validated_data)
 
         instance = BloodRequest.objects.create(**validated_data)
 

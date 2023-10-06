@@ -9,8 +9,10 @@ from auth.models import User
 class Donor(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     date_of_birth = models.DateField()
-    blood_group = models.ForeignKey('blood.BloodGroup', on_delete=models.RESTRICT)
-    profile_pic = models.ImageField(upload_to='profile_pic/donor', null=True, blank=True)
+    blood_group = models.ForeignKey(
+        'blood.BloodGroup', on_delete=models.RESTRICT)
+    profile_pic = models.ImageField(
+        upload_to='profile_pic/donor', null=True, blank=True)
 
     class Meta:
         db_table = 'bbm_donor'
@@ -25,11 +27,15 @@ BLOOD_DONATE_STATUS = [
     (3, 'Rejected')
 ]
 
+
 class BloodDonate(models.Model):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
     disease = models.CharField(max_length=100, default="Nothing")
     age = models.PositiveIntegerField()
-    blood_group = models.ForeignKey('blood.BloodGroup', on_delete=models.RESTRICT)
+    blood_group = models.ForeignKey(
+        'blood.BloodGroup', on_delete=models.RESTRICT)
+    reject_reason = models.TextField(
+        max_length=500, null=True, blank=True, default='')
     unit = models.PositiveIntegerField(default=0)
     status = models.IntegerField(choices=BLOOD_DONATE_STATUS, default=2)
     added = models.DateTimeField(auto_now_add=True)
@@ -44,8 +50,7 @@ class BloodDonate(models.Model):
     def calculate_age(self):
         today = date.today()
         age = today.year - self.donor.date_of_birth.year - \
-                ((today.month, today.day) < \
-                (self.donor.date_of_birth.month, self.donor.date_of_birth.day))
+            ((today.month, today.day) <
+             (self.donor.date_of_birth.month, self.donor.date_of_birth.day))
 
         return age
-    

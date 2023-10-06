@@ -1,10 +1,10 @@
-import { BloodGroup } from "../shared/shared.model";
+import { BloodGroup } from '../shared/shared.model';
 
 export interface AuthToken {
   auth_token: {
     access: string;
     refresh: string;
-  }
+  };
 }
 
 export interface LoginUser {
@@ -36,4 +36,19 @@ export interface RegisterUser {
   user: User;
   data_of_birth: Date;
   blood_group: BloodGroup;
+}
+
+interface User1 {
+  first_name: string;
+  last_name: string;
+  email: string;
+  mobile: string;
+  user_type: number;
+  address: string;
+}
+
+export interface UpdateUser {
+  id: number;
+  user: User1;
+  date_of_birth: Date;
 }

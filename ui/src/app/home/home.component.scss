@@ -1,0 +1,38 @@
+#home {
+	background-color: red;
+	width: 100%;
+	min-height: 90vh;
+	color: white;
+
+	.message1 {
+		display: inline-block;
+		margin-left: 25vw;
+		margin-top: 20vh;
+		font-size: 5rem;
+	}
+
+	.donate-btn {
+		display: block;
+		margin-left: 35vw;
+		background-color: white;
+		width: 250px;
+		height: 100px;
+		font-size: 1.5rem;
+		color: red;
+		transition: color 0.4s, background-color 0.4s;
+
+		i {
+			font-size: 1.5rem;
+			transition: font-size 0.4s;
+		}
+	}
+
+	.donate-btn:hover {
+		color: blue;
+		background-color: greenyellow;
+
+		i {
+			font-size: 2.5rem;
+		}
+	}
+}

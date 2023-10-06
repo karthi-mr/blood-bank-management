@@ -10,49 +10,48 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-donate-edit',
   templateUrl: './donate-edit.component.html',
-  styleUrls: ['./donate-edit.component.scss']
+  styleUrls: ['./donate-edit.component.scss'],
 })
-export class DonateEditComponent implements OnInit{
-
+export class DonateEditComponent implements OnInit {
   donateBloodForm!: FormGroup;
   bloodGroups: BloodGroup[] = [];
 
-  constructor(private sharedService: SharedService,
-              private donorService: DonorService,
-              private router: Router,
-              private route: ActivatedRoute) {}
+  constructor(
+    private sharedService: SharedService,
+    private donorService: DonorService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
-      this.initBloodDonateForm();
-      this.sharedService.get_blood_group().subscribe({
-        next: (data: any) => {
-          console.log(data);
-          this.bloodGroups = data;
-        }
-      });
+    this.initBloodDonateForm();
+    this.sharedService.get_blood_group().subscribe({
+      next: (data: any) => {
+        this.bloodGroups = data;
+      },
+    });
   }
 
   initBloodDonateForm(): void {
     this.donateBloodForm = new FormGroup({
       age: new FormControl('', [Validators.required]),
-      disease: new FormControl('' , []),
+      disease: new FormControl('', []),
       unit: new FormControl('', [Validators.required]),
       blood_group_id: new FormControl('', [Validators.required]),
-    })
+    });
   }
 
   onSubmitBloodDonateForm(): void {
     const donateBlood: DonateBlood = this.donateBloodForm.value;
 
-    if(donateBlood.disease == '') {
-      donateBlood.disease = "Nothing";
+    if (donateBlood.disease == '') {
+      donateBlood.disease = 'Nothing';
     }
-    
+
     this.donorService.donate_blood(this.donateBloodForm.value).subscribe({
       next: (data: any) => {
-        console.log(data);
-        this.router.navigate(['../'], {relativeTo: this.route})
-      }
+        this.router.navigate(['../'], { relativeTo: this.route });
+      },
     });
   }
 }

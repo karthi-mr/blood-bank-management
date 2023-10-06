@@ -7,7 +7,8 @@ from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from app.pagination import CustomPagination
 
-from .filters import SortFilter, SortBloodDonateHistoryFilter
+from .filters import (BloodDonateSearchFilter, DonorSearchFilter,
+                      SortBloodDonateHistoryFilter, SortFilter)
 from .models import BloodDonate, Donor
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
                           BloodDonateUpdatePermission, DonorPermission,
@@ -20,7 +21,7 @@ class DonorViewSet(ModelViewSet):
     serializer_class = DonorSerializer
     permission_classes = [DonorPermission]
     pagination_class = CustomPagination
-    filter_backends = [SortFilter]
+    filter_backends = [SortFilter, DonorSearchFilter]
 
     def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
@@ -28,10 +29,17 @@ class DonorViewSet(ModelViewSet):
         page = self.paginate_queryset(donorSerializer.data)
         return self.get_paginated_response(page)
 
+    def partial_update(self, request, pk=None, *args, **kwargs):
+        instance = get_object_or_404(Donor, pk=pk)
+        donorSerializer = DonorSerializer(
+            instance=instance, data=request.data, partial=True)
+        if donorSerializer.is_valid(raise_exception=True):
+            donorSerializer.save()
+        return Response({'detail': "Profile Updated Successfully."}, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['GET'], permission_classes=[TotalDonorPermission])
     def total_donor(self, request):
         queryset = Donor.objects.all()
-        # print(len(queryset))
         return Response({'total_donor': len(queryset)})
 
 
@@ -62,6 +70,11 @@ class BloodDonateViewSet(ModelViewSet):
         return Response({'detail': "Donate request created successfully."},
                         status=status.HTTP_201_CREATED)
 
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodDonate, pk=pk)
+        serializer = BloodDonateSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['PATCH'], permission_classes=[BloodDonateUpdatePermission])
     def update_status(self, request):
         id = request.data.get('id')
@@ -76,6 +89,20 @@ class BloodDonateViewSet(ModelViewSet):
             return Response({'detail': "An Unknown error occurred."},
                             status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+    @action(detail=False, methods=['PATCH'], permission_classes=[BloodDonateUpdatePermission])
+    def update_reason(self, request):
+        id = request.data.get('id')
+        reason_update = request.data.get('reject_reason')
+        queryset = get_object_or_404(BloodDonate, id=id)
+        try:
+            queryset.reject_reason = reason_update
+            queryset.save()
+            return Response({'detail': "Reject reason updated successfully."},
+                            status=status.HTTP_200_OK)
+        except Exception:
+            return Response({'detail': "An Unknown error occurred."},
+                            status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
     def total_donate(self, request):
         if request.user.user_type == 2:
@@ -83,7 +110,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(donor=donor)
         else:
             queryset = BloodDonate.objects.all()
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -93,7 +119,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=1))
         else:
             queryset = BloodDonate.objects.filter(status=1)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -103,7 +128,6 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=2))
         else:
             queryset = BloodDonate.objects.filter(status=2)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
     @action(detail=False, methods=['GET'], permission_classes=[BloodDonatePermission])
@@ -113,14 +137,13 @@ class BloodDonateViewSet(ModelViewSet):
             queryset = BloodDonate.objects.filter(Q(donor=donor) & Q(status=3))
         else:
             queryset = BloodDonate.objects.filter(status=3)
-        print(len(queryset))
         return Response({'total_donate': len(queryset)})
 
 
 class BloodDonateHistoryViewSet(GenericViewSet):
     permission_classes = [BloodDonateHistoryPermission]
     pagination_class = CustomPagination
-    filter_backends = [SortBloodDonateHistoryFilter]
+    filter_backends = [SortBloodDonateHistoryFilter, BloodDonateSearchFilter]
 
     def list(self, request, *args, **kwargs):
         queryset = BloodDonate.objects.all()
@@ -132,9 +155,15 @@ class BloodDonateHistoryViewSet(GenericViewSet):
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
         elif request.user.user_type == 1:
-            queryset = self.filter_queryset(BloodDonate.objects.exclude(status=2))
+            queryset = self.filter_queryset(
+                BloodDonate.objects.exclude(status=2))
             serializer = BloodDonateSerializer(queryset, many=True)
             page = self.paginate_queryset(serializer.data)
             return self.get_paginated_response(page)
         return Response({'detail': "Unknown error occurred in server."},
                         status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def retrieve(self, request, pk=None):
+        queryset = get_object_or_404(BloodDonate, pk=pk)
+        serializer = BloodDonateSerializer(queryset)
+        return Response({'result': serializer.data}, status=status.HTTP_200_OK)

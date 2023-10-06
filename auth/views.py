@@ -1,4 +1,5 @@
 from datetime import datetime
+
 from django.contrib.auth.hashers import check_password, make_password
 from django.contrib.auth.models import update_last_login
 from django.core.exceptions import ObjectDoesNotExist
@@ -104,15 +105,13 @@ def get_tab(request):
                         {'name': 'blood request details',
                          'link': 'admin/request-blood',
                          'icon': 'fa-solid fa-rotate'},
-                        # {'name': 'blood request history',
-                        #  'link': 'admin/request-blood-history'},
-                        # {'name': 'blood donate history',
-                        #  'link': 'admin/donate-blood-history'},
                         {'name': 'blood stock', 'link': 'admin/blood-stock',
                          'icon': 'fa-solid fa-hand-holding-droplet'},
                         ]
             if request.user.username == 'admin':
-                response.insert(1, {'name': 'admin', 'link': 'admin/admin'})
+                response.insert(1, {'name': 'admin',
+                                    'link': 'admin/admin',
+                                    'icon': 'fa-solid fa-user-tie'})
         elif request.user.user_type == 2:
             response = [{'name': 'dashboard', 'link': 'donor/dashboard',
                          'icon': 'fa-solid fa-chart-line'},
@@ -136,7 +135,7 @@ def get_tab(request):
     return Response(response, status=status.HTTP_200_OK)
 
 
-def get_inactive_date(time) -> str: # calculate inactive with last login
+def get_inactive_date(time) -> str:  # calculate inactive with last login
     if not time:
         return "You're not active."
 
@@ -146,16 +145,18 @@ def get_inactive_date(time) -> str: # calculate inactive with last login
     delta = today - last_login
     return f"You're inactive since {delta.days} days"
 
-def calculate_age(dob) -> int: # calculate age of a person
+
+def calculate_age(dob) -> int:  # calculate age of a person
     date_format = "%Y-%m-%d"
     today = datetime.strptime(str(datetime.now().date()), date_format)
     dob_date = datetime.strptime(str(dob), date_format)
     if today.month < dob_date.month or \
             (today.month == dob_date.month and today.day < dob_date.day):
-            delta = today.year - dob_date.year - 1
+        delta = today.year - dob_date.year - 1
     else:
-            delta = today.year - dob_date.year
+        delta = today.year - dob_date.year
     return delta
+
 
 @api_view(['GET'])
 @permission_classes([permissions.IsAuthenticated])
@@ -179,6 +180,6 @@ def get_my_profile(request):
     response = {'detail': "Profile Settings",
                 'age': age,
                 'user': serializer.data
-               }
+                }
 
     return Response(response, status=status.HTTP_200_OK)

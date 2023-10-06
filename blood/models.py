@@ -33,6 +33,8 @@ class BloodRequest(models.Model):
     patient_name = models.CharField(max_length=50)
     patient_age = models.PositiveIntegerField()
     reason = models.TextField(max_length=500)
+    reject_reason = models.TextField(
+        max_length=500, null=True, blank=True, default='')
     blood_group = models.ForeignKey(BloodGroup, on_delete=models.RESTRICT)
     unit = models.PositiveIntegerField(default=0)
     status = models.IntegerField(choices=BLOOD_DONATE_STATUS, default=2)

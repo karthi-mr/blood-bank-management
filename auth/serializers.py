@@ -20,6 +20,9 @@ class UserSerializer(serializers.ModelSerializer):
     # user_type = serializers.IntegerField(read_only = True)
 
     def validate_mobile(self, attrs):
+        if User.objects.filter(mobile=attrs) and self.parent and self.parent.instance == None:
+            raise ValidationError(
+                "A user with that mobile number already exists")
         if not attrs.isdigit():
             raise ValidationError("Mobile number must contain digits only.")
         if len(attrs) != 10:
@@ -27,15 +30,14 @@ class UserSerializer(serializers.ModelSerializer):
         return attrs
 
     def validate_username(self, attrs):
-        if User.objects.filter(username__iexact=attrs):
+        if User.objects.filter(username__iexact=attrs) and self.parent and self.parent.instance == None:
             raise ValidationError("A user with that username already exists")
         return attrs
 
     def validate_email(self, attrs):
-        if User.objects.filter(email__iexact=attrs):
+        if User.objects.filter(email__iexact=attrs) and self.parent and self.parent.instance == None:
             raise ValidationError("user with this email already exists.")
         return attrs.lower()
-
 
     class Meta:
         model = User
@@ -51,4 +53,6 @@ class UserSerializer(serializers.ModelSerializer):
         user_instance = User.objects.create(**validated_data)
 
         return user_instance
-    
+
+    def update(self, instance, validated_data):
+        return super().update(instance, validated_data)

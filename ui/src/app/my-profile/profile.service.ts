@@ -8,13 +8,12 @@ import { UpdateUser } from '../auth/auth.model';
   providedIn: 'root',
 })
 export class ProfileService {
-  private readonly PROFILE_API = 'http://127.0.0.1:8000/auth/my-profile/';
-  private AUTH_API = 'http://127.0.0.1:8000/auth/';
+  private readonly AUTH_API = 'http://127.0.0.1:8000/auth/';
 
   constructor(private http: HttpClient) {}
 
   get_my_profile(): Observable<MyProfile> {
-    return this.http.get<MyProfile>(`${this.PROFILE_API}`);
+    return this.http.get<MyProfile>(`${this.AUTH_API}my-profile/`);
   }
 
   /* update_user */

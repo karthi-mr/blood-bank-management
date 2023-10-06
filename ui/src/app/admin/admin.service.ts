@@ -15,12 +15,8 @@ import { Observable } from 'rxjs';
 export class AdminService {
   private readonly USER_API = 'http://127.0.0.1:8000/auth/';
   private readonly BLOOD_STOCK_API = 'http://127.0.0.1:8000/api/blood-stock/';
-  private readonly UPDATE_BLOOD_STOCK_API =
-    'http://127.0.0.1:8000/api/blood-stock/update_stock/';
   private readonly ADD_BLOOD_GROUP_API =
     'http://127.0.0.1:8000/api/blood-group/';
-  private readonly CHECK_BLOOD_UNIT_AVAILABLE_API =
-    'http://127.0.0.1:8000/api/blood-stock/unit_available/';
   private readonly BLOOD_DONATE_COUNT =
     'http://127.0.0.1:8000/api/donate-blood/';
   private readonly BLOOD_REQUEST_COUNT =
@@ -64,7 +60,7 @@ export class AdminService {
   }
 
   update_stock(data: { blood_group: number; unit: number }): any {
-    return this.http.patch(`${this.UPDATE_BLOOD_STOCK_API}`, data);
+    return this.http.patch(`${this.BLOOD_STOCK_API}update_stock/`, data);
   }
 
   unit_available(data: {
@@ -72,7 +68,7 @@ export class AdminService {
     unit: number;
   }): Observable<{ unit_available: boolean }> {
     return this.http.post<{ unit_available: boolean }>(
-      `${this.CHECK_BLOOD_UNIT_AVAILABLE_API}`,
+      `${this.BLOOD_STOCK_API}unit_available/`,
       data
     );
   }

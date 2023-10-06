@@ -1,7 +1,15 @@
+from datetime import date
+
 from django.db import models
 
-from donor.models import BLOOD_DONATE_STATUS, Donor
+from donor.models import Donor
 from patient.models import Patient
+
+BLOOD_DONATE_STATUS = [
+    (1, 'Approved'),
+    (2, 'Pending'),
+    (3, 'Rejected')
+]
 
 
 class BloodGroup(models.Model):
@@ -45,3 +53,44 @@ class BloodRequest(models.Model):
 
     def __str__(self):
         return f"{self.patient_name}"
+
+
+class BloodDonate(models.Model):
+    donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
+    disease = models.CharField(max_length=100, default="Nothing")
+    age = models.PositiveIntegerField()
+    blood_group = models.ForeignKey(
+        BloodGroup, on_delete=models.RESTRICT)
+    reject_reason = models.TextField(
+        max_length=500, null=True, blank=True, default='')
+    unit = models.PositiveIntegerField(default=0)
+    status = models.IntegerField(choices=BLOOD_DONATE_STATUS, default=2)
+    added = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        db_table = 'bbm_blood_donate'
+
+    def __str__(self):
+        return f"{self.donor.user.username}"
+
+    @property
+    def calculate_age(self):
+        today = date.today()
+        age = today.year - self.donor.date_of_birth.year - \
+            ((today.month, today.day) <
+             (self.donor.date_of_birth.month, self.donor.date_of_birth.day))
+
+        return age
+
+
+class Branch(models.Model):
+    name = models.CharField(max_length=150)
+    address = models.TextField()
+    mobile = models.CharField(max_length=10)
+    added = models.DateTimeField()
+
+    class Meta:
+        db_table = 'bbm_branch'
+
+    def __str__(self):
+        return f"{self.branch}"

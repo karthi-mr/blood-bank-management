@@ -29,6 +29,14 @@ class DonorViewSet(ModelViewSet):
         page = self.paginate_queryset(donorSerializer.data)
         return self.get_paginated_response(page)
 
+    def partial_update(self, request, pk=None, *args, **kwargs):
+        instance = get_object_or_404(Donor, pk=pk)
+        donorSerializer = DonorSerializer(
+            instance=instance, data=request.data, partial=True)
+        if donorSerializer.is_valid(raise_exception=True):
+            donorSerializer.save()
+        return Response({'detail': "Profile Updated Successfully."}, status=status.HTTP_200_OK)
+
     @action(detail=False, methods=['GET'], permission_classes=[TotalDonorPermission])
     def total_donor(self, request):
         queryset = Donor.objects.all()

@@ -1,4 +1,5 @@
 import { Donor, Links } from '../admin/admin.model';
+import { Branch } from '../patient/patient.model';
 import { BloodGroup } from '../shared/shared.model';
 
 export interface DonateHistory {
@@ -11,6 +12,7 @@ export interface DonateHistory {
   added: Date;
   donor: Donor;
   blood_group: BloodGroup;
+  donate_branch: Branch;
 }
 
 export interface DonateHistoryView {
@@ -25,4 +27,5 @@ export interface DonateBlood {
   blood_group: BloodGroup;
   unit: number;
   disease: string | null;
+  donate_branch_id: number;
 }

@@ -13,13 +13,14 @@ from patient.models import Patient
 from .filters import (BloodDonateSearchFilter, BloodRequestSearchFilter,
                       SortBloodDonateHistoryFilter,
                       SortBloodRequestHistoryFilter)
-from .models import BloodDonate, BloodGroup, BloodRequest, Stock
+from .models import BloodDonate, BloodGroup, BloodRequest, Branch, Stock
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
                           BloodDonateUpdatePermission, BloodGroupPermission,
                           BloodRequestPermission, BloodRequestUpdatePermission,
-                          StockPermission, UpdateStockPermission)
+                          StockPermission, UpdateStockPermission, BranchPermission)
 from .serializers import (BloodDonateSerializer, BloodGroupSerializer,
-                          BloodRequestSerializer, StockSerializer)
+                          BloodRequestSerializer, BranchSerializer,
+                          StockSerializer)
 
 
 class BloodGroupViewSet(GenericViewSet):
@@ -370,3 +371,9 @@ class BloodDonateHistoryViewSet(GenericViewSet):
         queryset = get_object_or_404(BloodDonate, pk=pk)
         serializer = BloodDonateSerializer(queryset)
         return Response({'result': serializer.data}, status=status.HTTP_200_OK)
+
+
+class BranchViewSet(ModelViewSet):
+    queryset = Branch.objects.all()
+    serializer_class = BranchSerializer
+    permission_classes = [BranchPermission]

@@ -78,3 +78,15 @@ class BloodDonateUpdatePermission(BasePermission):
         if request.user.user_type == 1:
             return True
         return False
+
+
+class BranchPermission(BasePermission):
+
+    def has_permission(self, request, view):
+        if request.method in SAFE_METHODS:
+            return True
+        if not request.user.is_authenticated:
+            return False
+        if request.user.user_type != 1:
+            return False
+        return True

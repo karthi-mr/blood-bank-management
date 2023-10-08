@@ -2,7 +2,7 @@ from rest_framework.routers import SimpleRouter
 
 from .views import (BloodDonateHistoryViewSet, BloodDonateViewSet,
                     BloodGroupViewSet, BloodRequestHistoryViewSet,
-                    BloodRequestViewSet, StockViewSet)
+                    BloodRequestViewSet, StockViewSet, BranchViewSet)
 
 router = SimpleRouter()
 router.register(r'blood-group', BloodGroupViewSet,
@@ -16,6 +16,8 @@ router.register(r'blood-request-history', BloodRequestHistoryViewSet,
 router.register(r'donate-blood', BloodDonateViewSet)
 router.register(r'donate-blood-history',
                 BloodDonateHistoryViewSet, basename='history')
+router.register(r'branch',
+                BranchViewSet, basename='branch')
 
 urlpatterns = [
 

@@ -5,7 +5,7 @@ from auth.serializers import UserSerializer
 from donor.models import Donor
 from patient.models import Patient
 
-from .models import BloodDonate, BloodGroup, BloodRequest, Stock
+from .models import BloodDonate, BloodGroup, BloodRequest, Branch, Stock
 
 
 class BloodGroupSerializer(serializers.ModelSerializer):
@@ -27,6 +27,28 @@ class StockSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Stock
+        fields = '__all__'
+
+
+class BranchSerializer(serializers.ModelSerializer):
+
+    def validate_name(self, attrs):
+        if Branch.objects.filter(name__iexact=attrs):
+            raise ValidationError("A branch with that name already exists")
+        return attrs
+
+    def validate_mobile(self, attrs):
+        if Branch.objects.filter(mobile=attrs):
+            raise ValidationError(
+                "A branch with that mobile number already exists")
+        if not attrs.isdigit():
+            raise ValidationError("Mobile number must contain digits only.")
+        if len(attrs) != 10:
+            raise ValidationError("Mobile number must contain 10 digits.")
+        return attrs
+
+    class Meta:
+        model = Branch
         fields = '__all__'
 
 
@@ -58,6 +80,10 @@ class BloodRequestSerializer(serializers.ModelSerializer):
                                                   write_only=True)
     request_by_donor = SimpleDonorSerializer(read_only=True)
     request_by_patient = SimplePatientSerializer(read_only=True)
+    request_branch = BranchSerializer(read_only=True)
+    request_branch_id = serializers.SlugRelatedField(queryset=Branch.objects.all(),
+                                                     slug_field='id',
+                                                     write_only=True)
 
     class Meta:
         model = BloodRequest
@@ -68,6 +94,8 @@ class BloodRequestSerializer(serializers.ModelSerializer):
         validated_data['request_by_donor'] = self.context.get('donor')
         validated_data['request_by_patient'] = self.context.get('patient')
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
+        validated_data['request_branch'] = validated_data.pop(
+            'request_branch_id')
 
         instance = BloodRequest.objects.create(**validated_data)
 
@@ -80,6 +108,10 @@ class BloodDonateSerializer(serializers.ModelSerializer):
     blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
                                                   slug_field='id',
                                                   write_only=True)
+    donate_branch = BranchSerializer(read_only=True)
+    donate_branch_id = serializers.SlugRelatedField(queryset=Branch.objects.all(),
+                                                    slug_field='id',
+                                                    write_only=True)
 
     class Meta:
         model = BloodDonate
@@ -107,6 +139,8 @@ class BloodDonateSerializer(serializers.ModelSerializer):
                                               or "Nothing",
                                               age=validated_data.get('age'),
                                               unit=validated_data.get('unit'),
-                                              blood_group=validated_data.get('blood_group_id'))
+                                              blood_group=validated_data.get(
+                                                  'blood_group_id'),
+                                              donate_branch=validated_data.get('donate_branch_id'))
 
         return instance

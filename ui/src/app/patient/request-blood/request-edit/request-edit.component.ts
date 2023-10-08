@@ -4,7 +4,7 @@ import { BloodGroup } from 'src/app/shared/shared.model';
 import { SharedService } from 'src/app/shared/shared.service';
 import { PatientService } from '../../patient.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { RequestBlood } from '../../patient.model';
+import { Branch, RequestBlood } from '../../patient.model';
 
 @Component({
   selector: 'app-request-edit',
@@ -14,6 +14,7 @@ import { RequestBlood } from '../../patient.model';
 export class RequestEditComponent {
   requestBloodForm!: FormGroup;
   bloodGroups: BloodGroup[] = [];
+  branches: Branch[] = [];
 
   constructor(
     private sharedService: SharedService,
@@ -24,9 +25,22 @@ export class RequestEditComponent {
 
   ngOnInit(): void {
     this.initRequestForm();
+    this.getBloodGroup();
+    this.getBranch();
+  }
+
+  getBloodGroup(): void {
     this.sharedService.get_blood_group().subscribe({
       next: (data: any) => {
         this.bloodGroups = data;
+      },
+    });
+  }
+
+  getBranch(): void {
+    this.sharedService.get_branch().subscribe({
+      next: (data: any) => {
+        this.branches = data;
       },
     });
   }
@@ -38,6 +52,7 @@ export class RequestEditComponent {
       reason: new FormControl('', [Validators.required]),
       unit: new FormControl('', [Validators.required]),
       blood_group_id: new FormControl('', [Validators.required]),
+      request_branch_id: new FormControl('', [Validators.required]),
     });
   }
 

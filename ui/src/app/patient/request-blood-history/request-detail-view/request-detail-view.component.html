@@ -4,12 +4,37 @@
 </button>
 
 <div class="container" *ngIf="patientHistoryDetail">
+  <div
+    class="pending-status my-3 text-center"
+    *ngIf="isPending && userType == 1"
+  >
+    <button
+      type="button"
+      class="btn btn-success me-2"
+      (click)="
+        onApproveRequest(
+          patientHistoryDetail.id,
+          patientHistoryDetail.blood_group,
+          patientHistoryDetail.unit
+        )
+      "
+    >
+      Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onRejectRequest(patientHistoryDetail.id)"
+    >
+      Reject
+    </button>
+  </div>
   <div class="accordion" id="patient">
     <!-- patient details -->
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          class="accordion-button collapsed shadow-none"
+          class="accordion-button shadow-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#patient-detail"
@@ -19,7 +44,7 @@
       </h2>
       <div
         id="patient-detail"
-        class="accordion-collapse collapse"
+        class="accordion-collapse collapse show"
         data-bs-parent="#patient"
       >
         <div class="accordion-body">
@@ -99,9 +124,12 @@
           <p class="mt-3">
             <span class="text-capitalize">status</span> :
             <span
-              class="text-white"
               [ngClass]="
-                patientHistoryDetail.status == 3 ? 'bg-danger' : 'bg-success'
+                patientHistoryDetail.status == 3
+                  ? 'bg-danger text-white'
+                  : patientHistoryDetail.status == 1
+                  ? 'bg-success text-white'
+                  : 'bg-info-subtle'
               "
               >{{ patientHistoryDetail.status | status }}</span
             >

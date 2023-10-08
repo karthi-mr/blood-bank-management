@@ -56,6 +56,7 @@ const routes: Routes = [
         children: [
           { path: '', component: DonateBloodComponent },
           { path: 'reject/:id', component: RejectRequestComponent },
+          { path: 'detail/:id', component: DonateDetailViewComponent },
           {
             path: 'history',
             children: [
@@ -70,6 +71,7 @@ const routes: Routes = [
         children: [
           { path: '', component: RequestBloodComponent },
           { path: 'reject/:id', component: RejectRequestComponent },
+          { path: 'detail/:id', component: RequestDetailViewComponent },
           {
             path: 'history',
             children: [
@@ -91,6 +93,7 @@ const routes: Routes = [
         path: 'donate-blood',
         children: [
           { path: '', component: DonateBloodComponent },
+          { path: 'detail/:id', component: DonateDetailViewComponent },
           {
             path: 'history',
             children: [
@@ -105,6 +108,7 @@ const routes: Routes = [
         path: 'request-blood',
         children: [
           { path: '', component: RequestBloodComponent },
+          { path: 'detail/:id', component: RequestDetailViewComponent },
           {
             path: 'history',
             children: [
@@ -125,6 +129,7 @@ const routes: Routes = [
         path: 'request-blood',
         children: [
           { path: '', component: RequestBloodComponent },
+          { path: 'detail/:id', component: RequestDetailViewComponent },
           {
             path: 'history',
             children: [

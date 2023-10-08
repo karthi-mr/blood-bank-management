@@ -5,12 +5,38 @@
 
 <!-- donor history detail -->
 <div class="container" *ngIf="donorHistoryDetail">
+  <div
+    class="pending-status my-3 text-center"
+    *ngIf="isPending && userType == 1"
+  >
+    <button
+      type="button"
+      class="btn btn-success me-2"
+      (click)="
+        onApproveRequest(
+          donorHistoryDetail.id,
+          donorHistoryDetail.blood_group,
+          donorHistoryDetail.unit
+        )
+      "
+    >
+      Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onRejectRequest(donorHistoryDetail.id)"
+    >
+      Reject
+    </button>
+  </div>
+
   <div class="accordion" id="donor-history">
     <!-- patient details -->
     <div class="accordion-item">
       <h2 class="accordion-header">
         <button
-          class="accordion-button collapsed shadow-none"
+          class="accordion-button shadow-none"
           type="button"
           data-bs-toggle="collapse"
           data-bs-target="#donor-detail"
@@ -20,7 +46,7 @@
       </h2>
       <div
         id="donor-detail"
-        class="accordion-collapse collapse"
+        class="accordion-collapse collapse show"
         data-bs-parent="#donor-history"
       >
         <div class="accordion-body">
@@ -42,7 +68,7 @@
           <!-- donor address -->
           <p class="mt-3">
             <span class="text-capitalize">donor address</span> :
-            {{ donorHistoryDetail.donor.user.address }}
+            {{ donorHistoryDetail.donor.user.address | emptyData }}
           </p>
           <!-- donor age -->
           <p class="mt-3">
@@ -80,6 +106,11 @@
             <span class="text-capitalize">unit of blood</span> :
             {{ donorHistoryDetail.unit }}
           </p>
+          <!-- disease -->
+          <p class="mt-3">
+            <span class="text-capitalize">disease</span> :
+            {{ donorHistoryDetail.disease }}
+          </p>
           <!-- added on -->
           <p class="mt-3">
             <span class="text-capitalize">added on</span> :
@@ -94,9 +125,13 @@
           <p class="mt-3">
             <span class="text-capitalize">status</span> :
             <span
-              class="text-white"
+              class=""
               [ngClass]="
-                donorHistoryDetail.status == 3 ? 'bg-danger' : 'bg-success'
+                donorHistoryDetail.status == 3
+                  ? 'bg-danger text-white'
+                  : donorHistoryDetail.status == 1
+                  ? 'bg-success text-white'
+                  : 'bg-info-subtle'
               "
               >{{ donorHistoryDetail.status | status }}</span
             >

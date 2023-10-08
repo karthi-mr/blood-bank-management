@@ -3,7 +3,7 @@ import { SharedService } from './../../../shared/shared.service';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { BloodGroup } from 'src/app/shared/shared.model';
+import { BloodGroup, Branch } from 'src/app/shared/shared.model';
 import { DonorService } from '../../donor.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -15,6 +15,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class DonateEditComponent implements OnInit {
   donateBloodForm!: FormGroup;
   bloodGroups: BloodGroup[] = [];
+  branches: Branch[] = [];
 
   constructor(
     private sharedService: SharedService,
@@ -25,9 +26,22 @@ export class DonateEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.initBloodDonateForm();
+    this.getBloodGroup();
+    this.getBranch();
+  }
+
+  getBloodGroup(): void {
     this.sharedService.get_blood_group().subscribe({
       next: (data: any) => {
         this.bloodGroups = data;
+      },
+    });
+  }
+
+  getBranch(): void {
+    this.sharedService.get_branch().subscribe({
+      next: (data: any) => {
+        this.branches = data;
       },
     });
   }
@@ -38,6 +52,7 @@ export class DonateEditComponent implements OnInit {
       disease: new FormControl('', []),
       unit: new FormControl('', [Validators.required]),
       blood_group_id: new FormControl('', [Validators.required]),
+      donate_branch_id: new FormControl('', [Validators.required]),
     });
   }
 

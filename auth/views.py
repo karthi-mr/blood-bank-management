@@ -36,8 +36,7 @@ class MyObtainTokenPairView(TokenObtainPairView):  # user login
             return Response({'error': "PASSWORD_NOT_PRESENT"}, status=status.HTTP_400_BAD_REQUEST)
         try:
             user = User.objects.get(Q(username__iexact=username) |
-                                    Q(email__iexact=username) |
-                                    Q(mobile__iexact=username))
+                                    Q(email__iexact=username))
         except ObjectDoesNotExist:
             return Response({'error': "USER_NOT_EXISTS"}, status=status.HTTP_403_FORBIDDEN)
         if not check_password(password=password, encoded=user.password):

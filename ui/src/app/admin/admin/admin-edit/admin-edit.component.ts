@@ -47,4 +47,8 @@ export class AdminEditComponent implements OnInit {
       },
     });
   }
+
+  onClickCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 }

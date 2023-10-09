@@ -90,8 +90,13 @@ const routes: Routes = [
           },
         ],
       },
-      { path: 'blood-stock', component: StockComponent },
-      { path: 'add-blood-group', component: AddBloodComponent },
+      {
+        path: 'blood-stock',
+        children: [
+          { path: '', component: StockComponent },
+          { path: 'add', component: AddBloodComponent },
+        ],
+      },
     ],
   },
   {

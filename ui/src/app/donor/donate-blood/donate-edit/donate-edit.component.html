@@ -37,6 +37,8 @@
         class="form-control shadow-none"
         id="unit"
         placeholder=""
+        min="0"
+        max="2"
         formControlName="unit"
       />
       <label for="unit">Unit</label>
@@ -61,6 +63,15 @@
         {{ branch.name }}
       </option>
     </select>
-    <button type="submit" class="btn btn-success">Donate Blood</button>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!donateBloodForm.valid"
+    >
+      Donate Blood
+    </button>
+    <button type="button" class="btn btn-danger ms-3" (click)="onClickCancel()">
+      Cancel
+    </button>
   </form>
 </div>

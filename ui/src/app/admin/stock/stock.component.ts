@@ -41,7 +41,7 @@ export class StockComponent implements OnInit {
   }
 
   onAddBloodGroup(): void {
-    this.router.navigate(['../add-blood-group'], { relativeTo: this.route });
+    this.router.navigate(['add'], { relativeTo: this.route });
   }
 
   onClickBloodStock(stock: BloodStock): void {

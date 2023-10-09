@@ -48,7 +48,7 @@ export class MyProfileComponent implements OnInit {
         }),
         email: new FormControl({
           value: this.myProfile.user.user.email,
-          disabled: !this.isEditMode,
+          disabled: true,
         }),
         mobile: new FormControl({
           value: this.myProfile.user.user.mobile,
@@ -64,16 +64,6 @@ export class MyProfileComponent implements OnInit {
         disabled: !this.isEditMode,
       }),
     });
-    // this.profileForm = new FormGroup({
-    //   user: new FormGroup({
-    //     first_name: new FormControl(this.myProfile.user.user.first_name),
-    //     last_name: new FormControl(this.myProfile.user.user.last_name),
-    //     email: new FormControl(this.myProfile.user.user.email),
-    //     mobile: new FormControl(this.myProfile.user.user.mobile),
-    //     address: new FormControl(this.myProfile.user.user.address),
-    //   }),
-    //   date_of_birth: new FormControl(this.myProfile.user.date_of_birth),
-    // });
   }
 
   onSubmitForm(): void {

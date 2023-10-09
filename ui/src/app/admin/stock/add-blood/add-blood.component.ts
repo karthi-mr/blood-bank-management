@@ -6,16 +6,16 @@ import { ActivatedRoute, Router } from '@angular/router';
 @Component({
   selector: 'app-add-blood',
   templateUrl: './add-blood.component.html',
-  styleUrls: ['./add-blood.component.scss']
+  styleUrls: ['./add-blood.component.scss'],
 })
 export class AddBloodComponent implements OnInit {
-
   addBloodForm!: FormGroup;
 
-  constructor(private adminService: AdminService,
-              private router: Router,
-              private route: ActivatedRoute 
-             ) {}
+  constructor(
+    private adminService: AdminService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -23,15 +23,19 @@ export class AddBloodComponent implements OnInit {
 
   initForm(): void {
     this.addBloodForm = new FormGroup({
-      blood_group: new FormControl('', [Validators.required])
-    })
+      blood_group: new FormControl('', [Validators.required]),
+    });
   }
 
   onSubmitForm(): void {
     this.adminService.add_blood_group(this.addBloodForm.value).subscribe({
       next: (data: any) => {
-        this.router.navigate(['../blood-stock'], {relativeTo: this.route});
-      }
+        this.router.navigate(['../blood-stock'], { relativeTo: this.route });
+      },
     });
+  }
+
+  onClickCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 }

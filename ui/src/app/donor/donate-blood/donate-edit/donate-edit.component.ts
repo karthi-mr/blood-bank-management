@@ -69,4 +69,8 @@ export class DonateEditComponent implements OnInit {
       },
     });
   }
+
+  onClickCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 }

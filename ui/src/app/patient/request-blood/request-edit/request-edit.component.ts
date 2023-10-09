@@ -65,4 +65,8 @@ export class RequestEditComponent {
       },
     });
   }
+
+  onClickCancel(): void {
+    this.router.navigate(['../'], { relativeTo: this.route });
+  }
 }

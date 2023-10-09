@@ -5,13 +5,18 @@
   <form [formGroup]="addBloodForm" (ngSubmit)="onSubmitForm()">
     <!-- blood_group -->
     <div class="form-floating mb-3">
-      <input type="text" 
-             class="form-control shadow-none" 
-             id="blood_group" 
-             placeholder=""
-             formControlName="blood_group">
+      <input
+        type="text"
+        class="form-control shadow-none"
+        id="blood_group"
+        placeholder=""
+        formControlName="blood_group"
+      />
       <label for="blood_group">Blood Group</label>
     </div>
     <button type="submit" class="btn btn-success">Donate Blood</button>
+    <button type="button" class="btn btn-danger ms-3" (click)="onClickCancel()">
+      Cancel
+    </button>
   </form>
 </div>

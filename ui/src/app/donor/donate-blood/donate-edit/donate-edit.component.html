@@ -63,6 +63,21 @@
         {{ branch.name }}
       </option>
     </select>
+    <div
+      *ngIf="selectedBranch"
+      class="selected-branch form-control border-4 border-primary mb-3"
+    >
+      <p class="h3 text-primary">Branch Detail</p>
+      <p>
+        {{ selectedBranch.name }}
+      </p>
+      <p>
+        {{ selectedBranch.address }}
+      </p>
+      <p>
+        {{ selectedBranch.mobile }}
+      </p>
+    </div>
     <button
       type="submit"
       class="btn btn-success"

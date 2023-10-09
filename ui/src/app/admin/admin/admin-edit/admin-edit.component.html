@@ -1,6 +1,22 @@
 <div class="auth-forms">
   <!-- admin form -->
   <div id="register" class="container">
+    <div class="alert alert-danger" *ngIf="errorMessage">
+      <p class="h4">
+        {{ errorMessage }}
+      </p>
+      <button type="button" class="btn btn-danger" (click)="onCloseAlert()">
+        Close
+      </button>
+    </div>
+    <div class="alert alert-success" *ngIf="successMessage">
+      <p class="h4">
+        {{ successMessage }}
+      </p>
+      <button type="button" class="btn btn-danger" (click)="onCloseAlert()">
+        Close
+      </button>
+    </div>
     <form [formGroup]="adminForm" (ngSubmit)="onSubmitAdminForm()">
       <!-- user -->
       <div formGroupName="user" class="user mb-3">

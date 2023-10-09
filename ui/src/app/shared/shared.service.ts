@@ -34,6 +34,10 @@ export class SharedService {
     );
   }
 
+  get_branch_detail(id: number): Observable<Branch> {
+    return this.http.get<Branch>(`${this.BRANCH_API}${id}/`);
+  }
+
   get_tabs(): any {
     return this.http.get(`${this.TABS_API}`);
   }

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Route, Router } from '@angular/router';
 import { AdminService } from '../../admin.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-edit',
@@ -11,6 +12,8 @@ import { AdminService } from '../../admin.service';
 export class AdminEditComponent implements OnInit {
   //
   adminForm!: FormGroup;
+  errorMessage: string | undefined;
+  successMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -43,12 +46,27 @@ export class AdminEditComponent implements OnInit {
     // console.log(this.adminForm.value);
     this.adminService.add_admin(this.adminForm.value).subscribe({
       next: (data: any) => {
-        console.log(data);
+        this.successMessage = 'Admin Created Successfully.';
+      },
+      error: (errRes: HttpErrorResponse) => {
+        const error = errRes.error.user;
+        if (error.username) {
+          this.errorMessage = error.username[0];
+        } else if (error.email) {
+          this.errorMessage = error.email[0];
+        } else if (error.mobile) {
+          this.errorMessage = error.mobile[0];
+        }
       },
     });
   }
 
   onClickCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onCloseAlert(): void {
+    this.errorMessage = undefined;
+    this.successMessage = undefined;
   }
 }

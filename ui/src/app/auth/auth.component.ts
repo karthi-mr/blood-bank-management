@@ -54,11 +54,12 @@ export class AuthComponent implements OnInit, OnDestroy {
   initRegisterForm(): void {
     this.registerForm = new FormGroup({
       user: new FormGroup({
-        first_name: new FormControl('', [Validators.required]),
-        last_name: new FormControl('', [Validators.required]),
+        first_name: new FormControl('', []),
+        last_name: new FormControl('', []),
         username: new FormControl('', [Validators.required]),
         email: new FormControl('', [Validators.required]),
         mobile: new FormControl('', [Validators.required]),
+        address: new FormControl('', []),
         password: new FormControl('', [Validators.required]),
         user_type: new FormControl('', [Validators.required]),
       }),

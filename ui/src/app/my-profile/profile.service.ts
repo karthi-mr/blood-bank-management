@@ -28,6 +28,11 @@ export class ProfileService {
         `${this.AUTH_API}patient/${data.id}/`,
         data
       );
+    } else if (data.user.user_type == 1) {
+      return this.http.patch<{ message: string }>(
+        `${this.AUTH_API}admin/${data.id}/`,
+        data
+      );
     }
   }
 }

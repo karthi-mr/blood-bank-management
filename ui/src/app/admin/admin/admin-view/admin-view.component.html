@@ -1,0 +1,21 @@
+<button type="button" class="btn btn-back mt-4 mx-3" (click)="onBack()">
+  <i class="fa-solid fa-circle-chevron-left"></i>
+  Back
+</button>
+
+<div class="container" *ngIf="admin">
+  <p class="h2 text-success">Kindly find the details of admin</p>
+  <h1 class="text-primary">Username : {{ admin.user.username }}</h1>
+  <p class="text-capitalize">
+    first name : {{ admin.user.first_name | emptyData }}
+  </p>
+  <p class="text-capitalize">
+    last name : {{ admin.user.last_name | emptyData }}
+  </p>
+  <p class="text-capitalize">email : {{ admin.user.email | emptyData }}</p>
+  <p class="text-capitalize">mobile : {{ admin.user.mobile | emptyData }}</p>
+  <p class="text-capitalize">address : {{ admin.user.address | emptyData }}</p>
+  <p class="text-capitalize">
+    last login : {{ admin.user.last_login | customDate }}
+  </p>
+</div>

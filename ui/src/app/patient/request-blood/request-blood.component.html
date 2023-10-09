@@ -52,7 +52,9 @@
           <td>{{ request.unit }}</td>
           <td>{{ request.added | customDate }}</td>
           <td>{{ request.blood_group.blood_group }}</td>
-          <td>{{ request.status | status }}</td>
+          <td class="bg-info text-white">
+            {{ request.status | status }}
+          </td>
           <td>
             <button
               type="button"

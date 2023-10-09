@@ -1,3 +1,4 @@
+import { AdminViewComponent } from './admin/admin/admin-view/admin-view.component';
 import { DonorComponent } from './admin/donor/donor.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
@@ -27,6 +28,7 @@ import { RequestDetailViewComponent } from './patient/request-blood-history/requ
 import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-detail-view/donate-detail-view.component';
 import { AboutUsComponent } from './shared/about-us/about-us.component';
 import { HelpDocsComponent } from './shared/help-docs/help-docs.component';
+import { AdminEditComponent } from './admin/admin/admin-edit/admin-edit.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -36,6 +38,14 @@ const routes: Routes = [
     path: 'admin',
     children: [
       { path: 'dashboard', component: AdminDashboardComponent },
+      {
+        path: 'admin',
+        children: [
+          { path: '', component: AdminComponent },
+          { path: 'create', component: AdminEditComponent },
+          { path: ':id', component: AdminViewComponent },
+        ],
+      },
       {
         path: 'donor',
         children: [
@@ -50,7 +60,6 @@ const routes: Routes = [
           { path: ':id', component: PatientViewComponent },
         ],
       },
-      { path: 'admin', component: AdminComponent },
       {
         path: 'donate-blood',
         children: [

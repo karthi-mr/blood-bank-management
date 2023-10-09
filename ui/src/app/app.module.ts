@@ -41,6 +41,8 @@ import { DonateDetailViewComponent } from './donor/donate-blood-history/donate-d
 import { AboutUsComponent } from './shared/about-us/about-us.component';
 import { HelpDocsComponent } from './shared/help-docs/help-docs.component';
 import { BloodGroupComponent } from './shared/dash-box/blood-group/blood-group.component';
+import { AdminViewComponent } from './admin/admin/admin-view/admin-view.component';
+import { AdminEditComponent } from './admin/admin/admin-edit/admin-edit.component';
 
 @NgModule({
   declarations: [
@@ -79,6 +81,8 @@ import { BloodGroupComponent } from './shared/dash-box/blood-group/blood-group.c
     AboutUsComponent,
     HelpDocsComponent,
     BloodGroupComponent,
+    AdminViewComponent,
+    AdminEditComponent,
   ],
   imports: [
     BrowserModule,

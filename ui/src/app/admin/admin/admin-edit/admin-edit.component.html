@@ -1,0 +1,109 @@
+<div class="auth-forms">
+  <!-- admin form -->
+  <div id="register" class="container">
+    <form [formGroup]="adminForm" (ngSubmit)="onSubmitAdminForm()">
+      <!-- user -->
+      <div formGroupName="user" class="user mb-3">
+        <!-- first_name & last_name -->
+        <div class="row">
+          <!-- first_name -->
+          <div class="col-lg-6 col-12">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control shadow-none"
+                id="first_name"
+                placeholder=""
+                formControlName="first_name"
+              />
+              <label for="first_name">First Name</label>
+            </div>
+          </div>
+          <!-- last_name -->
+          <div class="col-lg-6 col-12">
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control shadow-none"
+                id="last_name"
+                placeholder=""
+                formControlName="last_name"
+              />
+              <label for="last_name">Last Name</label>
+            </div>
+          </div>
+        </div>
+        <!-- username -->
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control shadow-none"
+            id="username"
+            placeholder=""
+            formControlName="username"
+          />
+          <label for="username">Username</label>
+        </div>
+        <!-- email -->
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control shadow-none"
+            id="email"
+            placeholder=""
+            formControlName="email"
+          />
+          <label for="email">Email</label>
+        </div>
+        <!-- mobile -->
+        <div class="form-floating mb-3">
+          <input
+            type="text"
+            class="form-control shadow-none"
+            id="mobile"
+            placeholder=""
+            formControlName="mobile"
+          />
+          <label for="mobile">Mobile Number</label>
+        </div>
+        <!-- password -->
+        <div class="form-floating mb-3">
+          <input
+            type="password"
+            class="form-control shadow-none"
+            id="password"
+            placeholder=""
+            formControlName="password"
+          />
+          <label for="password">Password</label>
+        </div>
+        <!-- address -->
+        <div class="mb-3">
+          <textarea
+            name="address"
+            id="address"
+            class="form-control shadow-none"
+            rows="5"
+            placeholder="Enter Address"
+            formControlName="address"
+          ></textarea>
+          <!-- <label for="address">Address</label> -->
+        </div>
+        <!-- user type -->
+        <select class="form-select shadow-none" formControlName="user_type">
+          <!-- <option value="" selected disabled>Select Register Type</option> -->
+          <option value="1" selected>Admin</option>
+        </select>
+      </div>
+      <!-- register button -->
+      <button
+        type="submit"
+        class="btn btn-success mt-3"
+        [disabled]="!adminForm.valid"
+      >
+        <i class="fa-solid fa-user-plus"></i>
+        Add Admin
+      </button>
+    </form>
+  </div>
+</div>

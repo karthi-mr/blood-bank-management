@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
+  Admin,
+  AdminResult,
   BloodStock,
   Donor,
   DonorResult,
@@ -28,13 +30,6 @@ export class AdminService {
 
   constructor(private http: HttpClient) {}
 
-  /* get_donor(link: string | null, order: string | null): Observable<DonorResult> {
-    if(link) {
-      return this.http.get<DonorResult>(`${link}`);
-    }
-    return this.http.get<DonorResult>(`${this.USER_API}donor/?ordering=${order}`);
-  } */
-
   get_donor(
     link: string | null,
     order: string | null
@@ -43,6 +38,16 @@ export class AdminService {
       return this.http.get<DonorResult>(`${link}`);
     }
     return this.http.get<DonorResult>(`${this.USER_API}donor/?${order}`);
+  }
+
+  get_admin(
+    link: string | null,
+    order: string | null
+  ): Observable<AdminResult> {
+    if (link) {
+      return this.http.get<AdminResult>(`${link}`);
+    }
+    return this.http.get<AdminResult>(`${this.USER_API}admin/?${order}`);
   }
 
   get_patient(
@@ -133,11 +138,19 @@ export class AdminService {
     );
   }
 
+  get_admin_detail(id: number): Observable<Admin> {
+    return this.http.get<Admin>(`${this.USER_API}admin/${id}`);
+  }
+
   get_donor_detail(id: number): Observable<Donor> {
     return this.http.get<Donor>(`${this.USER_API}donor/${id}`);
   }
 
   get_patient_detail(id: number): Observable<Patient> {
     return this.http.get<Patient>(`${this.USER_API}patient/${id}`);
+  }
+
+  add_admin(data: Admin): any {
+    return this.http.post(`${this.USER_API}admin/`, data);
   }
 }

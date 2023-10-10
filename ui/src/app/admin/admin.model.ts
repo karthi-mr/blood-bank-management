@@ -1,4 +1,5 @@
-import { BloodGroup } from "../shared/shared.model";
+import { User } from '../auth/auth.model';
+import { BloodGroup } from '../shared/shared.model';
 
 export interface Links {
   next: string;
@@ -17,6 +18,12 @@ export interface UserResult {
   last_login: Date | null;
 }
 
+export interface Admin {
+  id: number;
+  user: UserResult;
+  profile_pic: string | null;
+}
+
 export interface Donor {
   id: number;
   user: UserResult;
@@ -31,6 +38,13 @@ export interface Patient {
   date_of_birth: Date;
   profile_pic: string | null;
   blood_group: BloodGroup;
+}
+
+export interface AdminResult {
+  links: Links;
+  total: number;
+  count: number;
+  results: Admin[];
 }
 
 export interface DonorResult {

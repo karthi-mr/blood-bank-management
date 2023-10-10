@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BloodGroup } from './shared.model';
+import { BloodGroup, Branch } from './shared.model';
 import { Observable, Subject, Subscription, tap } from 'rxjs';
 
 @Injectable({
@@ -8,9 +8,11 @@ import { Observable, Subject, Subscription, tap } from 'rxjs';
 })
 export class SharedService {
   private readonly BLOOD_GROUP_API = 'http://127.0.0.1:8000/api/blood-group/';
+  private readonly BRANCH_API = 'http://127.0.0.1:8000/api/branch/';
   private readonly TABS_API = 'http://127.0.0.1:8000/auth/tab/';
 
   blood_groups: Subject<BloodGroup[]> = new Subject<BloodGroup[]>();
+  branches: Branch[] = [];
   blood_groups_array: BloodGroup[] = [];
 
   constructor(private http: HttpClient) {}
@@ -22,6 +24,18 @@ export class SharedService {
         this.blood_groups_array = data;
       })
     );
+  }
+
+  get_branch(): Observable<Branch[]> {
+    return this.http.get<Branch[]>(`${this.BRANCH_API}`).pipe(
+      tap((data: Branch[]) => {
+        this.branches = data;
+      })
+    );
+  }
+
+  get_branch_detail(id: number): Observable<Branch> {
+    return this.http.get<Branch>(`${this.BRANCH_API}${id}/`);
   }
 
   get_tabs(): any {

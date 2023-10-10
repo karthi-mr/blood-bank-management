@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { PatientService } from '../../patient.service';
 import { PatientHistory } from '../../patient.model';
+import { BloodGroup } from 'src/app/shared/shared.model';
+import { AdminService } from 'src/app/admin/admin.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-request-detail-view',
@@ -10,10 +13,13 @@ import { PatientHistory } from '../../patient.model';
 })
 export class RequestDetailViewComponent implements OnInit {
   //
-
   patientHistoryDetail!: PatientHistory;
+  isPending: boolean = false;
+  userType: number | undefined;
 
   constructor(
+    private adminService: AdminService,
+    private authService: AuthService,
     private patientService: PatientService,
     private router: Router,
     private route: ActivatedRoute
@@ -23,6 +29,14 @@ export class RequestDetailViewComponent implements OnInit {
     this.route.params.subscribe((data: Params) => {
       this.loadData(data['id']);
     });
+    this.route.fragment.subscribe((data: string | null) => {
+      if (data != null || data == 'pending') {
+        this.isPending = true;
+      } else {
+        this.isPending = false;
+      }
+    });
+    this.userType = this.authService.get_user_type();
   }
 
   loadData(id: number): void {
@@ -34,6 +48,40 @@ export class RequestDetailViewComponent implements OnInit {
   }
 
   onBack(): void {
-    this.router.navigate(['../'], { relativeTo: this.route });
+    if (this.isPending) {
+      this.router.navigate(['../../'], { relativeTo: this.route });
+    } else {
+      this.router.navigate(['../'], { relativeTo: this.route });
+    }
+  }
+
+  onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
+    this.adminService
+      .unit_available({ blood_group: blood_group.id, unit: -unit })
+      .subscribe({
+        next: (data: { unit_available: boolean }) => {
+          if (data.unit_available) {
+            this.patientService
+              .update_status_donate_requests({ id: id, status: 1 })
+              .subscribe({
+                next: (data: any) => {
+                  this.adminService
+                    .update_stock({ blood_group: blood_group.id, unit: -unit })
+                    .subscribe({
+                      next: (data: any) => {},
+                    });
+                },
+              });
+          } else {
+            alert('Requested stock not available.');
+          }
+        },
+      });
+  }
+
+  onRejectRequest(id: number): void {
+    this.router.navigate(['admin', 'request-blood', 'reject', id], {
+      fragment: 'blood-request',
+    });
   }
 }

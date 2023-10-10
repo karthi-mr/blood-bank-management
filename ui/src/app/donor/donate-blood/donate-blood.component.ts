@@ -1,3 +1,4 @@
+import { PageNotFoundComponent } from './../../page-not-found/page-not-found.component';
 import { DonorService } from './../donor.service';
 import { Component, OnInit } from '@angular/core';
 import { DonateHistory } from '../donor.model';
@@ -43,29 +44,14 @@ export class DonateBloodComponent implements OnInit {
     this.router.navigate(['../donate-blood/add'], { relativeTo: this.route });
   }
 
-  onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
-    this.donorService
-      .update_status_donate_requests({ id: id, status: 1 })
-      .subscribe({
-        next: (data: any) => {
-          this.adminService
-            .update_stock({ blood_group: blood_group.id, unit: unit })
-            .subscribe({
-              next: (data: any) => {},
-            });
-          this.getAllBloodDonateRequests();
-        },
-      });
-  }
-
-  onRejectRequest(id: number): void {
-    this.router.navigate(['reject', id], {
-      relativeTo: this.route,
-      fragment: 'blood-donate',
-    });
-  }
-
   onViewHistory(): void {
     this.router.navigate(['history'], { relativeTo: this.route });
+  }
+
+  onViewDetail(id: number): void {
+    this.router.navigate(['detail', id], {
+      relativeTo: this.route,
+      fragment: 'pending',
+    });
   }
 }

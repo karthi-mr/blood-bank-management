@@ -4,34 +4,24 @@
 </button>
 
 <div class="container" *ngIf="patient">
-  <p class="h2 text-success">
-    Kindly find the details of donor
-  </p>
-  <h1 class="text-primary">
-    Username : {{ patient.user.username }}
-  </h1>
+  <p class="h2 text-success">Kindly find the details of donor</p>
+  <h1 class="text-primary">Username : {{ patient.user.username }}</h1>
   <p class="text-capitalize">
-    first name : {{ patient.user.first_name | emptyData}}
+    first name : {{ patient.user.first_name | emptyData }}
   </p>
   <p class="text-capitalize">
     last name : {{ patient.user.last_name | emptyData }}
   </p>
-  <p class="text-capitalize">
-    email : {{ patient.user.email | emptyData}}
-  </p>
-  <p class="text-capitalize">
-    mobile : {{ patient.user.mobile | emptyData }}
-  </p>
+  <p class="text-capitalize">email : {{ patient.user.email | emptyData }}</p>
+  <p class="text-capitalize">mobile : {{ patient.user.mobile | emptyData }}</p>
   <p class="text-capitalize">
     address : {{ patient.user.address | emptyData }}
   </p>
   <p class="text-capitalize">
-    last login : {{ patient.user.last_login | emptyData }}
+    last login : {{ patient.user.last_login | customDate }}
   </p>
   <p class="text-capitalize">
-    blood group : {{ patient.blood_group.blood_group}}
+    blood group : {{ patient.blood_group.blood_group }}
   </p>
-  <p class="text-capitalize">
-    date of birth : {{ patient.date_of_birth }}
-  </p>
+  <p class="text-capitalize">date of birth : {{ patient.date_of_birth }}</p>
 </div>

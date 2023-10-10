@@ -17,6 +17,7 @@ export class DonorDashboardComponent implements OnInit {
   totalRequestApproved: number = 0;
   totalRequestPending: number = 0;
   totalRequestRejected: number = 0;
+  isLoading: boolean = false;
 
   constructor(private adminService: AdminService) {}
 
@@ -32,65 +33,81 @@ export class DonorDashboardComponent implements OnInit {
   }
 
   private get_total_donate_blood(): void {
+    this.isLoading = true;
     this.adminService.get_total_donate_blood().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonate = data.total_donate;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_donate_blood_approved(): void {
+    this.isLoading = true;
     this.adminService.get_total_donate_blood_approved().subscribe({
       next: (data: { total_donate: number }) => {
-        return (this.totalDonateApproved = data.total_donate);
+        this.totalDonateApproved = data.total_donate;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_donate_blood_pending(): void {
+    this.isLoading = true;
     this.adminService.get_total_donate_blood_pending().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonatePending = data.total_donate;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_donate_blood_rejected(): void {
+    this.isLoading = true;
     this.adminService.get_total_donate_blood_rejected().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonateRejected = data.total_donate;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_request_blood(): void {
+    this.isLoading = true;
     this.adminService.get_total_request_blood().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequest = data.total_request;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_request_blood_approved(): void {
+    this.isLoading = true;
     this.adminService.get_total_request_blood_approved().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestApproved = data.total_request;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_request_blood_pending(): void {
+    this.isLoading = true;
     this.adminService.get_total_request_blood_pending().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestPending = data.total_request;
+        this.isLoading = false;
       },
     });
   }
 
   private get_total_request_blood_rejected(): void {
+    this.isLoading = true;
     this.adminService.get_total_request_blood_rejected().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestRejected = data.total_request;
+        this.isLoading = false;
       },
     });
   }

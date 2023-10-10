@@ -3,49 +3,180 @@
   Back
 </button>
 
-<div class="container my-3" *ngIf="patientHistoryDetail">
-  <p class="h1 text-primary">
-    <span class="text-capitalize">patient name</span> :
-    {{ patientHistoryDetail.patient_name }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">patient age</span> :
-    {{ patientHistoryDetail.patient_age }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">reason</span> :
-    {{ patientHistoryDetail.reason }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">status</span> :
-    <span
-      class="text-white"
-      [ngClass]="patientHistoryDetail.status == 3 ? 'bg-danger' : 'bg-success'"
-      >{{ patientHistoryDetail.status | status }}</span
+<div class="container" *ngIf="patientHistoryDetail">
+  <div
+    class="pending-status my-3 text-center"
+    *ngIf="isPending && userType == 1"
+  >
+    <button
+      type="button"
+      class="btn btn-success me-2"
+      (click)="
+        onApproveRequest(
+          patientHistoryDetail.id,
+          patientHistoryDetail.blood_group,
+          patientHistoryDetail.unit
+        )
+      "
     >
-  </p>
-  <p class="mt-3" *ngIf="patientHistoryDetail.status == 3">
-    <span class="text-capitalize">reason for rejection</span> :
-    {{ patientHistoryDetail.reject_reason }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">blood group</span> :
-    {{ patientHistoryDetail.blood_group.blood_group }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">unit of blood</span> :
-    {{ patientHistoryDetail.unit }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">added on</span> :
-    {{ patientHistoryDetail.added | customDate }}
-  </p>
-  <p class="mt-3" *ngIf="patientHistoryDetail.request_by_donor != null">
-    <span class="text-capitalize">requested by</span> :
-    {{ patientHistoryDetail.request_by_donor.user.username }}
-  </p>
-  <p class="mt-3" *ngIf="patientHistoryDetail.request_by_patient != null">
-    <span class="text-capitalize">requested by</span> :
-    {{ patientHistoryDetail.request_by_patient.user.username }}
-  </p>
+      Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onRejectRequest(patientHistoryDetail.id)"
+    >
+      Reject
+    </button>
+  </div>
+  <div class="accordion" id="patient">
+    <!-- patient details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#patient-detail"
+        >
+          Patient Detail
+        </button>
+      </h2>
+      <div
+        id="patient-detail"
+        class="accordion-collapse collapse show"
+        data-bs-parent="#patient"
+      >
+        <div class="accordion-body">
+          <!-- patient name -->
+          <p class="mt-3">
+            <span class="text-capitalize">patient name</span> :
+            {{ patientHistoryDetail.patient_name }}
+          </p>
+          <!-- patient age -->
+          <p class="mt-3">
+            <span class="text-capitalize">patient age</span> :
+            {{ patientHistoryDetail.patient_age }}
+          </p>
+          <!-- blood group -->
+          <p class="mt-3">
+            <span class="text-capitalize">blood group</span> :
+            {{ patientHistoryDetail.blood_group.blood_group }}
+          </p>
+          <!-- reason -->
+          <p class="mt-3">
+            <span class="text-capitalize">reason</span> :
+            <span class="bg-light text-danger">{{
+              patientHistoryDetail.reason
+            }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- request details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#request-detail"
+        >
+          Request Detail
+        </button>
+      </h2>
+      <div
+        id="request-detail"
+        class="accordion-collapse collapse"
+        data-bs-parent="#patient"
+      >
+        <div class="accordion-body">
+          <!-- request by donor -->
+          <p class="mt-3" *ngIf="patientHistoryDetail.request_by_donor != null">
+            <span class="text-capitalize">requested by</span> :
+            {{ patientHistoryDetail.request_by_donor.user.username }} (Donor)
+          </p>
+          <!-- request by patient -->
+          <p
+            class="mt-3"
+            *ngIf="patientHistoryDetail.request_by_patient != null"
+          >
+            <span class="text-capitalize">requested by</span> :
+            {{ patientHistoryDetail.request_by_patient.user.username }}
+            (Patient)
+          </p>
+          <!-- unit of blood -->
+          <p class="mt-3">
+            <span class="text-capitalize">unit of blood</span> (needed) :
+            {{ patientHistoryDetail.unit }}
+          </p>
+          <!-- requested (or) added on -->
+          <p class="mt-3">
+            <span class="text-capitalize">requested on</span> :
+            {{ patientHistoryDetail.added | customDate }}
+          </p>
+          <!-- requested branch -->
+          <p class="mt-3">
+            <span class="text-capitalize">Requested Branch</span> :
+            {{ patientHistoryDetail.request_branch.name }}
+          </p>
+          <!-- status -->
+          <p class="mt-3">
+            <span class="text-capitalize">status</span> :
+            <span
+              [ngClass]="
+                patientHistoryDetail.status == 3
+                  ? 'bg-danger text-white'
+                  : patientHistoryDetail.status == 1
+                  ? 'bg-success text-white'
+                  : 'bg-info-subtle'
+              "
+              >{{ patientHistoryDetail.status | status }}</span
+            >
+          </p>
+          <!-- reject reason -->
+          <p class="mt-3" *ngIf="patientHistoryDetail.status == 3">
+            <span class="text-capitalize">reason for rejection</span> :
+            {{ patientHistoryDetail.reject_reason }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- branch details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#branch-detail"
+        >
+          Branch Detail
+        </button>
+      </h2>
+      <div
+        id="branch-detail"
+        class="accordion-collapse collapse"
+        data-bs-parent="#patient"
+      >
+        <div class="accordion-body">
+          <!-- branch name -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch name</span> :
+            {{ patientHistoryDetail.request_branch.name }}
+          </p>
+          <!-- branch address -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch address</span> :
+            {{ patientHistoryDetail.request_branch.address }}
+          </p>
+          <!-- branch mobile -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch contact number</span> :
+            {{ patientHistoryDetail.request_branch.mobile }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

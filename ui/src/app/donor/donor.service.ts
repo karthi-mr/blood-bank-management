@@ -8,15 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class DonorService {
   private readonly BLOOD_DONATE_HISTORY_API =
-    'http://127.0.0.1:8000/auth/donate-blood-history/';
-  private readonly BLOOD_DONATE_REQUEST_API =
-    'http://127.0.0.1:8000/auth/donate-blood/';
-  private readonly BLOOD_DONATE_API =
-    'http://127.0.0.1:8000/auth/donate-blood/';
-  private readonly BLOOD_STATUS_UPDATE =
-    'http://127.0.0.1:8000/auth/donate-blood/update_status/';
-  private readonly BLOOD_DONATE_REJECT_REASON_UPDATE =
-    'http://127.0.0.1:8000/auth/donate-blood/update_reason/';
+    'http://127.0.0.1:8000/api/donate-blood-history/';
+  private readonly BLOOD_DONATE_API = 'http://127.0.0.1:8000/api/donate-blood/';
 
   constructor(private http: HttpClient) {}
 
@@ -33,7 +26,7 @@ export class DonorService {
   }
 
   get_blood_donate_requests(): Observable<DonateHistory[]> {
-    return this.http.get<DonateHistory[]>(`${this.BLOOD_DONATE_REQUEST_API}`);
+    return this.http.get<DonateHistory[]>(`${this.BLOOD_DONATE_API}`);
   }
 
   donate_blood(data: DonateBlood): any {
@@ -41,14 +34,14 @@ export class DonorService {
   }
 
   update_status_donate_requests(data: { id: number; status: number }): any {
-    return this.http.patch(`${this.BLOOD_STATUS_UPDATE}`, data);
+    return this.http.patch(`${this.BLOOD_DONATE_API}update_status/`, data);
   }
 
   update_reject_reason_requests(data: {
     id: number;
     reject_reason: string;
   }): any {
-    return this.http.patch(`${this.BLOOD_DONATE_REJECT_REASON_UPDATE}`, data);
+    return this.http.patch(`${this.BLOOD_DONATE_API}update_reason/`, data);
   }
 
   get_blood_donate_history_detail(

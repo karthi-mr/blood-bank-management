@@ -3,41 +3,182 @@
   Back
 </button>
 
-<div class="container my-3" *ngIf="donorHistoryDetail">
-  <p class="h1 text-primary">
-    <span class="text-capitalize">donor name</span> :
-    {{ donorHistoryDetail.donor.user.username }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">donor age</span> :
-    {{ donorHistoryDetail.age }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">disease</span> :
-    {{ donorHistoryDetail.disease }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">status</span> :
-    <span
-      class="text-white"
-      [ngClass]="donorHistoryDetail.status == 3 ? 'bg-danger' : 'bg-success'"
-      >{{ donorHistoryDetail.status | status }}</span
+<!-- donor history detail -->
+<div class="container" *ngIf="donorHistoryDetail">
+  <div
+    class="pending-status my-3 text-center"
+    *ngIf="isPending && userType == 1"
+  >
+    <button
+      type="button"
+      class="btn btn-success me-2"
+      (click)="
+        onApproveRequest(
+          donorHistoryDetail.id,
+          donorHistoryDetail.blood_group,
+          donorHistoryDetail.unit
+        )
+      "
     >
-  </p>
-  <p class="mt-3" *ngIf="donorHistoryDetail.status == 3">
-    <span class="text-capitalize">reason for rejection</span> :
-    {{ donorHistoryDetail.reject_reason }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">blood group</span> :
-    {{ donorHistoryDetail.blood_group.blood_group }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">unit of blood</span> :
-    {{ donorHistoryDetail.unit }}
-  </p>
-  <p class="mt-3">
-    <span class="text-capitalize">added on</span> :
-    {{ donorHistoryDetail.added | customDate }}
-  </p>
+      Approve
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger"
+      (click)="onRejectRequest(donorHistoryDetail.id)"
+    >
+      Reject
+    </button>
+  </div>
+
+  <div class="accordion" id="donor-history">
+    <!-- patient details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#donor-detail"
+        >
+          Donor Detail
+        </button>
+      </h2>
+      <div
+        id="donor-detail"
+        class="accordion-collapse collapse show"
+        data-bs-parent="#donor-history"
+      >
+        <div class="accordion-body">
+          <!-- donor username -->
+          <p class="mt-3">
+            <span class="text-capitalize">donor username</span> :
+            {{ donorHistoryDetail.donor.user.username }}
+          </p>
+          <!-- patient age -->
+          <p class="mt-3">
+            <span class="text-capitalize">donor email</span> :
+            {{ donorHistoryDetail.donor.user.email }}
+          </p>
+          <!-- donor mobile -->
+          <p class="mt-3">
+            <span class="text-capitalize">donor contact number</span> :
+            {{ donorHistoryDetail.donor.user.mobile }}
+          </p>
+          <!-- donor address -->
+          <p class="mt-3">
+            <span class="text-capitalize">donor address</span> :
+            {{ donorHistoryDetail.donor.user.address | emptyData }}
+          </p>
+          <!-- donor age -->
+          <p class="mt-3">
+            <span class="text-capitalize">Age</span> :
+            {{ donorHistoryDetail.age }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- donate details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#donate-detail"
+        >
+          Donate Detail
+        </button>
+      </h2>
+      <div
+        id="donate-detail"
+        class="accordion-collapse collapse"
+        data-bs-parent="#donor-history"
+      >
+        <div class="accordion-body">
+          <!-- blood group -->
+          <p class="mt-3">
+            <span class="text-capitalize">blood group</span> :
+            {{ donorHistoryDetail.blood_group.blood_group }}
+          </p>
+          <!-- unit of blood -->
+          <p class="mt-3">
+            <span class="text-capitalize">unit of blood</span> :
+            {{ donorHistoryDetail.unit }}
+          </p>
+          <!-- disease -->
+          <p class="mt-3">
+            <span class="text-capitalize">disease</span> :
+            {{ donorHistoryDetail.disease }}
+          </p>
+          <!-- added on -->
+          <p class="mt-3">
+            <span class="text-capitalize">added on</span> :
+            {{ donorHistoryDetail.added | customDate }}
+          </p>
+          <!-- donate branch -->
+          <p class="mt-3">
+            <span class="text-capitalize">Donate Branch</span> :
+            {{ donorHistoryDetail.donate_branch.name }}
+          </p>
+          <!-- status -->
+          <p class="mt-3">
+            <span class="text-capitalize">status</span> :
+            <span
+              class=""
+              [ngClass]="
+                donorHistoryDetail.status == 3
+                  ? 'bg-danger text-white'
+                  : donorHistoryDetail.status == 1
+                  ? 'bg-success text-white'
+                  : 'bg-info-subtle'
+              "
+              >{{ donorHistoryDetail.status | status }}</span
+            >
+          </p>
+          <!-- reject reason -->
+          <p class="mt-3" *ngIf="donorHistoryDetail.status == 3">
+            <span class="text-capitalize">reason for rejection</span> :
+            {{ donorHistoryDetail.reject_reason }}
+          </p>
+        </div>
+      </div>
+    </div>
+    <!-- branch details -->
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button
+          class="accordion-button collapsed shadow-none"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#branch-detail"
+        >
+          Branch Detail
+        </button>
+      </h2>
+      <div
+        id="branch-detail"
+        class="accordion-collapse collapse"
+        data-bs-parent="#donor-history"
+      >
+        <div class="accordion-body">
+          <!-- branch name -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch name</span> :
+            {{ donorHistoryDetail.donate_branch.name }}
+          </p>
+          <!-- branch address -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch address</span> :
+            {{ donorHistoryDetail.donate_branch.address }}
+          </p>
+          <!-- branch mobile -->
+          <p class="mt-3">
+            <span class="text-capitalize">branch contact number</span> :
+            {{ donorHistoryDetail.donate_branch.mobile }}
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

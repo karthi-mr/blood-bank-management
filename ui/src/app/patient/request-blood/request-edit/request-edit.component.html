@@ -12,47 +12,93 @@
   <form [formGroup]="requestBloodForm" (ngSubmit)="onSubmitBloodRequestForm()">
     <!-- patient_name -->
     <div class="form-floating mb-3">
-      <input type="text" 
-             class="form-control shadow-none" 
-             id="patient_name" 
-             placeholder=""
-             formControlName="patient_name">
+      <input
+        type="text"
+        class="form-control shadow-none"
+        id="patient_name"
+        placeholder=""
+        formControlName="patient_name"
+      />
       <label for="patient_name">Patient Name</label>
     </div>
     <!-- patient_age -->
     <div class="form-floating mb-3">
-      <input type="number" 
-             class="form-control shadow-none" 
-             id="patient_age" 
-             placeholder=""
-             formControlName="patient_age">
+      <input
+        type="number"
+        class="form-control shadow-none"
+        id="patient_age"
+        placeholder=""
+        formControlName="patient_age"
+      />
       <label for="patient_age">Patient Age</label>
     </div>
     <!-- reason -->
     <div class="form-floating mb-3">
-      <input type="text" 
-             class="form-control shadow-none" 
-             id="reason" 
-             placeholder=""
-             formControlName="reason">
+      <input
+        type="text"
+        class="form-control shadow-none"
+        id="reason"
+        placeholder=""
+        formControlName="reason"
+      />
       <label for="reason">Reason</label>
     </div>
     <!-- unit -->
     <div class="form-floating mb-3">
-      <input type="number" 
-             class="form-control shadow-none" 
-             id="unit" 
-             placeholder=""
-             formControlName="unit">
+      <input
+        type="number"
+        class="form-control shadow-none"
+        id="unit"
+        placeholder=""
+        formControlName="unit"
+      />
       <label for="unit">Unit</label>
     </div>
     <!-- blood_group -->
-    <select class="form-select shadow-none mb-3" formControlName="blood_group_id">
+    <select
+      class="form-select shadow-none mb-3"
+      formControlName="blood_group_id"
+    >
       <option value="" selected disabled>Select Blood Group</option>
       <option *ngFor="let blood_group of bloodGroups" [value]="blood_group.id">
         {{ blood_group.blood_group }}
       </option>
     </select>
-    <button type="submit" class="btn btn-success">Request Blood</button>
+    <!-- branch -->
+    <select
+      class="form-select shadow-none mb-3"
+      formControlName="request_branch_id"
+    >
+      <option value="" selected disabled>Select Branch</option>
+      <option *ngFor="let branch of branches" [value]="branch.id">
+        {{ branch.name }}
+      </option>
+    </select>
+    <!-- selected branch detail display -->
+    <div
+      *ngIf="selectedBranch"
+      class="selected-branch form-control border-4 border-primary mb-3"
+    >
+      <p class="h3 text-primary">Branch Detail</p>
+      <p>
+        {{ selectedBranch.name }}
+      </p>
+      <p>
+        {{ selectedBranch.address }}
+      </p>
+      <p>
+        {{ selectedBranch.mobile }}
+      </p>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!requestBloodForm.valid"
+    >
+      Request Blood
+    </button>
+    <button type="button" class="btn btn-danger ms-3" (click)="onClickCancel()">
+      Cancel
+    </button>
   </form>
 </div>

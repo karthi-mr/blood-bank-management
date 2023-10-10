@@ -15,10 +15,6 @@ export class PatientService {
     'http://127.0.0.1:8000/api/blood-request-history/';
   private readonly BLOOD_REQUEST_REQUEST_API =
     'http://127.0.0.1:8000/api/blood-request/';
-  private readonly BLOOD_STATUS_UPDATE_API =
-    'http://127.0.0.1:8000/api/blood-request/update_status/';
-  private readonly BLOOD_REJECT_REASON_UPDATE_API =
-    'http://127.0.0.1:8000/api/blood-request/update_reason/';
 
   constructor(private http: HttpClient) {}
 
@@ -43,14 +39,20 @@ export class PatientService {
   }
 
   update_status_donate_requests(data: { id: number; status: number }): any {
-    return this.http.patch(`${this.BLOOD_STATUS_UPDATE_API}`, data);
+    return this.http.patch(
+      `${this.BLOOD_REQUEST_REQUEST_API}update_status/`,
+      data
+    );
   }
 
   update_reject_reason_requests(data: {
     id: number;
     reject_reason: string;
   }): any {
-    return this.http.patch(`${this.BLOOD_REJECT_REASON_UPDATE_API}`, data);
+    return this.http.patch(
+      `${this.BLOOD_REQUEST_REQUEST_API}update_reason/`,
+      data
+    );
   }
 
   get_blood_request_history_detail(

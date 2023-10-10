@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-logout',
@@ -9,15 +9,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LogoutComponent implements OnInit {
   message: string = 'An Unknown error occurred in Logout.';
-  time: number = 10;
+  time: number = 5;
   interval: any;
   timeout: any;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {
     this.message = 'You have been logged out successfully.';
@@ -29,7 +25,7 @@ export class LogoutComponent implements OnInit {
 
     this.timeout = setTimeout(() => {
       this.onClickLogin();
-    }, 10000);
+    }, 5000);
   }
 
   onClickLogin(): void {

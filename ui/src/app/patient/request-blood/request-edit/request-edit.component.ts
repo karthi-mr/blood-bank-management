@@ -15,6 +15,7 @@ export class RequestEditComponent {
   requestBloodForm!: FormGroup;
   bloodGroups: BloodGroup[] = [];
   branches: Branch[] = [];
+  selectedBranch!: Branch;
 
   constructor(
     private sharedService: SharedService,
@@ -54,6 +55,17 @@ export class RequestEditComponent {
       blood_group_id: new FormControl('', [Validators.required]),
       request_branch_id: new FormControl('', [Validators.required]),
     });
+    this.requestBloodForm.valueChanges.subscribe((changes: any) => {
+      if (!this.selectedBranch && changes['request_branch_id']) {
+        this.onGetBranchDetail(changes['request_branch_id']);
+      }
+      if (
+        this.selectedBranch &&
+        changes['request_branch_id'] != this.selectedBranch['id']
+      ) {
+        this.onGetBranchDetail(changes['request_branch_id']);
+      }
+    });
   }
 
   onSubmitBloodRequestForm(): void {
@@ -68,5 +80,13 @@ export class RequestEditComponent {
 
   onClickCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onGetBranchDetail(id: number): void {
+    this.sharedService.get_branch_detail(id).subscribe({
+      next: (data: Branch) => {
+        this.selectedBranch = data;
+      },
+    });
   }
 }

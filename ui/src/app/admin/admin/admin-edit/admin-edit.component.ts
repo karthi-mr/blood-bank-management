@@ -46,10 +46,13 @@ export class AdminEditComponent implements OnInit {
     // console.log(this.adminForm.value);
     this.adminService.add_admin(this.adminForm.value).subscribe({
       next: (data: any) => {
+        this.errorMessage = undefined;
         this.successMessage = 'Admin Created Successfully.';
       },
       error: (errRes: HttpErrorResponse) => {
         const error = errRes.error.user;
+        this.successMessage = undefined;
+        this.errorMessage = undefined;
         if (error.username) {
           this.errorMessage = error.username[0];
         } else if (error.email) {

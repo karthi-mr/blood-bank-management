@@ -57,7 +57,7 @@ export class RequestDetailViewComponent implements OnInit {
 
   onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
     this.adminService
-      .unit_available({ blood_group: blood_group.id, unit: -unit })
+      .unitAvailableCheck({ blood_group: blood_group.id, unit: -unit })
       .subscribe({
         next: (data: { unit_available: boolean }) => {
           if (data.unit_available) {
@@ -66,7 +66,7 @@ export class RequestDetailViewComponent implements OnInit {
               .subscribe({
                 next: (data: any) => {
                   this.adminService
-                    .update_stock({ blood_group: blood_group.id, unit: -unit })
+                    .updateStock({ blood_group: blood_group.id, unit: -unit })
                     .subscribe({
                       next: (data: any) => {},
                     });

@@ -32,7 +32,7 @@ export class StockComponent implements OnInit {
   getBloodStock(): void {
     this.isEditMode = false;
     this.isLoading = true;
-    this.adminService.get_stock().subscribe({
+    this.adminService.getStockDetail().subscribe({
       next: (data: BloodStock[]) => {
         this.stocks = data;
         this.isLoading = false;
@@ -52,7 +52,7 @@ export class StockComponent implements OnInit {
 
   onSubmit(formData: NgForm): void {
     this.adminService
-      .update_stock({
+      .updateStock({
         blood_group: this.blood_group.id,
         unit: formData.value.unit,
       })

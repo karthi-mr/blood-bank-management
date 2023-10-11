@@ -17,6 +17,14 @@ export class SharedService {
 
   constructor(private http: HttpClient) {}
 
+  calculateTotalPage(data: number): number {
+    let page = parseInt(String(data / 50));
+    if (data % 50 != 0) {
+      page += 1;
+    }
+    return page;
+  }
+
   get_blood_group(): Observable<BloodGroup[]> {
     return this.http.get<BloodGroup[]>(`${this.BLOOD_GROUP_API}`).pipe(
       tap((data: BloodGroup[]) => {

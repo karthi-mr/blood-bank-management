@@ -17,7 +17,8 @@ from .models import BloodDonate, BloodGroup, BloodRequest, Branch, Stock
 from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
                           BloodDonateUpdatePermission, BloodGroupPermission,
                           BloodRequestPermission, BloodRequestUpdatePermission,
-                          StockPermission, UpdateStockPermission, BranchPermission)
+                          BranchPermission, StockPermission,
+                          UpdateStockPermission)
 from .serializers import (BloodDonateSerializer, BloodGroupSerializer,
                           BloodRequestSerializer, BranchSerializer,
                           StockSerializer)

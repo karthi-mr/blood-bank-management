@@ -1,6 +1,20 @@
-<div class="auth-forms">
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="auth-forms" *ngIf="!isLoading">
   <!-- login form -->
   <div id="login" class="container" *ngIf="authType == 'login'">
+    <div class="alert alert-danger" *ngIf="loginErrorMessage">
+      <p>
+        {{ loginErrorMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
       <div class="form-floating mb-3">
         <input
@@ -45,6 +59,40 @@
 
   <!-- register form -->
   <div id="register" class="container" *ngIf="authType == 'register'">
+    <!-- failure message -->
+    <div class="alert alert-danger" *ngIf="registerErrorMessage">
+      <p>
+        {{ registerErrorMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
+    <!-- success message -->
+    <div class="alert alert-success" *ngIf="registerSuccessMessage">
+      <p>
+        {{ registerSuccessMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-success me-3"
+        (click)="changeAuthType()"
+      >
+        Go to Login
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
+
     <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
       <!-- user -->
       <div formGroupName="user" class="mb-3">

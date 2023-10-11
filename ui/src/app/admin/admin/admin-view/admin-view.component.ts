@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Admin } from '../../admin.model';
 import { AdminService } from '../../admin.service';
-import { ActivatedRoute, Params, Router } from '@angular/router';
 
 @Component({
   selector: 'app-admin-view',
@@ -18,10 +18,10 @@ export class AdminViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadDonorData();
+    this.loadAdminData();
   }
 
-  private loadDonorData(): void {
+  private loadAdminData(): void {
     this.route.params.subscribe({
       next: (data: Params) => {
         this.getAdminDetail(data['id']);
@@ -30,7 +30,7 @@ export class AdminViewComponent implements OnInit {
   }
 
   private getAdminDetail(id: number): void {
-    this.adminService.get_admin_detail(id).subscribe({
+    this.adminService.adminDetail(id).subscribe({
       next: (data: Admin) => {
         this.admin = data;
       },

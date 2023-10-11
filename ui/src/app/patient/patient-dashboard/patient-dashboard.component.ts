@@ -25,7 +25,7 @@ export class PatientDashboardComponent implements OnInit {
 
   private get_total_request_blood(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood().subscribe({
+    this.adminService.totalRequestBlood().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequest = data.total_request;
         this.isLoading = false;
@@ -35,7 +35,7 @@ export class PatientDashboardComponent implements OnInit {
 
   private get_total_request_blood_approved(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_approved().subscribe({
+    this.adminService.totalRequestBloodApproved().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestApproved = data.total_request;
         this.isLoading = false;
@@ -45,7 +45,7 @@ export class PatientDashboardComponent implements OnInit {
 
   private get_total_request_blood_pending(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_pending().subscribe({
+    this.adminService.totalRequestBloodPending().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestPending = data.total_request;
         this.isLoading = false;
@@ -55,7 +55,7 @@ export class PatientDashboardComponent implements OnInit {
 
   private get_total_request_blood_rejected(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_rejected().subscribe({
+    this.adminService.totalRequestBloodRejected().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestRejected = data.total_request;
         this.isLoading = false;

@@ -6,11 +6,9 @@ from rest_framework.viewsets import ModelViewSet
 
 from app.pagination import CustomPagination
 
-from .filters import (DonorSearchFilter,
-                      SortFilter)
+from .filters import DonorSearchFilter, SortFilter
 from .models import Donor
-from .permissions import (DonorPermission,
-                          TotalDonorPermission)
+from .permissions import DonorPermission, TotalDonorPermission
 from .serializers import DonorSerializer
 
 
@@ -26,6 +24,12 @@ class DonorViewSet(ModelViewSet):
         donorSerializer = DonorSerializer(queryset, many=True)
         page = self.paginate_queryset(donorSerializer.data)
         return self.get_paginated_response(page)
+
+    def create(self, request, *args, **kwargs):
+        serializer = DonorSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': "Donor Registered Successfully."}, status=status.HTTP_201_CREATED)
 
     def partial_update(self, request, pk=None, *args, **kwargs):
         instance = get_object_or_404(Donor, pk=pk)

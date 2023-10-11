@@ -1,7 +1,14 @@
 <div class="container-fluid">
   <h1 class="text-secondary text-center my-3">Admin Details</h1>
   <app-loading *ngIf="isLoading"></app-loading>
-  <div class="data" *ngIf="!isLoading">
+  <!-- error message -->
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    <p class="h3">{{ errorMessage }}</p>
+    <button type="button" class="btn btn-success" (click)="onClickReload()">
+      Reload Data
+    </button>
+  </div>
+  <div class="data" *ngIf="!isLoading && admins.length > 0">
     <button
       type="button"
       class="btn btn-primary my-4"
@@ -234,7 +241,11 @@
             <!-- <input type="text" name="username" id="username" class="form-control"> -->
           </th>
           <th>
-            <button type="button" class="btn btn-success" (click)="testInput()">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="onClickSearch()"
+            >
               Search
             </button>
           </th>

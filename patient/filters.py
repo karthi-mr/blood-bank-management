@@ -1,7 +1,5 @@
 from rest_framework.filters import BaseFilterBackend
 
-from .models import Patient
-
 
 class SortFilter(BaseFilterBackend):
 

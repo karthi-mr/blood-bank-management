@@ -43,7 +43,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private getAllDonorCount(): void {
     this.isLoading = true;
-    this.adminService.get_total_donor().subscribe({
+    this.adminService.totalDonor().subscribe({
       next: (data: { total_donor: number }) => {
         this.totalDonor = data.total_donor;
         this.isLoading = false;
@@ -53,7 +53,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private getAllPatientCount(): void {
     this.isLoading = true;
-    this.adminService.get_total_patient().subscribe({
+    this.adminService.totalPatient().subscribe({
       next: (data: { total_patient: number }) => {
         this.totalPatient = data.total_patient;
         this.isLoading = false;
@@ -63,7 +63,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private getAllBloodGroupCount(): void {
     this.isLoading = true;
-    this.adminService.get_stock().subscribe({
+    this.adminService.getStockDetail().subscribe({
       next: (data: BloodStock[]) => {
         this.bloodGroupStocks = data;
         this.isLoading = false;
@@ -73,7 +73,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_donate_blood(): void {
     this.isLoading = true;
-    this.adminService.get_total_donate_blood().subscribe({
+    this.adminService.totalDonateBlood().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonate = data.total_donate;
         this.isLoading = false;
@@ -83,7 +83,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_donate_blood_approved(): void {
     this.isLoading = true;
-    this.adminService.get_total_donate_blood_approved().subscribe({
+    this.adminService.totalDonateBloodApproved().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonateApproved = data.total_donate;
         this.isLoading = false;
@@ -93,7 +93,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_donate_blood_pending(): void {
     this.isLoading = true;
-    this.adminService.get_total_donate_blood_pending().subscribe({
+    this.adminService.totalDonateBloodPending().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonatePending = data.total_donate;
         this.isLoading = false;
@@ -103,7 +103,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_donate_blood_rejected(): void {
     this.isLoading = true;
-    this.adminService.get_total_donate_blood_rejected().subscribe({
+    this.adminService.totalDonateBloodRejected().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonateRejected = data.total_donate;
         this.isLoading = false;
@@ -113,7 +113,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_request_blood(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood().subscribe({
+    this.adminService.totalRequestBlood().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequest = data.total_request;
         this.isLoading = false;
@@ -123,7 +123,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_request_blood_approved(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_approved().subscribe({
+    this.adminService.totalRequestBloodApproved().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestApproved = data.total_request;
         this.isLoading = false;
@@ -133,7 +133,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_request_blood_pending(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_pending().subscribe({
+    this.adminService.totalRequestBloodPending().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestPending = data.total_request;
         this.isLoading = false;
@@ -143,7 +143,7 @@ export class AdminDashboardComponent implements OnInit {
 
   private get_total_request_blood_rejected(): void {
     this.isLoading = true;
-    this.adminService.get_total_request_blood_rejected().subscribe({
+    this.adminService.totalRequestBloodRejected().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestRejected = data.total_request;
         this.isLoading = false;

@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .validators import UnicodeUsernameValidator
+
 USER_TYPE = [
     (1, 'admin'),
     (2, 'donor'),
@@ -9,6 +11,8 @@ USER_TYPE = [
 
 
 class User(AbstractUser):
+    username = models.CharField(max_length=150, unique=True, validators=[
+                                UnicodeUsernameValidator()], error_messages={'unique': "USER_ALREADY_PRESENT"})
     email = models.EmailField()
     mobile = models.CharField(max_length=10)
     user_type = models.IntegerField(choices=USER_TYPE)

@@ -4,8 +4,13 @@
 </button>
 
 <div class="container" *ngIf="admin">
-  <p class="h2 text-success">Kindly find the details of admin</p>
-  <h1 class="text-primary">Username : {{ admin.user.username }}</h1>
+  <p class="h2 text-success">
+    Kindly find the details of
+    <span class="text-secondary">{{ admin.user.username }}</span>
+  </p>
+  <h3>
+    Username : <span class="text-primary">{{ admin.user.username }}</span>
+  </h3>
   <p class="text-capitalize">
     first name : {{ admin.user.first_name | emptyData }}
   </p>

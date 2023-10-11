@@ -28,7 +28,7 @@ export class AddBloodComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-    this.adminService.add_blood_group(this.addBloodForm.value).subscribe({
+    this.adminService.addBloodGroup(this.addBloodForm.value).subscribe({
       next: (data: any) => {
         this.router.navigate(['../blood-stock'], { relativeTo: this.route });
       },

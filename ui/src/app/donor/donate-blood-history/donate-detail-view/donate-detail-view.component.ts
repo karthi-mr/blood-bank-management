@@ -61,7 +61,7 @@ export class DonateDetailViewComponent implements OnInit {
       .subscribe({
         next: (data: any) => {
           this.adminService
-            .update_stock({ blood_group: blood_group.id, unit: unit })
+            .updateStock({ blood_group: blood_group.id, unit: unit })
             .subscribe({
               next: (data: any) => {
                 this.router.navigate(['admin', 'donate-blood']);

@@ -1,6 +1,8 @@
 <div class="auth-forms">
+  <!-- loading -->
+  <app-loading *ngIf="isLoading"></app-loading>
   <!-- admin form -->
-  <div id="register" class="container">
+  <div id="register" class="container" *ngIf="!isLoading">
     <div class="alert alert-danger" *ngIf="errorMessage">
       <p class="h4">
         {{ errorMessage }}

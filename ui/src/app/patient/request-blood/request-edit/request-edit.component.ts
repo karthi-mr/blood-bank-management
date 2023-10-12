@@ -5,6 +5,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { PatientService } from '../../patient.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Branch, RequestBlood } from '../../patient.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-request-edit',
@@ -16,6 +17,7 @@ export class RequestEditComponent {
   bloodGroups: BloodGroup[] = [];
   branches: Branch[] = [];
   selectedBranch!: Branch;
+  errorMessage: string | undefined;
 
   constructor(
     private sharedService: SharedService,
@@ -69,11 +71,12 @@ export class RequestEditComponent {
   }
 
   onSubmitBloodRequestForm(): void {
-    const donateBlood: RequestBlood = this.requestBloodForm.value;
-
     this.patientService.request_blood(this.requestBloodForm.value).subscribe({
       next: (data: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
       },
     });
   }
@@ -88,5 +91,9 @@ export class RequestEditComponent {
         this.selectedBranch = data;
       },
     });
+  }
+
+  onCloseError(): void {
+    this.errorMessage = undefined;
   }
 }

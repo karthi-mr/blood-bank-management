@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { BloodGroup } from 'src/app/shared/shared.model';
 import { BloodStock } from '../admin.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -22,12 +23,16 @@ export class AdminDashboardComponent implements OnInit {
   totalRequestApproved: number = 0;
   totalRequestPending: number = 0;
   totalRequestRejected: number = 0;
-
   isLoading: boolean = false;
+  errorMessage: string | undefined;
 
   constructor(private adminService: AdminService) {}
 
   ngOnInit(): void {
+    this.loadData();
+  }
+
+  private loadData(): void {
     this.getAllBloodGroupCount();
     this.getAllDonorCount();
     this.getAllPatientCount();
@@ -48,6 +53,10 @@ export class AdminDashboardComponent implements OnInit {
         this.totalDonor = data.total_donor;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
@@ -56,6 +65,10 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.totalPatient().subscribe({
       next: (data: { total_patient: number }) => {
         this.totalPatient = data.total_patient;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -68,6 +81,10 @@ export class AdminDashboardComponent implements OnInit {
         this.bloodGroupStocks = data;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
@@ -76,6 +93,10 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.totalDonateBlood().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonate = data.total_donate;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -88,6 +109,10 @@ export class AdminDashboardComponent implements OnInit {
         this.totalDonateApproved = data.total_donate;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
@@ -96,6 +121,10 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.totalDonateBloodPending().subscribe({
       next: (data: { total_donate: number }) => {
         this.totalDonatePending = data.total_donate;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -108,6 +137,10 @@ export class AdminDashboardComponent implements OnInit {
         this.totalDonateRejected = data.total_donate;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
@@ -116,6 +149,10 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.totalRequestBlood().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequest = data.total_request;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -128,6 +165,10 @@ export class AdminDashboardComponent implements OnInit {
         this.totalRequestApproved = data.total_request;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
@@ -136,6 +177,10 @@ export class AdminDashboardComponent implements OnInit {
     this.adminService.totalRequestBloodPending().subscribe({
       next: (data: { total_request: number }) => {
         this.totalRequestPending = data.total_request;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -148,6 +193,15 @@ export class AdminDashboardComponent implements OnInit {
         this.totalRequestRejected = data.total_request;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
+  }
+
+  onClickReload(): void {
+    this.errorMessage = undefined;
+    this.loadData();
   }
 }

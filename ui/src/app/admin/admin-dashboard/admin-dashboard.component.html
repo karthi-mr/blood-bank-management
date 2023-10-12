@@ -1,6 +1,14 @@
 <app-loading *ngIf="isLoading"></app-loading>
 
-<div *ngIf="!isLoading">
+<!-- error message -->
+<div class="alert alert-danger mt-3 mx-4" *ngIf="errorMessage">
+  <p class="h3">{{ errorMessage }}</p>
+  <button type="button" class="btn btn-success" (click)="onClickReload()">
+    Reload Data
+  </button>
+</div>
+
+<div *ngIf="!isLoading && !errorMessage">
   <p class="display-5 text-primary text-center text-uppercase my-4">
     {{ title }}
   </p>

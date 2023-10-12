@@ -4,7 +4,14 @@
     <i class="fa-regular fa-face-grin-beam ms-2"></i>
   </h1>
 </div>
-
+<!-- error message -->
+<div class="alert alert-danger mt-3 mx-5" *ngIf="errorMessage">
+  <p class="h3">{{ errorMessage }}</p>
+  <button type="button" class="btn btn-danger" (click)="onCloseError()">
+    Close
+  </button>
+</div>
+<!-- form -->
 <div class="container" id="bloodDonateForm">
   <h1 class="text-primary">Please Fill the form to donate blood</h1>
   <form [formGroup]="donateBloodForm" (ngSubmit)="onSubmitBloodDonateForm()">

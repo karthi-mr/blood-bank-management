@@ -51,23 +51,21 @@ export class RejectRequestComponent implements OnInit {
         });
     } else if (this.type == 'blood-donate') {
       // update status
-      this.donorService
-        .update_status_donate_requests({ id: this.id, status: 3 })
-        .subscribe({
-          next: (data: any) => {
-            // update reason
-            this.donorService
-              .update_reject_reason_requests({
-                id: this.id,
-                reject_reason: this.reason,
-              })
-              .subscribe({
-                next: (data: any) => {
-                  this.router.navigate(['../../'], { relativeTo: this.route });
-                },
-              });
-          },
-        });
+      this.donorService.updateStatus({ id: this.id, status: 3 }).subscribe({
+        next: (data: any) => {
+          // update reason
+          this.donorService
+            .updateRejectReason({
+              id: this.id,
+              reject_reason: this.reason,
+            })
+            .subscribe({
+              next: (data: any) => {
+                this.router.navigate(['../../'], { relativeTo: this.route });
+              },
+            });
+        },
+      });
     }
   }
 }

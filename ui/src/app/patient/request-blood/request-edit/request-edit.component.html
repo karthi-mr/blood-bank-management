@@ -1,10 +1,11 @@
-<!-- <div class="mt-3">
-  <h1 class="text-secondary text-center">
-    Thanks for Requesting your blood.
-    <i class="fa-regular fa-face-grin-beam ms-2"></i>
-  </h1>
-</div> -->
-
+<!-- error message -->
+<div class="alert alert-danger mt-3 mx-5" *ngIf="errorMessage">
+  <p class="h3">{{ errorMessage }}</p>
+  <button type="button" class="btn btn-danger" (click)="onCloseError()">
+    Close
+  </button>
+</div>
+<!-- form -->
 <div class="container mt-4" id="bloodDonateForm">
   <h1 class="text-primary text-capitalize">
     Please Fill the form to request blood

@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import {
   BloodRequestHistoryView,
   PatientHistory,
   RequestBlood,
 } from './patient.model';
+import { PatientErrorService } from './patient-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,10 @@ export class PatientService {
   private readonly BLOOD_REQUEST_REQUEST_API =
     'http://127.0.0.1:8000/api/blood-request/';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private patientErrorService: PatientErrorService
+  ) {}
 
   get_blood_request_history(
     link: string | null,
@@ -35,7 +39,9 @@ export class PatientService {
   }
 
   request_blood(data: RequestBlood): any {
-    return this.http.post(`${this.BLOOD_REQUEST_REQUEST_API}`, data);
+    return this.http
+      .post(`${this.BLOOD_REQUEST_REQUEST_API}`, data)
+      .pipe(catchError(this.patientErrorService.requestBloodErrorHandle));
   }
 
   update_status_donate_requests(data: { id: number; status: number }): any {

@@ -1,10 +1,11 @@
-import { DonateBlood } from './../../donor.model';
-import { SharedService } from './../../../shared/shared.service';
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BloodGroup, Branch } from 'src/app/shared/shared.model';
 import { DonorService } from '../../donor.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { SharedService } from './../../../shared/shared.service';
+import { DonateBlood } from './../../donor.model';
 
 @Component({
   selector: 'app-donate-edit',
@@ -16,6 +17,7 @@ export class DonateEditComponent implements OnInit {
   bloodGroups: BloodGroup[] = [];
   branches: Branch[] = [];
   selectedBranch!: Branch;
+  errorMessage: string | undefined;
 
   constructor(
     private sharedService: SharedService,
@@ -73,15 +75,22 @@ export class DonateEditComponent implements OnInit {
       donateBlood.disease = 'Nothing';
     }
 
-    this.donorService.donate_blood(this.donateBloodForm.value).subscribe({
+    this.donorService.donateBlood(this.donateBloodForm.value).subscribe({
       next: (data: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
       },
     });
   }
 
   onClickCancel(): void {
     this.router.navigate(['../'], { relativeTo: this.route });
+  }
+
+  onCloseError(): void {
+    this.errorMessage = undefined;
   }
 
   onGetBranchDetail(id: number): void {

@@ -21,10 +21,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_mobile(self, attrs):
         if User.objects.filter(mobile=attrs) and self.parent and self.parent.instance == None:
-            raise ValidationError(
-                "MOBILE_ALREADY_PRESENT")
+            raise ValidationError("MOBILE_ALREADY_PRESENT")
         if not attrs.isdigit():
-            # raise ValidationError("Mobile number must contain digits only.")
             raise ValidationError("OTHER_THAN_NUMBER")
         if len(attrs) != 10:
             raise ValidationError("LENGTH_NOT_TEN")

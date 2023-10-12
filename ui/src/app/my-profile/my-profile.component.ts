@@ -22,7 +22,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   loadProfileData(): void {
-    this.profileService.get_my_profile().subscribe({
+    this.profileService.myProfile().subscribe({
       next: (data: MyProfile) => {
         this.myProfile = data;
         this.initProfileForm();
@@ -73,7 +73,7 @@ export class MyProfileComponent implements OnInit {
     this.profileForm.value['id'] = this.myProfile.user.id;
     this.profileForm.value['user']['user_type'] =
       this.myProfile.user.user.user_type;
-    this.profileService.update_user(this.profileForm.value).subscribe({
+    this.profileService.updateUser(this.profileForm.value).subscribe({
       next: (data: any) => {
         this.successMessage = data.detail;
         this.loadProfileData();

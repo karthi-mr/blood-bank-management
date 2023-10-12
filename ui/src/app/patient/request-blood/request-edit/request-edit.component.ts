@@ -33,7 +33,7 @@ export class RequestEditComponent {
   }
 
   getBloodGroup(): void {
-    this.sharedService.get_blood_group().subscribe({
+    this.sharedService.bloodGroupList().subscribe({
       next: (data: any) => {
         this.bloodGroups = data;
       },
@@ -41,7 +41,7 @@ export class RequestEditComponent {
   }
 
   getBranch(): void {
-    this.sharedService.get_branch().subscribe({
+    this.sharedService.branchList().subscribe({
       next: (data: any) => {
         this.branches = data;
       },
@@ -71,7 +71,7 @@ export class RequestEditComponent {
   }
 
   onSubmitBloodRequestForm(): void {
-    this.patientService.request_blood(this.requestBloodForm.value).subscribe({
+    this.patientService.requestBlood(this.requestBloodForm.value).subscribe({
       next: (data: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
       },
@@ -86,7 +86,7 @@ export class RequestEditComponent {
   }
 
   onGetBranchDetail(id: number): void {
-    this.sharedService.get_branch_detail(id).subscribe({
+    this.sharedService.branchDetail(id).subscribe({
       next: (data: Branch) => {
         this.selectedBranch = data;
       },

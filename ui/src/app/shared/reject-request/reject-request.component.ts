@@ -33,12 +33,12 @@ export class RejectRequestComponent implements OnInit {
     if (this.type == 'blood-request') {
       // update status
       this.patientService
-        .update_status_donate_requests({ id: this.id, status: 3 })
+        .updateRequestStatus({ id: this.id, status: 3 })
         .subscribe({
           next: (data: any) => {
             // update reason
             this.patientService
-              .update_reject_reason_requests({
+              .updateRequestRejectReason({
                 id: this.id,
                 reject_reason: this.reason,
               })

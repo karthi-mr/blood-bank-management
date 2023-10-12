@@ -17,7 +17,7 @@ export class LogoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.message = 'You have been logged out successfully.';
-    this.authService.logout_user();
+    this.authService.logoutUser();
 
     this.interval = setInterval(() => {
       this.time--;

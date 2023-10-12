@@ -30,13 +30,13 @@ export class RequestBloodComponent implements OnInit {
 
   getAllBloodRequestRequests(): void {
     this.isLoading = true;
-    this.patientService.get_blood_request_requests().subscribe({
+    this.patientService.bloodRequestList().subscribe({
       next: (data: PatientHistory[]) => {
         this.bloodRequests = data;
         this.isLoading = false;
       },
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   onClickRequestBlood(): void {

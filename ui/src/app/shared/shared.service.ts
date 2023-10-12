@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, Subject, tap } from 'rxjs';
 import { BloodGroup, Branch } from './shared.model';
-import { Observable, Subject, Subscription, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -25,7 +25,7 @@ export class SharedService {
     return page;
   }
 
-  get_blood_group(): Observable<BloodGroup[]> {
+  bloodGroupList(): Observable<BloodGroup[]> {
     return this.http.get<BloodGroup[]>(`${this.BLOOD_GROUP_API}`).pipe(
       tap((data: BloodGroup[]) => {
         this.blood_groups.next(data);
@@ -34,7 +34,7 @@ export class SharedService {
     );
   }
 
-  get_branch(): Observable<Branch[]> {
+  branchList(): Observable<Branch[]> {
     return this.http.get<Branch[]>(`${this.BRANCH_API}`).pipe(
       tap((data: Branch[]) => {
         this.branches = data;
@@ -42,11 +42,11 @@ export class SharedService {
     );
   }
 
-  get_branch_detail(id: number): Observable<Branch> {
+  branchDetail(id: number): Observable<Branch> {
     return this.http.get<Branch>(`${this.BRANCH_API}${id}/`);
   }
 
-  get_tabs(): any {
+  tabsList(): any {
     return this.http.get(`${this.TABS_API}`);
   }
 }

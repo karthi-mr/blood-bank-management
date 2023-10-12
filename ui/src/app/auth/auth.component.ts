@@ -30,7 +30,7 @@ export class AuthComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLoginForm();
     this.initRegisterForm();
-    this.sharedService.get_blood_group().subscribe();
+    this.sharedService.bloodGroupList().subscribe();
     this.bloodGroupSubscription = this.sharedService.blood_groups.subscribe(
       (data: BloodGroup[]) => {
         this.bloodGroups = data;
@@ -68,7 +68,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmitLoginForm(): void {
     this.isLoading = true;
-    this.authService.login_user(this.loginForm.value).subscribe({
+    this.authService.loginUser(this.loginForm.value).subscribe({
       next: (data: any) => {
         this.isLoading = false;
       },
@@ -81,7 +81,7 @@ export class AuthComponent implements OnInit, OnDestroy {
 
   onSubmitRegisterForm(): void {
     this.isLoading = true;
-    this.authService.register_user(this.registerForm.value).subscribe({
+    this.authService.registerUser(this.registerForm.value).subscribe({
       next: (data: { message: string }) => {
         this.isLoading = false;
         this.registerSuccessMessage = data.message;

@@ -18,7 +18,7 @@ export class AuthService {
   ) {}
 
   /* login user */
-  login_user(loginUser: LoginUser): any {
+  loginUser(loginUser: LoginUser): any {
     return this.http.post<AuthToken>(`${this.AUTH_API}login/`, loginUser).pipe(
       catchError(this.authErrorService.loginErrorHandle),
       tap((resData: AuthToken) => {
@@ -30,7 +30,7 @@ export class AuthService {
   }
 
   /* register user */
-  register_user(data: RegisterUser): Observable<{ message: string }> {
+  registerUser(data: RegisterUser): Observable<{ message: string }> {
     if (data.user.user_type == 2) {
       return this.http
         .post<{ message: string }>(`${this.AUTH_API}donor/`, data)
@@ -43,7 +43,7 @@ export class AuthService {
   }
 
   /* logout user */
-  logout_user(): void {
+  logoutUser(): void {
     localStorage.removeItem('access');
     localStorage.removeItem('refresh');
     this.isLoggedIn.next(false);
@@ -70,7 +70,7 @@ export class AuthService {
           this.refresh_access_token(this.get_refresh_token());
           return true;
         } else {
-          this.logout_user();
+          this.logoutUser();
           return false;
         }
       } else {
@@ -129,13 +129,13 @@ export class AuthService {
   }
 
   /* get login user user type */
-  get_user_type(): number | undefined {
+  userType(): number | undefined {
     const token = this.get_access_token();
     return this.decode_token(token)?.user_type;
   }
 
   /* get login user profile name */
-  get_profile_name(): string | undefined {
+  profileName(): string | undefined {
     const token = this.get_access_token();
     return this.decode_token(token)?.username;
   }

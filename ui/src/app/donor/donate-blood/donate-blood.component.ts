@@ -33,7 +33,7 @@ export class DonateBloodComponent implements OnInit {
         this.isLoading = false;
       },
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   onClickDonateBlood(): void {

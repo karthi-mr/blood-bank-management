@@ -36,7 +36,7 @@ export class DonateDetailViewComponent implements OnInit {
         this.isPending = false;
       }
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   loadData(id: number): void {

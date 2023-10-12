@@ -1,12 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
+import { PatientErrorService } from './patient-error.service';
 import {
   BloodRequestHistoryView,
   PatientHistory,
   RequestBlood,
 } from './patient.model';
-import { PatientErrorService } from './patient-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -22,7 +22,7 @@ export class PatientService {
     private patientErrorService: PatientErrorService
   ) {}
 
-  get_blood_request_history(
+  bloodRequestHistoryList(
     link: string | null,
     order: string | null
   ): Observable<BloodRequestHistoryView> {
@@ -34,34 +34,31 @@ export class PatientService {
     );
   }
 
-  get_blood_request_requests(): Observable<PatientHistory[]> {
+  bloodRequestList(): Observable<PatientHistory[]> {
     return this.http.get<PatientHistory[]>(`${this.BLOOD_REQUEST_REQUEST_API}`);
   }
 
-  request_blood(data: RequestBlood): any {
+  requestBlood(data: RequestBlood): any {
     return this.http
       .post(`${this.BLOOD_REQUEST_REQUEST_API}`, data)
       .pipe(catchError(this.patientErrorService.requestBloodErrorHandle));
   }
 
-  update_status_donate_requests(data: { id: number; status: number }): any {
+  updateRequestStatus(data: { id: number; status: number }): any {
     return this.http.patch(
       `${this.BLOOD_REQUEST_REQUEST_API}update_status/`,
       data
     );
   }
 
-  update_reject_reason_requests(data: {
-    id: number;
-    reject_reason: string;
-  }): any {
+  updateRequestRejectReason(data: { id: number; reject_reason: string }): any {
     return this.http.patch(
       `${this.BLOOD_REQUEST_REQUEST_API}update_reason/`,
       data
     );
   }
 
-  get_blood_request_history_detail(
+  bloodRequestHistoryDetail(
     id: number
   ): Observable<{ result: PatientHistory }> {
     return this.http.get<{ result: PatientHistory }>(

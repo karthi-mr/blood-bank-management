@@ -51,7 +51,7 @@ export class RequestBloodHistoryComponent implements OnInit {
   getRequestHistory(order: string): void {
     this.sortOrder = order;
     this.isLoading = true;
-    this.patientService.get_blood_request_history(null, order).subscribe({
+    this.patientService.bloodRequestHistoryList(null, order).subscribe({
       next: (data: BloodRequestHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -67,41 +67,37 @@ export class RequestBloodHistoryComponent implements OnInit {
 
   onNext(): void {
     this.isLoading = true;
-    this.patientService
-      .get_blood_request_history(this.nextLink, null)
-      .subscribe({
-        next: (data: BloodRequestHistoryView) => {
-          this.nextLink = data.links.next;
-          this.prevLink = data.links.previous;
-          this.requestHistory = data.results;
-          this.total = this.calculateTotalPage(data.total);
-          this.totalCount = data.total;
-          this.page += 1;
-          this.valueCount += data.count;
-          this.isLoading = false;
-        },
-      });
+    this.patientService.bloodRequestHistoryList(this.nextLink, null).subscribe({
+      next: (data: BloodRequestHistoryView) => {
+        this.nextLink = data.links.next;
+        this.prevLink = data.links.previous;
+        this.requestHistory = data.results;
+        this.total = this.calculateTotalPage(data.total);
+        this.totalCount = data.total;
+        this.page += 1;
+        this.valueCount += data.count;
+        this.isLoading = false;
+      },
+    });
   }
 
   onPrev(): void {
     this.isLoading = true;
-    this.patientService
-      .get_blood_request_history(this.prevLink, null)
-      .subscribe({
-        next: (data: BloodRequestHistoryView) => {
-          this.nextLink = data.links.next;
-          this.prevLink = data.links.previous;
-          this.requestHistory = data.results;
-          this.total = this.calculateTotalPage(data.total);
-          this.totalCount = data.total;
-          this.page -= 1;
-          this.valueCount -= data.count;
-          if (this.valueCount % 50 != 0) {
-            this.valueCount = (this.page - 1) * 50;
-          }
-          this.isLoading = false;
-        },
-      });
+    this.patientService.bloodRequestHistoryList(this.prevLink, null).subscribe({
+      next: (data: BloodRequestHistoryView) => {
+        this.nextLink = data.links.next;
+        this.prevLink = data.links.previous;
+        this.requestHistory = data.results;
+        this.total = this.calculateTotalPage(data.total);
+        this.totalCount = data.total;
+        this.page -= 1;
+        this.valueCount -= data.count;
+        if (this.valueCount % 50 != 0) {
+          this.valueCount = (this.page - 1) * 50;
+        }
+        this.isLoading = false;
+      },
+    });
   }
 
   onFullPrev(): void {
@@ -122,7 +118,7 @@ export class RequestBloodHistoryComponent implements OnInit {
       if (this.totalCount) dCount = this.totalCount - 50;
     }
     const link = `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
-    this.patientService.get_blood_request_history(link, null).subscribe({
+    this.patientService.bloodRequestHistoryList(link, null).subscribe({
       next: (data: BloodRequestHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;

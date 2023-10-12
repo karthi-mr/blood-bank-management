@@ -36,11 +36,11 @@ export class RequestDetailViewComponent implements OnInit {
         this.isPending = false;
       }
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   loadData(id: number): void {
-    this.patientService.get_blood_request_history_detail(id).subscribe({
+    this.patientService.bloodRequestHistoryDetail(id).subscribe({
       next: (data: { result: PatientHistory }) => {
         this.patientHistoryDetail = data.result;
       },
@@ -62,7 +62,7 @@ export class RequestDetailViewComponent implements OnInit {
         next: (data: { unit_available: boolean }) => {
           if (data.unit_available) {
             this.patientService
-              .update_status_donate_requests({ id: id, status: 1 })
+              .updateRequestStatus({ id: id, status: 1 })
               .subscribe({
                 next: (data: any) => {
                   this.adminService

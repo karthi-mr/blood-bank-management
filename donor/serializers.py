@@ -1,6 +1,8 @@
+from datetime import date
 
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
+from rest_framework.validators import ValidationError
 
 from auth.serializers import UserSerializer
 from blood.models import BloodGroup
@@ -16,6 +18,11 @@ class DonorSerializer(serializers.ModelSerializer):
                                                   slug_field='id',
                                                   write_only=True)
 
+    def validate_date_of_birth(self, attrs):
+        if date.today() < attrs:
+            raise ValidationError("INVALID_DOB")
+        return attrs
+
     class Meta:
         model = Donor
         fields = '__all__'
@@ -30,6 +37,7 @@ class DonorSerializer(serializers.ModelSerializer):
             user = userSerializer.save()
 
         """ creating donor """
+        self.validate_date_of_birth(validated_data['date_of_birth'])
         validated_data['user'] = user
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
         instance = Donor.objects.create(**validated_data)

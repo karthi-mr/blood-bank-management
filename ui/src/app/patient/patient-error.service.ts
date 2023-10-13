@@ -25,6 +25,12 @@ export class PatientErrorService {
       if (requestBloodError.unit) {
         error = requestBloodError.unit[0];
       }
+      if (requestBloodError.patient_name) {
+        error = requestBloodError.patient_name[0];
+      }
+      if (requestBloodError.reason) {
+        error = requestBloodError.reason[0];
+      }
     }
 
     switch (error) {
@@ -38,6 +44,9 @@ export class PatientErrorService {
       case 'UNIT_GREATER_THAN_20':
         errorMessage =
           'Unit should not be greater than 20. If any issue, please contact support.';
+        break;
+      case 'MAX_LIMIT_EXCEED':
+        errorMessage = 'Maximum Character Limit exceeded';
         break;
       default:
         errorMessage = 'An unknown error occurred.';

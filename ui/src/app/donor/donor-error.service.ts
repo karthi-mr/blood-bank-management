@@ -25,6 +25,9 @@ export class DonorErrorService {
       if (donateBloodError.unit) {
         error = donateBloodError.unit[0];
       }
+      if (donateBloodError.disease) {
+        error = donateBloodError.disease[0];
+      }
     }
 
     switch (error) {
@@ -41,6 +44,36 @@ export class DonorErrorService {
         break;
       case 'UNIT_GREATER_THAN_2':
         errorMessage = 'Unit should not be greater than 2.';
+        break;
+      case 'LENGTH_LIMIT_EXCEED':
+        errorMessage = 'Disease length must be less than 100 characters.';
+        break;
+      default:
+        errorMessage = 'An unknown error occurred';
+    }
+    return throwError(() => new Error(errorMessage));
+  }
+
+  rejectErrorHandle(errorRes: HttpErrorResponse) {
+    let error = 'UNKNOWN_ERROR';
+    let errorMessage: string | undefined;
+    const rejectError = errorRes.error;
+
+    if (errorRes.status == 0 && errorRes.error instanceof ProgressEvent) {
+      error = 'NETWORK_ISSUE';
+    }
+    if (rejectError) {
+      if (rejectError.reject_reason) {
+        error = rejectError.reject_reason;
+      }
+    }
+
+    switch (error) {
+      case 'NETWORK_ISSUE':
+        errorMessage = 'Kindly check your network.';
+        break;
+      case 'MAX_LIMIT_EXCEED':
+        errorMessage = 'Maximum character limit reached.';
         break;
       default:
         errorMessage = 'An unknown error occurred';

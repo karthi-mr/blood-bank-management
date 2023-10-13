@@ -44,7 +44,14 @@ class UserSerializer(serializers.ModelSerializer):
                   'mobile', 'user_type', 'address', 'password', 'last_login')
         read_only_fields = ('last_login', 'user_type')
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'first_name': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'last_name': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'username': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'email': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED", 'invalid': "INVALID_EMAIL"}},
+            'mobile': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'password': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'address': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
         }
 
     def create(self, validated_data):

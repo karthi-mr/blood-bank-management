@@ -4,7 +4,7 @@
 </button>
 
 <!-- donor history detail -->
-<div class="container" *ngIf="donorHistoryDetail">
+<div class="container text-break mb-5" *ngIf="donorHistoryDetail">
   <div
     class="pending-status my-3 text-center"
     *ngIf="isPending && userType == 1"
@@ -139,7 +139,9 @@
           <!-- reject reason -->
           <p class="mt-3" *ngIf="donorHistoryDetail.status == 3">
             <span class="text-capitalize">reason for rejection</span> :
-            {{ donorHistoryDetail.reject_reason }}
+            <span class="text-bg-secondary">{{
+              donorHistoryDetail.reject_reason
+            }}</span>
           </p>
         </div>
       </div>

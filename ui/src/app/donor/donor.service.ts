@@ -44,7 +44,9 @@ export class DonorService {
   }
 
   updateRejectReason(data: { id: number; reject_reason: string }): any {
-    return this.http.patch(`${this.BLOOD_DONATE_API}update_reason/`, data);
+    return this.http
+      .patch(`${this.BLOOD_DONATE_API}update_reason/`, data)
+      .pipe(catchError(this.donorErrorService.rejectErrorHandle));
   }
 
   donateBloodHistoryDetail(id: number): Observable<{ result: DonateHistory }> {

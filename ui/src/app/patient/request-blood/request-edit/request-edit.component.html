@@ -6,56 +6,79 @@
   </button>
 </div>
 <!-- form -->
-<div class="container mt-4" id="bloodDonateForm">
+<div class="container my-5" id="bloodDonateForm">
   <h1 class="text-primary text-capitalize">
     Please Fill the form to request blood
   </h1>
   <form [formGroup]="requestBloodForm" (ngSubmit)="onSubmitBloodRequestForm()">
     <!-- patient_name -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="patient_name" class="form-label">Patient Name</label>
       <input
         type="text"
         class="form-control shadow-none"
         id="patient_name"
         placeholder=""
+        maxlength="50"
         formControlName="patient_name"
       />
-      <label for="patient_name">Patient Name</label>
+      <span
+        class="text-danger"
+        *ngIf="requestBloodForm.value.patient_name.length > 50"
+      >
+        MAximum limit exceeded.
+      </span>
     </div>
     <!-- patient_age -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="patient_age" class="form-label">Patient Age</label>
       <input
         type="number"
         class="form-control shadow-none"
         id="patient_age"
         placeholder=""
+        max="120"
         formControlName="patient_age"
       />
-      <label for="patient_age">Patient Age</label>
+      <span
+        class="text-danger"
+        *ngIf="requestBloodForm.value.patient_age > 120"
+      >
+        Age should not greater than 120.
+      </span>
     </div>
     <!-- reason -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="reason" class="form-label">Reason</label>
       <input
         type="text"
         class="form-control shadow-none"
         id="reason"
         placeholder=""
+        maxlength="150"
         formControlName="reason"
       />
-      <label for="reason">Reason</label>
+      <span class="text-danger" *ngIf="requestBloodForm.value.reason > 150">
+        Maximum limit exceeded.
+      </span>
     </div>
     <!-- unit -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="unit" class="form-label">Unit</label>
       <input
         type="number"
         class="form-control shadow-none"
         id="unit"
         placeholder=""
+        max="20"
         formControlName="unit"
       />
-      <label for="unit">Unit</label>
+      <span class="text-danger" *ngIf="requestBloodForm.value.unit > 20">
+        Unit should not greater than 20.
+      </span>
     </div>
     <!-- blood_group -->
+    <label for="blood_group" class="form-label">Blood Group</label>
     <select
       class="form-select shadow-none mb-3"
       formControlName="blood_group_id"
@@ -66,6 +89,7 @@
       </option>
     </select>
     <!-- branch -->
+    <label for="branch" class="form-label">Branch</label>
     <select
       class="form-select shadow-none mb-3"
       formControlName="request_branch_id"

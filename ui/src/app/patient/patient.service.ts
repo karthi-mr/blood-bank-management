@@ -7,6 +7,7 @@ import {
   PatientHistory,
   RequestBlood,
 } from './patient.model';
+import { DonorErrorService } from '../donor/donor-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +20,8 @@ export class PatientService {
 
   constructor(
     private http: HttpClient,
-    private patientErrorService: PatientErrorService
+    private patientErrorService: PatientErrorService,
+    private donorErrorService: DonorErrorService
   ) {}
 
   bloodRequestHistoryList(
@@ -52,10 +54,9 @@ export class PatientService {
   }
 
   updateRequestRejectReason(data: { id: number; reject_reason: string }): any {
-    return this.http.patch(
-      `${this.BLOOD_REQUEST_REQUEST_API}update_reason/`,
-      data
-    );
+    return this.http
+      .patch(`${this.BLOOD_REQUEST_REQUEST_API}update_reason/`, data)
+      .pipe(catchError(this.donorErrorService.rejectErrorHandle));
   }
 
   bloodRequestHistoryDetail(

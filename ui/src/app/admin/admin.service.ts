@@ -11,6 +11,7 @@ import {
   Patient,
   PatientResult,
 } from './admin.model';
+import { AuthErrorService } from '../auth/auth-error.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,7 +32,8 @@ export class AdminService {
 
   constructor(
     private http: HttpClient,
-    private adminErrorService: AdminErrorService
+    private adminErrorService: AdminErrorService,
+    private authErrorService: AuthErrorService
   ) {}
 
   getDonorList(
@@ -97,7 +99,9 @@ export class AdminService {
   }
 
   addBloodGroup(data: { blood_group: string }): any {
-    return this.http.post(`${this.ADD_BLOOD_GROUP_API}`, data);
+    return this.http
+      .post(`${this.ADD_BLOOD_GROUP_API}`, data)
+      .pipe(catchError(this.adminErrorService.addBloodGroupErrorHandle));
   }
 
   totalDonor(): Observable<{ total_donor: number }> {
@@ -191,6 +195,6 @@ export class AdminService {
   addAdmin(data: Admin): Observable<{ message: string }> {
     return this.http
       .post<{ message: string }>(`${this.AUTH_API}admin/`, data)
-      .pipe(catchError(this.adminErrorService.addAdminErrorHandle));
+      .pipe(catchError(this.authErrorService.registerErrorHandle));
   }
 }

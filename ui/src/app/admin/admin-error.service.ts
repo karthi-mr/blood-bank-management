@@ -69,4 +69,35 @@ export class AdminErrorService {
     }
     return throwError(() => new Error(errorMessage));
   }
+
+  addBloodGroupErrorHandle(errorRes: HttpErrorResponse) {
+    let error = 'UNKNOWN_ERROR';
+    let errorMessage: string | undefined;
+    const bloodError = errorRes.error;
+
+    if (errorRes.status == 0 && errorRes.error instanceof ProgressEvent) {
+      error = 'NETWORK_ISSUE';
+    }
+
+    if (bloodError) {
+      if (bloodError.blood_group) {
+        error = bloodError.blood_group[0];
+      }
+    }
+
+    switch (error) {
+      case 'NETWORK_ISSUE':
+        errorMessage = 'Kindly check your network.';
+        break;
+      case 'MAX_LIMIT_EXCEED':
+        errorMessage = 'Blood group maximum limit length exceeded.';
+        break;
+      case 'BLOOD_NOT_UNIQUE':
+        errorMessage = 'Blood Group with this blood group already registered.';
+        break;
+      default:
+        errorMessage = 'An unknown error occurred';
+    }
+    return throwError(() => new Error(errorMessage));
+  }
 }

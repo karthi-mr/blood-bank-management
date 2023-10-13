@@ -17,7 +17,7 @@ export class StockComponent implements OnInit {
   isEditMode: boolean = false;
   blood_group!: BloodGroup;
   blood_unit: number = 0;
-  errorMessage: string | null = null;
+  errorMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -60,6 +60,7 @@ export class StockComponent implements OnInit {
         next: (data: any) => {
           this.getBloodStock();
           this.isEditMode = false;
+          this.errorMessage = undefined;
         },
         error: (errorData: HttpErrorResponse) => {
           this.errorMessage = errorData.error.detail;
@@ -68,7 +69,7 @@ export class StockComponent implements OnInit {
   }
 
   onCloseErrorMessage(): void {
-    this.errorMessage = null;
+    this.errorMessage = undefined;
   }
 
   onClickCancel(): void {

@@ -1,5 +1,11 @@
 <div class="container my-4">
   <p class="h2 text-primary">Kindly update the reason for rejecting request</p>
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    <p class="h3">{{ errorMessage }}</p>
+    <button type="button" class="btn btn-danger" (click)="onCloseError()">
+      Close
+    </button>
+  </div>
   <textarea
     class="form-control shadow-none border-3 border-danger mt-4"
     name="reason"

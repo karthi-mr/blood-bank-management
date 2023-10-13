@@ -4,6 +4,7 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.validators import ValidationError
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from app.pagination import CustomPagination
@@ -148,6 +149,8 @@ class BloodRequestViewSet(GenericViewSet):
     def update_reason(self, request, *args, **kwargs):
         id = request.data.get('id')
         reason_update = request.data.get('reject_reason')
+        if len(reason_update) > 500:
+            raise ValidationError({'reject_reason': "MAX_LIMIT_EXCEED"})
         queryset = get_object_or_404(BloodRequest, id=id)
         try:
             queryset.reject_reason = reason_update
@@ -298,6 +301,8 @@ class BloodDonateViewSet(ModelViewSet):
     def update_reason(self, request):
         id = request.data.get('id')
         reason_update = request.data.get('reject_reason')
+        if len(reason_update) > 500:
+            raise ValidationError({'reject_reason': "MAX_LIMIT_EXCEED"})
         queryset = get_object_or_404(BloodDonate, id=id)
         try:
             queryset.reject_reason = reason_update

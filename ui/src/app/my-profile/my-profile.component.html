@@ -5,6 +5,12 @@
       Close
     </button>
   </div>
+  <div class="message alert alert-danger" *ngIf="errorMessage">
+    <p class="h5">{{ errorMessage }}</p>
+    <button type="button" class="btn btn-danger" (click)="onCloseMessage()">
+      Close
+    </button>
+  </div>
   <form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
     <div formGroupName="user" class="userFormGroup">
       <!-- first & last name -->
@@ -20,6 +26,12 @@
               class="form-control shadow-none"
               formControlName="first_name"
             />
+            <span
+              class="text-danger"
+              *ngIf="profileForm.value.user.first_name.length > 150"
+            >
+              Maximum length limit exceeded. Allowed 150 characters only.
+            </span>
           </div>
         </div>
         <div class="col-lg-6 col-12">
@@ -33,6 +45,12 @@
               class="form-control shadow-none"
               formControlName="last_name"
             />
+            <span
+              class="text-danger"
+              *ngIf="profileForm.value.user.last_name.length > 150"
+            >
+              Maximum length limit exceeded. Allowed 150 characters only.
+            </span>
           </div>
         </div>
       </div>
@@ -69,6 +87,12 @@
           class="form-control shadow-none"
           formControlName="mobile"
         />
+        <span
+          class="text-danger"
+          *ngIf="profileForm.value.user.mobile.length > 10"
+        >
+          Mobile number must contain 10 digits.
+        </span>
       </div>
       <!-- user_type -->
       <div class="user_type mb-3">
@@ -98,6 +122,12 @@
           class="form-control"
           formControlName="address"
         ></textarea>
+        <span
+          class="text-danger"
+          *ngIf="profileForm.value.user.address.length > 500"
+        >
+          Maximum length limit exceeded. Allowed 500 characters only.
+        </span>
       </div>
       <!-- last login -->
       <div class="last_login mb-3">

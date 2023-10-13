@@ -84,6 +84,7 @@ export class AuthComponent implements OnInit, OnDestroy {
     this.authService.registerUser(this.registerForm.value).subscribe({
       next: (data: { message: string }) => {
         this.isLoading = false;
+        this.registerErrorMessage = undefined;
         this.registerSuccessMessage = data.message;
       },
       error: (errorRes: HttpErrorResponse) => {

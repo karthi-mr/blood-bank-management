@@ -1,6 +1,7 @@
 from datetime import date
 
 from django.db import models
+from django.core.validators import MaxLengthValidator
 
 from donor.models import Donor
 from patient.models import Patient
@@ -13,7 +14,8 @@ BLOOD_DONATE_STATUS = [
 
 
 class BloodGroup(models.Model):
-    blood_group = models.CharField(max_length=10, unique=True)
+    blood_group = models.CharField(max_length=10, unique=True, error_messages={
+                                   'unique': "BLOOD_NOT_UNIQUE"})
 
     class Meta:
         db_table = 'bbm_blood_group'
@@ -53,7 +55,7 @@ class BloodRequest(models.Model):
         Donor, on_delete=models.CASCADE, null=True, blank=True)
     patient_name = models.CharField(max_length=50)
     patient_age = models.PositiveIntegerField()
-    reason = models.TextField(max_length=500)
+    reason = models.CharField(max_length=150)
     reject_reason = models.TextField(
         max_length=500, null=True, blank=True, default='')
     request_branch = models.ForeignKey(
@@ -76,8 +78,7 @@ class BloodDonate(models.Model):
     age = models.PositiveIntegerField()
     blood_group = models.ForeignKey(
         BloodGroup, on_delete=models.RESTRICT)
-    reject_reason = models.TextField(
-        max_length=500, null=True, blank=True, default='')
+    reject_reason = models.TextField(null=True, blank=True)
     donate_branch = models.ForeignKey(
         Branch, on_delete=models.PROTECT)
     unit = models.PositiveIntegerField(default=0)

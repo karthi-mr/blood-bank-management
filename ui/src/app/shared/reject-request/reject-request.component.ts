@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonorService } from 'src/app/donor/donor.service';
@@ -12,6 +13,7 @@ export class RejectRequestComponent implements OnInit {
   reason!: string;
   type!: string;
   id!: number;
+  errorMessage: string | undefined;
 
   constructor(
     private donorService: DonorService,
@@ -46,6 +48,9 @@ export class RejectRequestComponent implements OnInit {
                 next: (data: any) => {
                   this.router.navigate(['../../'], { relativeTo: this.route });
                 },
+                error: (errorRes: HttpErrorResponse) => {
+                  this.errorMessage = errorRes.message;
+                },
               });
           },
         });
@@ -63,9 +68,16 @@ export class RejectRequestComponent implements OnInit {
               next: (data: any) => {
                 this.router.navigate(['../../'], { relativeTo: this.route });
               },
+              error: (errorRes: HttpErrorResponse) => {
+                this.errorMessage = errorRes.message;
+              },
             });
         },
       });
     }
+  }
+
+  onCloseError(): void {
+    this.errorMessage = undefined;
   }
 }

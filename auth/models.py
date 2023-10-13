@@ -13,7 +13,7 @@ USER_TYPE = [
 class User(AbstractUser):
     username = models.CharField(max_length=150, unique=True, validators=[
                                 UnicodeUsernameValidator()], error_messages={'unique': "USER_ALREADY_PRESENT"})
-    email = models.EmailField()
+    email = models.EmailField(max_length=150)
     mobile = models.CharField(max_length=10)
     user_type = models.IntegerField(choices=USER_TYPE)
     address = models.TextField(max_length=500, null=True, blank=True)

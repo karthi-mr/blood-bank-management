@@ -21,22 +21,21 @@ class UserSerializer(serializers.ModelSerializer):
 
     def validate_mobile(self, attrs):
         if User.objects.filter(mobile=attrs) and self.parent and self.parent.instance == None:
-            raise ValidationError(
-                "A user with that mobile number already exists")
+            raise ValidationError("MOBILE_ALREADY_PRESENT")
         if not attrs.isdigit():
-            raise ValidationError("Mobile number must contain digits only.")
+            raise ValidationError("OTHER_THAN_NUMBER")
         if len(attrs) != 10:
-            raise ValidationError("Mobile number must contain 10 digits.")
+            raise ValidationError("LENGTH_NOT_TEN")
         return attrs
 
     def validate_username(self, attrs):
         if User.objects.filter(username__iexact=attrs) and self.parent and self.parent.instance == None:
-            raise ValidationError("A user with that username already exists")
+            raise ValidationError("USERNAME_ALREADY_PRESENT")
         return attrs
 
     def validate_email(self, attrs):
         if User.objects.filter(email__iexact=attrs) and self.parent and self.parent.instance == None:
-            raise ValidationError("user with this email already exists.")
+            raise ValidationError("EMAIL_ALREADY_PRESENT")
         return attrs.lower()
 
     class Meta:
@@ -45,7 +44,14 @@ class UserSerializer(serializers.ModelSerializer):
                   'mobile', 'user_type', 'address', 'password', 'last_login')
         read_only_fields = ('last_login', 'user_type')
         extra_kwargs = {
-            'password': {'write_only': True}
+            'password': {'write_only': True},
+            'first_name': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'last_name': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'username': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'email': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED", 'invalid': "INVALID_EMAIL"}},
+            'mobile': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'password': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'address': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
         }
 
     def create(self, validated_data):

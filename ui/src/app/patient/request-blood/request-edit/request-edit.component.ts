@@ -5,6 +5,7 @@ import { SharedService } from 'src/app/shared/shared.service';
 import { PatientService } from '../../patient.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Branch, RequestBlood } from '../../patient.model';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-request-edit',
@@ -16,6 +17,7 @@ export class RequestEditComponent {
   bloodGroups: BloodGroup[] = [];
   branches: Branch[] = [];
   selectedBranch!: Branch;
+  errorMessage: string | undefined;
 
   constructor(
     private sharedService: SharedService,
@@ -31,7 +33,7 @@ export class RequestEditComponent {
   }
 
   getBloodGroup(): void {
-    this.sharedService.get_blood_group().subscribe({
+    this.sharedService.bloodGroupList().subscribe({
       next: (data: any) => {
         this.bloodGroups = data;
       },
@@ -39,7 +41,7 @@ export class RequestEditComponent {
   }
 
   getBranch(): void {
-    this.sharedService.get_branch().subscribe({
+    this.sharedService.branchList().subscribe({
       next: (data: any) => {
         this.branches = data;
       },
@@ -69,11 +71,12 @@ export class RequestEditComponent {
   }
 
   onSubmitBloodRequestForm(): void {
-    const donateBlood: RequestBlood = this.requestBloodForm.value;
-
-    this.patientService.request_blood(this.requestBloodForm.value).subscribe({
+    this.patientService.requestBlood(this.requestBloodForm.value).subscribe({
       next: (data: any) => {
         this.router.navigate(['../'], { relativeTo: this.route });
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
       },
     });
   }
@@ -83,10 +86,14 @@ export class RequestEditComponent {
   }
 
   onGetBranchDetail(id: number): void {
-    this.sharedService.get_branch_detail(id).subscribe({
+    this.sharedService.branchDetail(id).subscribe({
       next: (data: Branch) => {
         this.selectedBranch = data;
       },
     });
+  }
+
+  onCloseError(): void {
+    this.errorMessage = undefined;
   }
 }

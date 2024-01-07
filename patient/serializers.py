@@ -1,5 +1,8 @@
+from datetime import date
+
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
+from rest_framework.validators import ValidationError
 
 from auth.serializers import UserSerializer
 from blood.models import BloodGroup
@@ -14,6 +17,11 @@ class PatientSerializer(serializers.ModelSerializer):
     blood_group_id = serializers.SlugRelatedField(queryset=BloodGroup.objects.all(),
                                                   slug_field='id',
                                                   write_only=True)
+
+    def validate_date_of_birth(self, attrs):
+        if date.today() < attrs:
+            raise ValidationError("INVALID_DOB")
+        return attrs
 
     class Meta:
         model = Patient

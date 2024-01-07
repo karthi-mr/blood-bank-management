@@ -3,7 +3,7 @@
   Back
 </button>
 
-<div class="container" *ngIf="patientHistoryDetail">
+<div class="container text-break mb-5" *ngIf="patientHistoryDetail">
   <div
     class="pending-status my-3 text-center"
     *ngIf="isPending && userType == 1"
@@ -137,7 +137,9 @@
           <!-- reject reason -->
           <p class="mt-3" *ngIf="patientHistoryDetail.status == 3">
             <span class="text-capitalize">reason for rejection</span> :
-            {{ patientHistoryDetail.reject_reason }}
+            <span class="text-bg-secondary">{{
+              patientHistoryDetail.reject_reason
+            }}</span>
           </p>
         </div>
       </div>

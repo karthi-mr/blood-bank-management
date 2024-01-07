@@ -24,11 +24,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.getTabs(false);
-    this.username = this.authService.get_profile_name();
+    this.username = this.authService.profileName();
     this.isUserLoggedIn = this.authService.auto_login();
     this.authService.isLoggedIn.subscribe({
       next: (data: boolean) => {
-        this.username = this.authService.get_profile_name();
+        this.username = this.authService.profileName();
         this.isUserLoggedIn = data;
         this.getTabs(true);
       },
@@ -36,7 +36,7 @@ export class HeaderComponent implements OnInit {
   }
 
   getTabs(activate: boolean): void {
-    this.sharedService.get_tabs().subscribe({
+    this.sharedService.tabsList().subscribe({
       next: (data: any) => {
         this.tabs = data;
         if (this.isUserLoggedIn && activate) {

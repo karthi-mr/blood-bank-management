@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-add-blood',
@@ -10,6 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class AddBloodComponent implements OnInit {
   addBloodForm!: FormGroup;
+  errorMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -21,6 +23,10 @@ export class AddBloodComponent implements OnInit {
     this.initForm();
   }
 
+  onCloseError(): void {
+    this.errorMessage = undefined;
+  }
+
   initForm(): void {
     this.addBloodForm = new FormGroup({
       blood_group: new FormControl('', [Validators.required]),
@@ -28,9 +34,13 @@ export class AddBloodComponent implements OnInit {
   }
 
   onSubmitForm(): void {
-    this.adminService.add_blood_group(this.addBloodForm.value).subscribe({
+    this.adminService.addBloodGroup(this.addBloodForm.value).subscribe({
       next: (data: any) => {
-        this.router.navigate(['../blood-stock'], { relativeTo: this.route });
+        this.onCloseError();
+        this.router.navigate(['../'], { relativeTo: this.route });
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
       },
     });
   }

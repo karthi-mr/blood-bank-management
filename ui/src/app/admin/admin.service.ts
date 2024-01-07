@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError } from 'rxjs';
+import { AdminErrorService } from './admin-error.service';
 import {
   Admin,
   AdminResult,
@@ -9,13 +11,13 @@ import {
   Patient,
   PatientResult,
 } from './admin.model';
-import { Observable } from 'rxjs';
+import { AuthErrorService } from '../auth/auth-error.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminService {
-  private readonly USER_API = 'http://127.0.0.1:8000/auth/';
+  private readonly AUTH_API = 'http://127.0.0.1:8000/auth/';
   private readonly BLOOD_STOCK_API = 'http://127.0.0.1:8000/api/blood-stock/';
   private readonly ADD_BLOOD_GROUP_API =
     'http://127.0.0.1:8000/api/blood-group/';
@@ -28,47 +30,65 @@ export class AdminService {
   private readonly TOTAL_PATIENT =
     'http://127.0.0.1:8000/auth/patient/total_patient/';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private adminErrorService: AdminErrorService,
+    private authErrorService: AuthErrorService
+  ) {}
 
-  get_donor(
+  getDonorList(
     link: string | null,
     order: string | null
   ): Observable<DonorResult> {
     if (link) {
-      return this.http.get<DonorResult>(`${link}`);
+      return this.http
+        .get<DonorResult>(`${link}`)
+        .pipe(catchError(this.adminErrorService.commonErrorHandle));
     }
-    return this.http.get<DonorResult>(`${this.USER_API}donor/?${order}`);
+    return this.http
+      .get<DonorResult>(`${this.AUTH_API}donor/?${order}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_admin(
+  getAdminList(
     link: string | null,
     order: string | null
   ): Observable<AdminResult> {
     if (link) {
-      return this.http.get<AdminResult>(`${link}`);
+      return this.http
+        .get<AdminResult>(`${link}`)
+        .pipe(catchError(this.adminErrorService.commonErrorHandle));
     }
-    return this.http.get<AdminResult>(`${this.USER_API}admin/?${order}`);
+    return this.http
+      .get<AdminResult>(`${this.AUTH_API}admin/?${order}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_patient(
+  getPatientList(
     link: string | null,
     order: string | null
   ): Observable<PatientResult> {
     if (link) {
-      return this.http.get<PatientResult>(`${link}`);
+      return this.http
+        .get<PatientResult>(`${link}`)
+        .pipe(catchError(this.adminErrorService.commonErrorHandle));
     }
-    return this.http.get<PatientResult>(`${this.USER_API}patient/?${order}`);
+    return this.http
+      .get<PatientResult>(`${this.AUTH_API}patient/?${order}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_stock(): Observable<BloodStock[]> {
-    return this.http.get<BloodStock[]>(`${this.BLOOD_STOCK_API}`);
+  getStockDetail(): Observable<BloodStock[]> {
+    return this.http
+      .get<BloodStock[]>(`${this.BLOOD_STOCK_API}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  update_stock(data: { blood_group: number; unit: number }): any {
+  updateStock(data: { blood_group: number; unit: number }): any {
     return this.http.patch(`${this.BLOOD_STOCK_API}update_stock/`, data);
   }
 
-  unit_available(data: {
+  unitAvailableCheck(data: {
     blood_group: number;
     unit: number;
   }): Observable<{ unit_available: boolean }> {
@@ -78,79 +98,103 @@ export class AdminService {
     );
   }
 
-  add_blood_group(data: { blood_group: string }): any {
-    return this.http.post(`${this.ADD_BLOOD_GROUP_API}`, data);
+  addBloodGroup(data: { blood_group: string }): any {
+    return this.http
+      .post(`${this.ADD_BLOOD_GROUP_API}`, data)
+      .pipe(catchError(this.adminErrorService.addBloodGroupErrorHandle));
   }
 
-  get_total_donor(): Observable<{ total_donor: number }> {
-    return this.http.get<{ total_donor: number }>(`${this.TOTAL_DONOR}`);
+  totalDonor(): Observable<{ total_donor: number }> {
+    return this.http
+      .get<{ total_donor: number }>(`${this.TOTAL_DONOR}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_patient(): Observable<{ total_patient: number }> {
-    return this.http.get<{ total_patient: number }>(`${this.TOTAL_PATIENT}`);
+  totalPatient(): Observable<{ total_patient: number }> {
+    return this.http
+      .get<{ total_patient: number }>(`${this.TOTAL_PATIENT}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_donate_blood(): Observable<{ total_donate: number }> {
-    return this.http.get<{ total_donate: number }>(
-      `${this.BLOOD_DONATE_COUNT}total_donate/`
-    );
+  totalDonateBlood(): Observable<{ total_donate: number }> {
+    return this.http
+      .get<{ total_donate: number }>(`${this.BLOOD_DONATE_COUNT}total_donate/`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_donate_blood_approved(): Observable<{ total_donate: number }> {
-    return this.http.get<{ total_donate: number }>(
-      `${this.BLOOD_DONATE_COUNT}total_donate_approved/`
-    );
+  totalDonateBloodApproved(): Observable<{ total_donate: number }> {
+    return this.http
+      .get<{ total_donate: number }>(
+        `${this.BLOOD_DONATE_COUNT}total_donate_approved/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_donate_blood_pending(): Observable<{ total_donate: number }> {
-    return this.http.get<{ total_donate: number }>(
-      `${this.BLOOD_DONATE_COUNT}total_donate_pending/`
-    );
+  totalDonateBloodPending(): Observable<{ total_donate: number }> {
+    return this.http
+      .get<{ total_donate: number }>(
+        `${this.BLOOD_DONATE_COUNT}total_donate_pending/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_donate_blood_rejected(): Observable<{ total_donate: number }> {
-    return this.http.get<{ total_donate: number }>(
-      `${this.BLOOD_DONATE_COUNT}total_donate_rejected/`
-    );
+  totalDonateBloodRejected(): Observable<{ total_donate: number }> {
+    return this.http
+      .get<{ total_donate: number }>(
+        `${this.BLOOD_DONATE_COUNT}total_donate_rejected/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_request_blood(): Observable<{ total_request: number }> {
-    return this.http.get<{ total_request: number }>(
-      `${this.BLOOD_REQUEST_COUNT}total_request/`
-    );
+  totalRequestBlood(): Observable<{ total_request: number }> {
+    return this.http
+      .get<{ total_request: number }>(
+        `${this.BLOOD_REQUEST_COUNT}total_request/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_request_blood_approved(): Observable<{ total_request: number }> {
-    return this.http.get<{ total_request: number }>(
-      `${this.BLOOD_REQUEST_COUNT}total_request_approved/`
-    );
+  totalRequestBloodApproved(): Observable<{ total_request: number }> {
+    return this.http
+      .get<{ total_request: number }>(
+        `${this.BLOOD_REQUEST_COUNT}total_request_approved/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_request_blood_pending(): Observable<{ total_request: number }> {
-    return this.http.get<{ total_request: number }>(
-      `${this.BLOOD_REQUEST_COUNT}total_request_pending/`
-    );
+  totalRequestBloodPending(): Observable<{ total_request: number }> {
+    return this.http
+      .get<{ total_request: number }>(
+        `${this.BLOOD_REQUEST_COUNT}total_request_pending/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_total_request_blood_rejected(): Observable<{ total_request: number }> {
-    return this.http.get<{ total_request: number }>(
-      `${this.BLOOD_REQUEST_COUNT}total_request_rejected/`
-    );
+  totalRequestBloodRejected(): Observable<{ total_request: number }> {
+    return this.http
+      .get<{ total_request: number }>(
+        `${this.BLOOD_REQUEST_COUNT}total_request_rejected/`
+      )
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_admin_detail(id: number): Observable<Admin> {
-    return this.http.get<Admin>(`${this.USER_API}admin/${id}`);
+  adminDetail(id: number): Observable<Admin> {
+    return this.http
+      .get<Admin>(`${this.AUTH_API}admin/${id}`)
+      .pipe(catchError(this.adminErrorService.commonErrorHandle));
   }
 
-  get_donor_detail(id: number): Observable<Donor> {
-    return this.http.get<Donor>(`${this.USER_API}donor/${id}`);
+  donorDetail(id: number): Observable<Donor> {
+    return this.http.get<Donor>(`${this.AUTH_API}donor/${id}`);
   }
 
-  get_patient_detail(id: number): Observable<Patient> {
-    return this.http.get<Patient>(`${this.USER_API}patient/${id}`);
+  patientDetail(id: number): Observable<Patient> {
+    return this.http.get<Patient>(`${this.AUTH_API}patient/${id}`);
   }
 
-  add_admin(data: Admin): any {
-    return this.http.post(`${this.USER_API}admin/`, data);
+  addAdmin(data: Admin): Observable<{ message: string }> {
+    return this.http
+      .post<{ message: string }>(`${this.AUTH_API}admin/`, data)
+      .pipe(catchError(this.authErrorService.registerErrorHandle));
   }
 }

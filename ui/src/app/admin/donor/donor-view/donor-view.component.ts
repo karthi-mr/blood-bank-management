@@ -30,7 +30,7 @@ export class DonorViewComponent implements OnInit {
   }
 
   private getDonorDetail(id: number): void {
-    this.adminService.get_donor_detail(id).subscribe({
+    this.adminService.donorDetail(id).subscribe({
       next: (data: Donor) => {
         this.donor = data;
       },

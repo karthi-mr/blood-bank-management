@@ -46,9 +46,9 @@
       </thead>
       <tbody class="table-group-divider">
         <tr *ngFor="let request of bloodRequests">
-          <td>{{ request.patient_name }}</td>
+          <td class="text-break">{{ request.patient_name }}</td>
           <td>{{ request.patient_age }}</td>
-          <td>{{ request.reason }}</td>
+          <td class="text-break">{{ request.reason }}</td>
           <td>{{ request.unit }}</td>
           <td>{{ request.added | customDate }}</td>
           <td>{{ request.blood_group.blood_group }}</td>

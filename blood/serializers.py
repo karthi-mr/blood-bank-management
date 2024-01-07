@@ -13,6 +13,9 @@ class BloodGroupSerializer(serializers.ModelSerializer):
     class Meta:
         model = BloodGroup
         fields = '__all__'
+        extra_kwargs = {
+            'blood_group': {'error_messages': {'max_length': 'MAX_LIMIT_EXCEED'}}
+        }
 
 
 class StockSerializer1(serializers.ModelSerializer):
@@ -34,17 +37,16 @@ class BranchSerializer(serializers.ModelSerializer):
 
     def validate_name(self, attrs):
         if Branch.objects.filter(name__iexact=attrs):
-            raise ValidationError("A branch with that name already exists")
+            raise ValidationError("BRANCH_ALREADY_EXISTS")
         return attrs
 
     def validate_mobile(self, attrs):
         if Branch.objects.filter(mobile=attrs):
-            raise ValidationError(
-                "A branch with that mobile number already exists")
+            raise ValidationError("MOBILE_ALREADY_PRESENT")
         if not attrs.isdigit():
-            raise ValidationError("Mobile number must contain digits only.")
+            raise ValidationError("OTHER_THAN_NUMBER")
         if len(attrs) != 10:
-            raise ValidationError("Mobile number must contain 10 digits.")
+            raise ValidationError("LENGTH_NOT_TEN")
         return attrs
 
     class Meta:
@@ -85,10 +87,24 @@ class BloodRequestSerializer(serializers.ModelSerializer):
                                                      slug_field='id',
                                                      write_only=True)
 
+    def validate_unit(self, attrs):
+        if attrs > 20:
+            raise ValidationError("UNIT_GREATER_THAN_20")
+        return attrs
+
+    def validate_patient_age(self, attrs):
+        if attrs > 120:
+            raise ValidationError("AGE_GREATER_THAN_120")
+        return attrs
+
     class Meta:
         model = BloodRequest
         fields = '__all__'
         read_only_fields = ('request_by_donor', 'request_by_patient')
+        extra_kwargs = {
+            'patient_name': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}},
+            'reason': {'error_messages': {'max_length': "MAX_LIMIT_EXCEED"}}
+        }
 
     def create(self, validated_data):
         validated_data['request_by_donor'] = self.context.get('donor')
@@ -113,25 +129,29 @@ class BloodDonateSerializer(serializers.ModelSerializer):
                                                     slug_field='id',
                                                     write_only=True)
 
-    class Meta:
-        model = BloodDonate
-        fields = '__all__'
-        read_only_fields = ('status', 'donor')
-
     def validate_age(self, attrs):
         if attrs < 12:
-            raise ValidationError("Below age 12 should not give blood")
+            raise ValidationError("AGE_LESS_THAN_12")
+        if attrs > 60:
+            raise ValidationError("AGE_GREATER_THAN_60")
         return attrs
 
     def validate_unit(self, attrs):
         if attrs > 2:
-            raise ValidationError("Unit should not be greater than 2.")
+            raise ValidationError("UNIT_GREATER_THAN_2")
         return attrs
+
+    class Meta:
+        model = BloodDonate
+        fields = '__all__'
+        read_only_fields = ('status', 'donor')
+        extra_kwargs = {
+            'disease': {'error_messages': {'max_length': "LENGTH_LIMIT_EXCEED"}}
+        }
 
     def create(self, validated_data):
         user = self.context.get('user')
         donor = Donor.objects.get(user=user)
-        # validated_data['donor'] = donor
 
         instance = BloodDonate.objects.create(donor=donor,
                                               disease=validated_data.get(

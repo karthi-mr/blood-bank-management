@@ -1,7 +1,14 @@
 <div class="container-fluid">
   <h1 class="text-secondary text-center my-3">Donor Details</h1>
   <app-loading *ngIf="isLoading"></app-loading>
-  <div class="data" *ngIf="!isLoading">
+  <!-- error message -->
+  <div class="alert alert-danger" *ngIf="errorMessage">
+    <p class="h3">{{ errorMessage }}</p>
+    <button type="button" class="btn btn-success" (click)="onClickReload()">
+      Reload Data
+    </button>
+  </div>
+  <div class="data" *ngIf="!isLoading && donors.length > 0">
     <table
       class="table table-striped table-hover table-bordered table-responsive"
     >
@@ -284,7 +291,11 @@
             />
           </th>
           <th>
-            <button type="button" class="btn btn-success" (click)="testInput()">
+            <button
+              type="button"
+              class="btn btn-success"
+              (click)="onClickSearch()"
+            >
               Search
             </button>
           </th>

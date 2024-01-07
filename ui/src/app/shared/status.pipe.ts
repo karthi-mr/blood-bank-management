@@ -1,27 +1,22 @@
-import { state } from '@angular/animations';
 import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
-  name: 'status'
+  name: 'status',
 })
 export class StatusPipe implements PipeTransform {
-
   transform(value: number, ...args: unknown[]): unknown {
     let status: string | null = null;
-    
-    switch(value) {
+    switch (value) {
       case 1:
-        status = "Approved";
+        status = 'Approved';
         break;
       case 2:
-        status = "Pending";
+        status = 'Pending';
         break;
       case 3:
-        status = "Rejected";
+        status = 'Rejected';
         break;
     }
-    
     return status;
   }
-
 }

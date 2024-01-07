@@ -25,6 +25,12 @@ class PatientViewSet(ModelViewSet):
         page = self.paginate_queryset(patientSerializer.data)
         return self.get_paginated_response(page)
 
+    def create(self, request, *args, **kwargs):
+        serializer = PatientSerializer(data=request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save()
+            return Response({'message': "Patient Registered Successfully."}, status=status.HTTP_201_CREATED)
+
     def partial_update(self, request, pk=None, *args, **kwargs):
         instance = get_object_or_404(Patient, pk=pk)
         donorSerializer = PatientSerializer(

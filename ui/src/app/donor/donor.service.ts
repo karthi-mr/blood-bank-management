@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError } from 'rxjs';
+import { DonorErrorService } from './donor-error.service';
 import { DonateBlood, DonateHistory, DonateHistoryView } from './donor.model';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,9 +12,12 @@ export class DonorService {
     'http://127.0.0.1:8000/api/donate-blood-history/';
   private readonly BLOOD_DONATE_API = 'http://127.0.0.1:8000/api/donate-blood/';
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private donorErrorService: DonorErrorService
+  ) {}
 
-  get_blood_donate_history(
+  donateBloodHistory(
     link: string | null,
     order: string | null
   ): Observable<DonateHistoryView> {
@@ -25,28 +29,27 @@ export class DonorService {
     );
   }
 
-  get_blood_donate_requests(): Observable<DonateHistory[]> {
+  donateBloodRequest(): Observable<DonateHistory[]> {
     return this.http.get<DonateHistory[]>(`${this.BLOOD_DONATE_API}`);
   }
 
-  donate_blood(data: DonateBlood): any {
-    return this.http.post(`${this.BLOOD_DONATE_API}`, data);
+  donateBlood(data: DonateBlood): any {
+    return this.http
+      .post(`${this.BLOOD_DONATE_API}`, data)
+      .pipe(catchError(this.donorErrorService.donateBloodErrorHandle));
   }
 
-  update_status_donate_requests(data: { id: number; status: number }): any {
+  updateStatus(data: { id: number; status: number }): any {
     return this.http.patch(`${this.BLOOD_DONATE_API}update_status/`, data);
   }
 
-  update_reject_reason_requests(data: {
-    id: number;
-    reject_reason: string;
-  }): any {
-    return this.http.patch(`${this.BLOOD_DONATE_API}update_reason/`, data);
+  updateRejectReason(data: { id: number; reject_reason: string }): any {
+    return this.http
+      .patch(`${this.BLOOD_DONATE_API}update_reason/`, data)
+      .pipe(catchError(this.donorErrorService.rejectErrorHandle));
   }
 
-  get_blood_donate_history_detail(
-    id: number
-  ): Observable<{ result: DonateHistory }> {
+  donateBloodHistoryDetail(id: number): Observable<{ result: DonateHistory }> {
     return this.http.get<{ result: DonateHistory }>(
       `${this.BLOOD_DONATE_HISTORY_API}${id}/`
     );

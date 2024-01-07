@@ -1,8 +1,8 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { AdminService } from '../../admin.service';
-import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-admin-edit',
@@ -14,6 +14,7 @@ export class AdminEditComponent implements OnInit {
   adminForm!: FormGroup;
   errorMessage: string | undefined;
   successMessage: string | undefined;
+  isLoading: boolean = false;
 
   constructor(
     private adminService: AdminService,
@@ -43,23 +44,16 @@ export class AdminEditComponent implements OnInit {
   }
 
   onSubmitAdminForm(): void {
-    // console.log(this.adminForm.value);
-    this.adminService.add_admin(this.adminForm.value).subscribe({
-      next: (data: any) => {
+    this.isLoading = true;
+    this.adminService.addAdmin(this.adminForm.value).subscribe({
+      next: (data: { message: string }) => {
+        this.isLoading = false;
         this.errorMessage = undefined;
-        this.successMessage = 'Admin Created Successfully.';
+        this.successMessage = data.message;
       },
-      error: (errRes: HttpErrorResponse) => {
-        const error = errRes.error.user;
-        this.successMessage = undefined;
-        this.errorMessage = undefined;
-        if (error.username) {
-          this.errorMessage = error.username[0];
-        } else if (error.email) {
-          this.errorMessage = error.email[0];
-        } else if (error.mobile) {
-          this.errorMessage = error.mobile[0];
-        }
+      error: (errorRes: HttpErrorResponse) => {
+        this.isLoading = false;
+        this.errorMessage = errorRes.message;
       },
     });
   }

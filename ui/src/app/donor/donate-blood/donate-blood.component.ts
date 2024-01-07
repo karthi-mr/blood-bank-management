@@ -1,11 +1,8 @@
-import { PageNotFoundComponent } from './../../page-not-found/page-not-found.component';
-import { DonorService } from './../donor.service';
 import { Component, OnInit } from '@angular/core';
-import { DonateHistory } from '../donor.model';
-import { AuthService } from 'src/app/auth/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AdminService } from 'src/app/admin/admin.service';
-import { BloodGroup } from 'src/app/shared/shared.model';
+import { AuthService } from 'src/app/auth/auth.service';
+import { DonateHistory } from '../donor.model';
+import { DonorService } from './../donor.service';
 
 @Component({
   selector: 'app-donate-blood',
@@ -20,7 +17,6 @@ export class DonateBloodComponent implements OnInit {
   constructor(
     private donorService: DonorService,
     private authService: AuthService,
-    private adminService: AdminService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -31,13 +27,13 @@ export class DonateBloodComponent implements OnInit {
 
   getAllBloodDonateRequests(): void {
     this.isLoading = true;
-    this.donorService.get_blood_donate_requests().subscribe({
+    this.donorService.donateBloodRequest().subscribe({
       next: (data: DonateHistory[]) => {
         this.donateRequests = data;
         this.isLoading = false;
       },
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   onClickDonateBlood(): void {

@@ -1,10 +1,10 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from './auth.service';
-import { ActivatedRoute, Router } from '@angular/router';
-import { SharedService } from '../shared/shared.service';
-import { BloodGroup } from '../shared/shared.model';
 import { Subscription } from 'rxjs';
+import { BloodGroup } from '../shared/shared.model';
+import { SharedService } from '../shared/shared.service';
+import { AuthService } from './auth.service';
 
 @Component({
   selector: 'app-auth',
@@ -14,25 +14,23 @@ import { Subscription } from 'rxjs';
 export class AuthComponent implements OnInit, OnDestroy {
   loginForm!: FormGroup;
   registerForm!: FormGroup;
-
   authType: string = 'login';
-
+  loginErrorMessage: string | undefined;
+  registerErrorMessage: string | undefined;
+  registerSuccessMessage: string | undefined;
   bloodGroups: BloodGroup[] = [];
   bloodGroupSubscription!: Subscription;
+  isLoading: boolean = false;
 
   constructor(
     private authService: AuthService,
-    private sharedService: SharedService,
-    private router: Router,
-    private route: ActivatedRoute
+    private sharedService: SharedService
   ) {}
 
   ngOnInit(): void {
     this.initLoginForm();
     this.initRegisterForm();
-
-    this.sharedService.get_blood_group().subscribe();
-
+    this.sharedService.bloodGroupList().subscribe();
     this.bloodGroupSubscription = this.sharedService.blood_groups.subscribe(
       (data: BloodGroup[]) => {
         this.bloodGroups = data;
@@ -69,22 +67,40 @@ export class AuthComponent implements OnInit, OnDestroy {
   }
 
   onSubmitLoginForm(): void {
-    this.authService.login_user(this.loginForm.value).subscribe({
+    this.isLoading = true;
+    this.authService.loginUser(this.loginForm.value).subscribe({
       next: (data: any) => {
-        // this.router.navigate(['/home'], {relativeTo: this.route})
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.isLoading = false;
+        this.loginErrorMessage = errorRes.message;
       },
     });
   }
 
   onSubmitRegisterForm(): void {
-    this.authService.register_user(this.registerForm.value).subscribe({
-      next: (data: any) => {
-        this.changeAuthType();
+    this.isLoading = true;
+    this.authService.registerUser(this.registerForm.value).subscribe({
+      next: (data: { message: string }) => {
+        this.isLoading = false;
+        this.registerErrorMessage = undefined;
+        this.registerSuccessMessage = data.message;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.isLoading = false;
+        this.registerErrorMessage = errorRes.message;
       },
     });
   }
 
   changeAuthType(): void {
     this.authType = this.authType == 'login' ? 'register' : 'login';
+  }
+
+  onCloseErrorMessage(): void {
+    this.loginErrorMessage = undefined;
+    this.registerErrorMessage = undefined;
+    this.registerSuccessMessage = undefined;
   }
 }

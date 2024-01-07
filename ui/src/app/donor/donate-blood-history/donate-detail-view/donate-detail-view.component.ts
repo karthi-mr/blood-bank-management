@@ -36,11 +36,11 @@ export class DonateDetailViewComponent implements OnInit {
         this.isPending = false;
       }
     });
-    this.userType = this.authService.get_user_type();
+    this.userType = this.authService.userType();
   }
 
   loadData(id: number): void {
-    this.donorService.get_blood_donate_history_detail(id).subscribe({
+    this.donorService.donateBloodHistoryDetail(id).subscribe({
       next: (data: { result: DonateHistory }) => {
         this.donorHistoryDetail = data.result;
       },
@@ -56,20 +56,18 @@ export class DonateDetailViewComponent implements OnInit {
   }
 
   onApproveRequest(id: number, blood_group: BloodGroup, unit: number): void {
-    this.donorService
-      .update_status_donate_requests({ id: id, status: 1 })
-      .subscribe({
-        next: (data: any) => {
-          this.adminService
-            .update_stock({ blood_group: blood_group.id, unit: unit })
-            .subscribe({
-              next: (data: any) => {
-                this.router.navigate(['admin', 'donate-blood']);
-              },
-            });
-          // this.getAllBloodDonateRequests();
-        },
-      });
+    this.donorService.updateStatus({ id: id, status: 1 }).subscribe({
+      next: (data: any) => {
+        this.adminService
+          .updateStock({ blood_group: blood_group.id, unit: unit })
+          .subscribe({
+            next: (data: any) => {
+              this.router.navigate(['admin', 'donate-blood']);
+            },
+          });
+        // this.getAllBloodDonateRequests();
+      },
+    });
   }
 
   onRejectRequest(id: number): void {

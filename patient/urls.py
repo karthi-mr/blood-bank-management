@@ -7,5 +7,5 @@ router = SimpleRouter()
 router.register(r'patient', PatientViewSet)
 
 urlpatterns = [
-    
+
 ] + router.urls

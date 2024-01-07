@@ -51,7 +51,7 @@ export class DonateBloodHistoryComponent implements OnInit {
   getBloodDonateHistory(order: string): void {
     this.sortOrder = order;
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(null, order).subscribe({
+    this.donorService.donateBloodHistory(null, order).subscribe({
       next: (data: DonateHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -67,7 +67,7 @@ export class DonateBloodHistoryComponent implements OnInit {
 
   onNext(): void {
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(this.nextLink, null).subscribe({
+    this.donorService.donateBloodHistory(this.nextLink, null).subscribe({
       next: (data: DonateHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -83,7 +83,7 @@ export class DonateBloodHistoryComponent implements OnInit {
 
   onPrev(): void {
     this.isLoading = true;
-    this.donorService.get_blood_donate_history(this.prevLink, null).subscribe({
+    this.donorService.donateBloodHistory(this.prevLink, null).subscribe({
       next: (data: DonateHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -118,7 +118,7 @@ export class DonateBloodHistoryComponent implements OnInit {
       if (this.totalCount) dCount = this.totalCount - 50;
     }
     const link = `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
-    this.donorService.get_blood_donate_history(link, null).subscribe({
+    this.donorService.donateBloodHistory(link, null).subscribe({
       next: (data: DonateHistoryView) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;

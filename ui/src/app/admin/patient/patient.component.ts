@@ -3,6 +3,7 @@ import { AdminService } from '../admin.service';
 import { Subscription } from 'rxjs';
 import { Patient, PatientResult } from '../admin.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-patient',
@@ -20,11 +21,13 @@ export class PatientComponent implements OnInit {
   isLoading: boolean = false;
   sortOrder: string = 'username';
   isFilterEnabled: boolean = false;
-
+  // input
   inputUsername: string = '';
   inputEmail: string = '';
   inputMobile: string = '';
   inputBloodGroup: string = '';
+  // error message
+  errorMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -47,7 +50,7 @@ export class PatientComponent implements OnInit {
   loadData(order: string): void {
     this.sortOrder = order;
     this.isLoading = true;
-    this.adminService.get_patient(null, order).subscribe({
+    this.adminService.getPatientList(null, order).subscribe({
       next: (data: PatientResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -58,12 +61,16 @@ export class PatientComponent implements OnInit {
         this.valueCount = data.count;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
   onNext(): void {
     this.isLoading = true;
-    this.adminService.get_patient(this.nextLink, null).subscribe({
+    this.adminService.getPatientList(this.nextLink, null).subscribe({
       next: (data: PatientResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -74,12 +81,16 @@ export class PatientComponent implements OnInit {
         this.valueCount += data.count;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
   onPrev(): void {
     this.isLoading = true;
-    this.adminService.get_patient(this.prevLink, null).subscribe({
+    this.adminService.getPatientList(this.prevLink, null).subscribe({
       next: (data: PatientResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -91,6 +102,10 @@ export class PatientComponent implements OnInit {
         if (this.valueCount % 50 != 0) {
           this.valueCount = (this.page - 1) * 50;
         }
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -114,7 +129,7 @@ export class PatientComponent implements OnInit {
       if (this.totalCount) dCount = this.totalCount - 50;
     }
     const link = `http://127.0.0.1:8000/auth/patient/?limit=50&offset=${dCount}`;
-    this.adminService.get_patient(link, null).subscribe({
+    this.adminService.getPatientList(link, null).subscribe({
       next: (data: PatientResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -123,6 +138,10 @@ export class PatientComponent implements OnInit {
         this.totalCount = data.total;
         this.page = this.calculateTotalPage(data.total);
         this.valueCount = dCount + data.count;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -158,5 +177,10 @@ export class PatientComponent implements OnInit {
       order += `&blood_group=${this.inputBloodGroup}`;
     }
     this.loadData(order);
+  }
+
+  onClickReload(): void {
+    this.errorMessage = undefined;
+    this.loadData('ordering=username');
   }
 }

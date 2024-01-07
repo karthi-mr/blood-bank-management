@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DonorService } from 'src/app/donor/donor.service';
@@ -12,6 +13,7 @@ export class RejectRequestComponent implements OnInit {
   reason!: string;
   type!: string;
   id!: number;
+  errorMessage: string | undefined;
 
   constructor(
     private donorService: DonorService,
@@ -33,41 +35,49 @@ export class RejectRequestComponent implements OnInit {
     if (this.type == 'blood-request') {
       // update status
       this.patientService
-        .update_status_donate_requests({ id: this.id, status: 3 })
+        .updateRequestStatus({ id: this.id, status: 3 })
         .subscribe({
           next: (data: any) => {
             // update reason
             this.patientService
-              .update_reject_reason_requests({
+              .updateRequestRejectReason({
                 id: this.id,
                 reject_reason: this.reason,
               })
               .subscribe({
                 next: (data: any) => {
                   this.router.navigate(['../../'], { relativeTo: this.route });
+                },
+                error: (errorRes: HttpErrorResponse) => {
+                  this.errorMessage = errorRes.message;
                 },
               });
           },
         });
     } else if (this.type == 'blood-donate') {
       // update status
-      this.donorService
-        .update_status_donate_requests({ id: this.id, status: 3 })
-        .subscribe({
-          next: (data: any) => {
-            // update reason
-            this.donorService
-              .update_reject_reason_requests({
-                id: this.id,
-                reject_reason: this.reason,
-              })
-              .subscribe({
-                next: (data: any) => {
-                  this.router.navigate(['../../'], { relativeTo: this.route });
-                },
-              });
-          },
-        });
+      this.donorService.updateStatus({ id: this.id, status: 3 }).subscribe({
+        next: (data: any) => {
+          // update reason
+          this.donorService
+            .updateRejectReason({
+              id: this.id,
+              reject_reason: this.reason,
+            })
+            .subscribe({
+              next: (data: any) => {
+                this.router.navigate(['../../'], { relativeTo: this.route });
+              },
+              error: (errorRes: HttpErrorResponse) => {
+                this.errorMessage = errorRes.message;
+              },
+            });
+        },
+      });
     }
+  }
+
+  onCloseError(): void {
+    this.errorMessage = undefined;
   }
 }

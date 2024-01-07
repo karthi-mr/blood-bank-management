@@ -1,6 +1,20 @@
-<div class="auth-forms">
+<app-loading *ngIf="isLoading"></app-loading>
+
+<div class="auth-forms" *ngIf="!isLoading">
   <!-- login form -->
   <div id="login" class="container" *ngIf="authType == 'login'">
+    <div class="alert alert-danger" *ngIf="loginErrorMessage">
+      <p>
+        {{ loginErrorMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
     <form [formGroup]="loginForm" (ngSubmit)="onSubmitLoginForm()">
       <div class="form-floating mb-3">
         <input
@@ -45,6 +59,40 @@
 
   <!-- register form -->
   <div id="register" class="container" *ngIf="authType == 'register'">
+    <!-- failure message -->
+    <div class="alert alert-danger" *ngIf="registerErrorMessage">
+      <p>
+        {{ registerErrorMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
+    <!-- success message -->
+    <div class="alert alert-success" *ngIf="registerSuccessMessage">
+      <p>
+        {{ registerSuccessMessage }}
+      </p>
+      <button
+        type="button"
+        class="btn btn-success me-3"
+        (click)="changeAuthType()"
+      >
+        Go to Login
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger"
+        (click)="onCloseErrorMessage()"
+      >
+        Close
+      </button>
+    </div>
+
     <form [formGroup]="registerForm" (ngSubmit)="onSubmitRegisterForm()">
       <!-- user -->
       <div formGroupName="user" class="mb-3">
@@ -52,7 +100,8 @@
         <div class="row">
           <!-- first_name -->
           <div class="col-lg-6 col-12">
-            <div class="form-floating mb-3">
+            <label for="first_name" class="form-label">First Name</label>
+            <div class="mb-3">
               <input
                 type="text"
                 class="form-control shadow-none"
@@ -60,12 +109,18 @@
                 placeholder=""
                 formControlName="first_name"
               />
-              <label for="first_name">First Name</label>
+              <span
+                class="text-danger"
+                *ngIf="registerForm.value.user.first_name.length > 150"
+              >
+                Maximum length limit exceeded. Allowed 150 characters only.
+              </span>
             </div>
           </div>
           <!-- last_name -->
           <div class="col-lg-6 col-12">
-            <div class="form-floating mb-3">
+            <label for="last_name" class="form-label">Last Name</label>
+            <div class="mb-3">
               <input
                 type="text"
                 class="form-control shadow-none"
@@ -73,12 +128,18 @@
                 placeholder=""
                 formControlName="last_name"
               />
-              <label for="last_name">Last Name</label>
+              <span
+                class="text-danger"
+                *ngIf="registerForm.value.user.last_name.length > 150"
+              >
+                Maximum length limit exceeded. Allowed 150 characters only.
+              </span>
             </div>
           </div>
         </div>
         <!-- username -->
-        <div class="form-floating mb-3">
+        <div class="mb-3">
+          <label for="username" class="form-label">Username</label>
           <input
             type="text"
             class="form-control shadow-none"
@@ -86,10 +147,16 @@
             placeholder=""
             formControlName="username"
           />
-          <label for="username">Username</label>
+          <span
+            class="text-danger"
+            *ngIf="registerForm.value.user.username.length > 150"
+          >
+            Maximum length limit exceeded. Allowed 150 characters only.
+          </span>
         </div>
         <!-- email -->
-        <div class="form-floating mb-3">
+        <div class="mb-3">
+          <label for="email" class="form-label">Email</label>
           <input
             type="text"
             class="form-control shadow-none"
@@ -97,10 +164,16 @@
             placeholder=""
             formControlName="email"
           />
-          <label for="email">Email</label>
+          <span
+            class="text-danger"
+            *ngIf="registerForm.value.user.email.length > 150"
+          >
+            Maximum length limit exceeded. Allowed 150 characters only.
+          </span>
         </div>
         <!-- mobile -->
-        <div class="form-floating mb-3">
+        <div class="mb-3">
+          <label for="mobile" class="form-label">Mobile Number</label>
           <input
             type="text"
             class="form-control shadow-none"
@@ -108,10 +181,16 @@
             placeholder=""
             formControlName="mobile"
           />
-          <label for="mobile">Mobile Number</label>
+          <span
+            class="text-danger"
+            *ngIf="registerForm.value.user.mobile.length > 10"
+          >
+            Mobile number must contain 10 digits.
+          </span>
         </div>
         <!-- password -->
-        <div class="form-floating mb-3">
+        <div class="mb-3">
+          <label for="password" class="form-label">Password</label>
           <input
             type="password"
             class="form-control shadow-none"
@@ -119,29 +198,46 @@
             placeholder=""
             formControlName="password"
           />
-          <label for="password">Password</label>
+          <span
+            class="text-danger"
+            *ngIf="registerForm.value.user.password.length > 150"
+          >
+            Maximum length limit exceeded. Allowed 128 characters only.
+          </span>
         </div>
         <!-- address -->
         <div class="mb-3">
+          <label for="address" class="form-label">Address</label>
           <textarea
             name="address"
             id="address"
             class="form-control shadow-none"
             rows="5"
-            placeholder="Enter Address"
+            placeholder=""
             formControlName="address"
           ></textarea>
-          <!-- <label for="address">Address</label> -->
+          <span
+            class="text-danger"
+            *ngIf="registerForm.value.user.address.length > 500"
+          >
+            Maximum length limit exceeded. Allowed 500 characters only.
+          </span>
         </div>
         <!-- user type -->
-        <select class="form-select shadow-none" formControlName="user_type">
+        <label for="register_type" class="form-label">Register type</label>
+        <select
+          class="form-select shadow-none"
+          formControlName="user_type"
+          id="register_type"
+        >
           <option value="" selected disabled>Select Register Type</option>
           <option value="2">Donor</option>
           <option value="3">Patient</option>
         </select>
       </div>
       <!-- date_of_birth -->
-      <div class="form-floating mb-3">
+      <label for="date_of_birth" class="form-label">Date of Birth</label>
+      <div class="mb-3">
         <input
           type="date"
           class="form-control shadow-none"
@@ -149,12 +245,13 @@
           placeholder=""
           formControlName="date_of_birth"
         />
-        <label for="date_of_birth">Date of Birth</label>
       </div>
       <!-- blood_group -->
+      <label for="blood_group" class="form-label">Blood Group</label>
       <select
         class="form-select shadow-none mb-3"
         formControlName="blood_group_id"
+        id="blood_group"
       >
         <option value="" selected disabled>Select Blood Group</option>
         <option

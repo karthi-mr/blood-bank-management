@@ -30,7 +30,7 @@ export class PatientViewComponent implements OnInit {
   }
 
   private getPatientDetail(id: number): void {
-    this.adminService.get_patient_detail(id).subscribe({
+    this.adminService.patientDetail(id).subscribe({
       next: (data: Patient) => {
         this.patient = data;
       },

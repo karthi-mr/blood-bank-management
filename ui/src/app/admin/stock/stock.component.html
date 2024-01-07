@@ -51,12 +51,19 @@
               type="number"
               name="unit"
               id="unit"
-              class="form-control"
+              class="form-control shadow-none"
+              max="100"
               [(ngModel)]="blood_unit"
             />
           </div>
           <div class="col-md-4 col-12">
-            <button type="submit" class="btn btn-success">Update Stock</button>
+            <button
+              type="submit"
+              class="btn btn-success"
+              [disabled]="blood_unit > 100"
+            >
+              Update Stock
+            </button>
             <button
               type="button"
               class="btn btn-danger text-capitalize ms-3"
@@ -66,6 +73,9 @@
             </button>
           </div>
         </div>
+        <span class="text-danger">
+          You can only add 100 unit at one time.
+        </span>
       </form>
     </div>
   </div>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AdminService } from '../admin.service';
 import { Donor, DonorResult } from '../admin.model';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-donor',
@@ -19,12 +20,13 @@ export class DonorComponent implements OnInit {
   isLoading: boolean = false;
   sortOrder: string = 'username';
   isFilterEnabled: boolean = false;
-
   // input
   inputUsername: string = '';
   inputEmail: string = '';
   inputMobile: string = '';
   inputBloodGroup: string = '';
+  // error message
+  errorMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -47,7 +49,7 @@ export class DonorComponent implements OnInit {
   loadData(order: string): void {
     this.sortOrder = order;
     this.isLoading = true;
-    this.adminService.get_donor(null, order).subscribe({
+    this.adminService.getDonorList(null, order).subscribe({
       next: (data: DonorResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -58,12 +60,16 @@ export class DonorComponent implements OnInit {
         this.valueCount = data.count;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
   onNext(): void {
     this.isLoading = true;
-    this.adminService.get_donor(this.nextLink, null).subscribe({
+    this.adminService.getDonorList(this.nextLink, null).subscribe({
       next: (data: DonorResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -74,12 +80,16 @@ export class DonorComponent implements OnInit {
         this.valueCount += data.count;
         this.isLoading = false;
       },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
+        this.isLoading = false;
+      },
     });
   }
 
   onPrev(): void {
     this.isLoading = true;
-    this.adminService.get_donor(this.prevLink, null).subscribe({
+    this.adminService.getDonorList(this.prevLink, null).subscribe({
       next: (data: DonorResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -91,6 +101,10 @@ export class DonorComponent implements OnInit {
         if (this.valueCount % 50 != 0) {
           this.valueCount = (this.page - 1) * 50;
         }
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -114,7 +128,7 @@ export class DonorComponent implements OnInit {
       if (this.totalCount) dCount = this.totalCount - 50;
     }
     const link = `http://127.0.0.1:8000/auth/donor/?limit=50&offset=${dCount}`;
-    this.adminService.get_donor(link, null).subscribe({
+    this.adminService.getDonorList(link, null).subscribe({
       next: (data: DonorResult) => {
         this.nextLink = data.links.next;
         this.prevLink = data.links.previous;
@@ -123,6 +137,10 @@ export class DonorComponent implements OnInit {
         this.totalCount = data.total;
         this.page = this.calculateTotalPage(data.total);
         this.valueCount = dCount + data.count;
+        this.isLoading = false;
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.errorMessage = errorRes.message;
         this.isLoading = false;
       },
     });
@@ -143,7 +161,7 @@ export class DonorComponent implements OnInit {
     }
   }
 
-  testInput(): void {
+  onClickSearch(): void {
     let order = 'ordering=username';
     if (this.inputUsername) {
       order += `&username=${this.inputUsername}`;
@@ -158,5 +176,10 @@ export class DonorComponent implements OnInit {
       order += `&blood_group=${this.inputBloodGroup}`;
     }
     this.loadData(order);
+  }
+
+  onClickReload(): void {
+    this.errorMessage = undefined;
+    this.loadData('ordering=username');
   }
 }

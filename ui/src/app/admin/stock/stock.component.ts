@@ -17,7 +17,7 @@ export class StockComponent implements OnInit {
   isEditMode: boolean = false;
   blood_group!: BloodGroup;
   blood_unit: number = 0;
-  errorMessage: string | null = null;
+  errorMessage: string | undefined;
 
   constructor(
     private adminService: AdminService,
@@ -32,7 +32,7 @@ export class StockComponent implements OnInit {
   getBloodStock(): void {
     this.isEditMode = false;
     this.isLoading = true;
-    this.adminService.get_stock().subscribe({
+    this.adminService.getStockDetail().subscribe({
       next: (data: BloodStock[]) => {
         this.stocks = data;
         this.isLoading = false;
@@ -52,7 +52,7 @@ export class StockComponent implements OnInit {
 
   onSubmit(formData: NgForm): void {
     this.adminService
-      .update_stock({
+      .updateStock({
         blood_group: this.blood_group.id,
         unit: formData.value.unit,
       })
@@ -60,6 +60,7 @@ export class StockComponent implements OnInit {
         next: (data: any) => {
           this.getBloodStock();
           this.isEditMode = false;
+          this.errorMessage = undefined;
         },
         error: (errorData: HttpErrorResponse) => {
           this.errorMessage = errorData.error.detail;
@@ -68,7 +69,7 @@ export class StockComponent implements OnInit {
   }
 
   onCloseErrorMessage(): void {
-    this.errorMessage = null;
+    this.errorMessage = undefined;
   }
 
   onClickCancel(): void {

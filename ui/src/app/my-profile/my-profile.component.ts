@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProfileService } from './profile.service';
 import { MyProfile } from './profile.model';
 import { FormControl, FormGroup } from '@angular/forms';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-my-profile',
@@ -12,7 +13,8 @@ export class MyProfileComponent implements OnInit {
   myProfile!: MyProfile;
   isEditMode: boolean = false;
   profileForm!: FormGroup;
-  successMessage: string | null = null;
+  successMessage: string | undefined;
+  errorMessage: string | undefined;
 
   constructor(private profileService: ProfileService) {}
 
@@ -22,7 +24,7 @@ export class MyProfileComponent implements OnInit {
   }
 
   loadProfileData(): void {
-    this.profileService.get_my_profile().subscribe({
+    this.profileService.myProfile().subscribe({
       next: (data: MyProfile) => {
         this.myProfile = data;
         this.initProfileForm();
@@ -73,16 +75,22 @@ export class MyProfileComponent implements OnInit {
     this.profileForm.value['id'] = this.myProfile.user.id;
     this.profileForm.value['user']['user_type'] =
       this.myProfile.user.user.user_type;
-    this.profileService.update_user(this.profileForm.value).subscribe({
+    this.profileService.updateUser(this.profileForm.value).subscribe({
       next: (data: any) => {
         this.successMessage = data.detail;
+        this.errorMessage = undefined;
         this.loadProfileData();
         this.onClickEdit(false);
+      },
+      error: (errorRes: HttpErrorResponse) => {
+        this.successMessage = undefined;
+        this.errorMessage = errorRes.message;
       },
     });
   }
 
   onCloseMessage(): void {
-    this.successMessage = null;
+    this.successMessage = undefined;
+    this.errorMessage = undefined;
   }
 }

@@ -2,6 +2,12 @@
   <h1 class="text-primary mb-4 text-capitalize">
     Please Fill the form to add blood group
   </h1>
+  <div class="alert alert-danger mb-4" *ngIf="errorMessage">
+    <p class="h3">{{ errorMessage }}</p>
+    <button type="button" class="btn btn-danger" (click)="onCloseError()">
+      Close
+    </button>
+  </div>
   <form [formGroup]="addBloodForm" (ngSubmit)="onSubmitForm()">
     <!-- blood_group -->
     <div class="form-floating mb-3">
@@ -14,7 +20,13 @@
       />
       <label for="blood_group">Blood Group</label>
     </div>
-    <button type="submit" class="btn btn-success">Donate Blood</button>
+    <button
+      type="submit"
+      class="btn btn-success"
+      [disabled]="!addBloodForm.valid"
+    >
+      Add Blood Group
+    </button>
     <button type="button" class="btn btn-danger ms-3" (click)="onClickCancel()">
       Cancel
     </button>

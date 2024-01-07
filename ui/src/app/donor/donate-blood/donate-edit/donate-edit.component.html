@@ -4,23 +4,35 @@
     <i class="fa-regular fa-face-grin-beam ms-2"></i>
   </h1>
 </div>
-
-<div class="container" id="bloodDonateForm">
+<!-- error message -->
+<div class="alert alert-danger mt-3 mx-5" *ngIf="errorMessage">
+  <p class="h3">{{ errorMessage }}</p>
+  <button type="button" class="btn btn-danger" (click)="onCloseError()">
+    Close
+  </button>
+</div>
+<!-- form -->
+<div class="container mb-5" id="bloodDonateForm">
   <h1 class="text-primary">Please Fill the form to donate blood</h1>
   <form [formGroup]="donateBloodForm" (ngSubmit)="onSubmitBloodDonateForm()">
     <!-- age -->
-    <div class="form-floating mb-3">
+    <label for="age" class="form-label">Age</label>
+    <div class="mb-3">
       <input
         type="number"
         class="form-control shadow-none"
         id="age"
         placeholder=""
         formControlName="age"
+        max="60"
       />
-      <label for="age">Age</label>
+      <span class="text-danger" *ngIf="donateBloodForm.value.age > 60">
+        Age should be less than or equal to 60.
+      </span>
     </div>
     <!-- disease -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="disease" class="form-label">Disease (if any)</label>
       <input
         type="text"
         class="form-control shadow-none"
@@ -28,10 +40,10 @@
         placeholder=""
         formControlName="disease"
       />
-      <label for="disease">Disease (if any)</label>
     </div>
     <!-- unit -->
-    <div class="form-floating mb-3">
+    <div class="mb-3">
+      <label for="unit" class="form-label">Unit</label>
       <input
         type="number"
         class="form-control shadow-none"
@@ -41,11 +53,15 @@
         max="2"
         formControlName="unit"
       />
-      <label for="unit">Unit</label>
+      <span class="text-danger" *ngIf="donateBloodForm.value.unit > 2">
+        Unit should be less than or equal to 2.
+      </span>
     </div>
     <!-- blood_group -->
+    <label for="blood_group" class="form-label">Blood Group</label>
     <select
       class="form-select shadow-none mb-3"
+      id="blood_group"
       formControlName="blood_group_id"
     >
       <option value="" selected disabled>Select Blood Group</option>
@@ -54,8 +70,10 @@
       </option>
     </select>
     <!-- branch -->
+    <label for="branch" class="form-label">Branch</label>
     <select
       class="form-select shadow-none mb-3"
+      id="branch"
       formControlName="donate_branch_id"
     >
       <option value="" selected disabled>Select Branch</option>

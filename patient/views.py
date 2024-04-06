@@ -5,11 +5,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from app.pagination import CustomPagination
-
-from .filters import PatientSearchFilter, SortFilter
-from .models import Patient
-from .permissions import PatientPermission, TotalPatientPermission
-from .serializers import PatientSerializer
+from patient.filters import PatientSearchFilter, SortFilter
+from patient.models import Patient
+from patient.permissions import PatientPermission, TotalPatientPermission
+from patient.serializers import PatientSerializer
 
 
 class PatientViewSet(ModelViewSet):
@@ -19,7 +18,7 @@ class PatientViewSet(ModelViewSet):
     pagination_class = CustomPagination
     filter_backends = [SortFilter, PatientSearchFilter]
 
-    def list(self, request):
+    def list(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         patientSerializer = PatientSerializer(queryset, many=True)
         page = self.paginate_queryset(patientSerializer.data)
@@ -30,6 +29,7 @@ class PatientViewSet(ModelViewSet):
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'message': "Patient Registered Successfully."}, status=status.HTTP_201_CREATED)
+        return Response({'message': "Unknown error occurred"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def partial_update(self, request, pk=None, *args, **kwargs):
         instance = get_object_or_404(Patient, pk=pk)

@@ -1,9 +1,11 @@
+from typing import Any
+
 from rest_framework.permissions import SAFE_METHODS, BasePermission
 
 
 class BloodGroupPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if request.method in SAFE_METHODS:
             return True
         if not request.user.is_authenticated:
@@ -15,7 +17,7 @@ class BloodGroupPermission(BasePermission):
 
 class StockPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         if request.user.user_type != 1:
@@ -25,7 +27,7 @@ class StockPermission(BasePermission):
 
 class UpdateStockPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         if request.user.user_type != 1:
@@ -35,7 +37,7 @@ class UpdateStockPermission(BasePermission):
 
 class BloodRequestPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         return True
@@ -43,7 +45,7 @@ class BloodRequestPermission(BasePermission):
 
 class BloodRequestUpdatePermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if request.user.user_type == 1:
             return True
         return False
@@ -51,7 +53,7 @@ class BloodRequestUpdatePermission(BasePermission):
 
 class BloodDonatePermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         if view.action in ('create', 'update') and request.user.user_type != 2:
@@ -64,7 +66,7 @@ class BloodDonatePermission(BasePermission):
 
 class BloodDonateHistoryPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         if request.user.user_type in (1, 2):
@@ -74,7 +76,7 @@ class BloodDonateHistoryPermission(BasePermission):
 
 class BloodDonateUpdatePermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if request.user.user_type == 1:
             return True
         return False
@@ -82,7 +84,7 @@ class BloodDonateUpdatePermission(BasePermission):
 
 class BranchPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if request.method in SAFE_METHODS:
             return True
         if not request.user.is_authenticated:

@@ -5,11 +5,10 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 
 from app.pagination import CustomPagination
-
-from .filters import DonorSearchFilter, SortFilter
-from .models import Donor
-from .permissions import DonorPermission, TotalDonorPermission
-from .serializers import DonorSerializer
+from donor.filters import DonorSearchFilter, SortFilter
+from donor.models import Donor
+from donor.permissions import DonorPermission, TotalDonorPermission
+from donor.serializers import DonorSerializer
 
 
 class DonorViewSet(ModelViewSet):
@@ -25,11 +24,12 @@ class DonorViewSet(ModelViewSet):
         page = self.paginate_queryset(donorSerializer.data)
         return self.get_paginated_response(page)
 
-    def create(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs) -> Response:
         serializer = DonorSerializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({'message': "Donor Registered Successfully."}, status=status.HTTP_201_CREATED)
+        return Response({'message': "UNKNOWN_ERROR_OCCURRED"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
     def partial_update(self, request, pk=None, *args, **kwargs):
         instance = get_object_or_404(Donor, pk=pk)

@@ -7,8 +7,7 @@ from rest_framework.validators import ValidationError
 from auth.serializers import UserSerializer
 from blood.models import BloodGroup
 from blood.serializers import BloodGroupSerializer
-
-from .models import Donor
+from donor.models import Donor
 
 
 class DonorSerializer(serializers.ModelSerializer):
@@ -38,7 +37,7 @@ class DonorSerializer(serializers.ModelSerializer):
 
         """ creating donor """
         self.validate_date_of_birth(validated_data['date_of_birth'])
-        validated_data['user'] = user
+        validated_data['user'] = user # type: ignore
         validated_data['blood_group'] = validated_data.pop('blood_group_id')
         instance = Donor.objects.create(**validated_data)
 

@@ -1,9 +1,11 @@
+from typing import Any, Literal
+
 from rest_framework.permissions import BasePermission
 
 
 class DonorPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated and view.action != 'create':
             return False
         if view.action in ('list', 'destroy') and request.user.user_type != 1:
@@ -16,7 +18,7 @@ class DonorPermission(BasePermission):
 
 class TotalDonorPermission(BasePermission):
 
-    def has_permission(self, request, view):
+    def has_permission(self, request, view) -> Any:
         if not request.user.is_authenticated:
             return False
         if request.user.user_type != 1:

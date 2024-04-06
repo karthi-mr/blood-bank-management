@@ -14,13 +14,12 @@ from rest_framework_simplejwt.views import TokenObtainPairView
 
 from admin.models import Admin
 from admin.serializers import AdminSerializer
+from auth.models import User
+from auth.serializers import MyTokenObtainPairSerializer, UserSerializer
 from donor.models import Donor
 from donor.serializers import DonorSerializer
 from patient.models import Patient
 from patient.serializers import PatientSerializer
-
-from .models import User
-from .serializers import MyTokenObtainPairSerializer, UserSerializer
 
 
 class MyObtainTokenPairView(TokenObtainPairView):  # user login
@@ -28,8 +27,8 @@ class MyObtainTokenPairView(TokenObtainPairView):  # user login
     serializer_class = MyTokenObtainPairSerializer
 
     def post(self, request, *args, **kwargs):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        username = request.data.get('username') # type: ignore
+        password = request.data.get('password') # type: ignore
         if username == None:
             return Response({'error': "USER_NAME_NOT_PRESENT"}, status=status.HTTP_400_BAD_REQUEST)
         if password == None:
@@ -43,9 +42,9 @@ class MyObtainTokenPairView(TokenObtainPairView):  # user login
             return Response({'error': "WRONG_PASSWORD"}, status=status.HTTP_403_FORBIDDEN)
 
         user_token = MyTokenObtainPairSerializer.get_token(user)
-        update_last_login(None, user)
+        update_last_login(None, user) # type: ignore
         response = {
-            'access': str(user_token.access_token),
+            'access': str(user_token.access_token), # type: ignore
             'refresh': str(user_token)
         }
         return Response({'auth_token': response})
@@ -131,7 +130,7 @@ def get_tab(request):
                         # {'name': 'request blood history',
                         #  'link': 'patient/request-blood-history'},
                         ]
-    return Response(response, status=status.HTTP_200_OK)
+    return Response(response, status=status.HTTP_200_OK) # type:ignore
 
 
 def get_inactive_date(time) -> str:  # calculate inactive with last login

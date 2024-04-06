@@ -10,8 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
-from pathlib import Path
 from datetime import timedelta
+from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -89,12 +89,12 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.mysql',
         'HOST': 'localhost',
-        'PORT': 5433,
-        'NAME': 'blood_bank_management',
-        'USER': 'admin',
-        'PASSWORD': 'admin'
+        'PORT': 3306,
+        'NAME': 'bbm',
+        'USER': 'user_1',
+        'PASSWORD': 'Test@321'
     }
 }
 

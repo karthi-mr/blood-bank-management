@@ -20,9 +20,9 @@ This website is for managing blood in blood bank.
 
 - MySql
 
----
-
-> [!Steps to run the project]
+> [!TIP]
+>
+> ### Steps to run project
 >
 > 1. Download the project.
 > 2. Create a virtual environment and **activate it**.

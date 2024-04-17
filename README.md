@@ -22,18 +22,20 @@ This website is for managing blood in blood bank.
 
 ### Steps to run the project
 
-```Markdown
-1. Download the project.
-2. Create a virtual environment and **activate it**.
-3. Run command **pip install -r requirements.txt** to install python dependencies.
-4. Run command **py db.py** to create a database and an user (Make sure MySQL is installed in your System).
-5. Run command **py manage.py migrate** to migrate tables in a database.
-6. Run command **py manage.py shell < y_code\*.py** to create mock data in a table.
-7. Run command **py manage.py runserver** to run django server.
-8. Go to ui folder.
-9. Run command **npm install --save --legacy-peer-deps** to install angular dependencies.
-10. Run command **npm start** to run the angular project.
-```
+> [!TIP]
+>
+> 1. Download the project.
+> 2. Create a virtual environment and **activate it**.
+> 3. Run command **pip install -r requirements.txt** to install python dependencies.
+> 4. Run command **py db.py** to create a database and an user (Make sure MySQL is installed in your System).
+> 5. Run command **py manage.py migrate** to migrate tables in a database.
+> 6. Run command **py manage.py shell < y_code\*.py** to create mock data in a table.
+> 7. Run command **py manage.py runserver** to run django server.
+> 8. Go to ui folder.
+> 9. Run command **npm install --save --legacy-peer-deps** to install angular dependencies.
+> 10. Run command **npm start** to run the angular project.
+
+---
 
 ## Screenshot of this Application
 

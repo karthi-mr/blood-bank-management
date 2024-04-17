@@ -1,11 +1,12 @@
+import random
 from datetime import datetime, timedelta
+
 from django.contrib.auth.hashers import make_password
 
-import random
-
-from donor.models import Donor
 from auth.models import User
 from blood.models import BloodGroup
+from donor.models import Donor
+
 
 def random_number(N):
     minimum = pow(10, N-1)
@@ -36,11 +37,13 @@ dob.append(datetime.now() - timedelta(days=4000))
 #                               blood_group = blood_groups[1]
 #                              )
 
-for i in range(1, 1001):
+for i in range(2, 3):
     user = User.objects.create(username = f"custom_donor_{i}",
                                email = f"custom_donor_{i}@bbm.com",
                                password = make_password('a'),
                                mobile = random_number(10),
+                               is_superuser = False,
+                               is_staff = False,
                                is_active = True,
                                user_type = 2 
                               )

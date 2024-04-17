@@ -1,9 +1,7 @@
 from django.contrib.auth.hashers import make_password
 
-from auth.models import User
 from admin.models import Admin
-from patient.models import Patient
-from donor.models import Donor
+from auth.models import User
 
 user_admin = User.objects.create(username = "admin",
                                  email = "admin@bbm.com",

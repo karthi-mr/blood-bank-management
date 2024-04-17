@@ -8,21 +8,33 @@ from rest_framework.validators import ValidationError
 from rest_framework.viewsets import GenericViewSet, ModelViewSet
 
 from app.pagination import CustomPagination
+from blood.filters import (
+    BloodDonateSearchFilter,
+    BloodRequestSearchFilter,
+    SortBloodDonateHistoryFilter,
+    SortBloodRequestHistoryFilter,
+)
+from blood.models import BloodDonate, BloodGroup, BloodRequest, Branch, Stock
+from blood.permissions import (
+    BloodDonateHistoryPermission,
+    BloodDonatePermission,
+    BloodDonateUpdatePermission,
+    BloodGroupPermission,
+    BloodRequestPermission,
+    BloodRequestUpdatePermission,
+    BranchPermission,
+    StockPermission,
+    UpdateStockPermission,
+)
+from blood.serializers import (
+    BloodDonateSerializer,
+    BloodGroupSerializer,
+    BloodRequestSerializer,
+    BranchSerializer,
+    StockSerializer,
+)
 from donor.models import Donor
 from patient.models import Patient
-
-from .filters import (BloodDonateSearchFilter, BloodRequestSearchFilter,
-                      SortBloodDonateHistoryFilter,
-                      SortBloodRequestHistoryFilter)
-from .models import BloodDonate, BloodGroup, BloodRequest, Branch, Stock
-from .permissions import (BloodDonateHistoryPermission, BloodDonatePermission,
-                          BloodDonateUpdatePermission, BloodGroupPermission,
-                          BloodRequestPermission, BloodRequestUpdatePermission,
-                          BranchPermission, StockPermission,
-                          UpdateStockPermission)
-from .serializers import (BloodDonateSerializer, BloodGroupSerializer,
-                          BloodRequestSerializer, BranchSerializer,
-                          StockSerializer)
 
 
 class BloodGroupViewSet(GenericViewSet):
@@ -278,7 +290,7 @@ class BloodDonateViewSet(ModelViewSet):
         return Response({'detail': "Donate request created successfully."},
                         status=status.HTTP_201_CREATED)
 
-    def retrieve(self, request, pk=None):
+    def retrieve(self, request, pk=None, *args, **kwargs):
         queryset = get_object_or_404(BloodDonate, pk=pk)
         serializer = BloodDonateSerializer(queryset)
         return Response({'result': serializer.data}, status=status.HTTP_200_OK)

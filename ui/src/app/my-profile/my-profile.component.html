@@ -1,200 +1,183 @@
 <div class="container my-profile" *ngIf="myProfile">
-  <div class="message alert alert-success" *ngIf="successMessage">
-    <p class="h5">{{ successMessage }}</p>
-    <button type="button" class="btn btn-danger" (click)="onCloseMessage()">
-      Close
-    </button>
-  </div>
-  <div class="message alert alert-danger" *ngIf="errorMessage">
-    <p class="h5">{{ errorMessage }}</p>
-    <button type="button" class="btn btn-danger" (click)="onCloseMessage()">
-      Close
-    </button>
-  </div>
-  <form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
-    <div formGroupName="user" class="userFormGroup">
-      <!-- first & last name -->
-      <div class="row mb-lg-3 mb-0">
-        <div class="col-lg-6 col-12">
-          <!-- first name -->
-          <div class="first_name mb-lg-0 mb-3">
-            <label for="first_name" class="form-label">First Name</label>
-            <input
-              type="text"
-              name="first_name"
-              id="first_name"
-              class="form-control shadow-none"
-              formControlName="first_name"
-            />
-            <span
-              class="text-danger"
-              *ngIf="profileForm.value.user.first_name.length > 150"
-            >
-              Maximum length limit exceeded. Allowed 150 characters only.
-            </span>
-          </div>
-        </div>
-        <div class="col-lg-6 col-12">
-          <!-- last name -->
-          <div class="last_name mb-lg-0 mb-3">
-            <label for="last_name" class="form-label">Last Name</label>
-            <input
-              type="text"
-              name="last_name"
-              id="last_name"
-              class="form-control shadow-none"
-              formControlName="last_name"
-            />
-            <span
-              class="text-danger"
-              *ngIf="profileForm.value.user.last_name.length > 150"
-            >
-              Maximum length limit exceeded. Allowed 150 characters only.
-            </span>
-          </div>
-        </div>
-      </div>
-      <!-- username -->
-      <div class="username mb-3">
-        <label for="username" class="form-label">Username</label>
-        <input
-          type="text"
-          name="username"
-          id="username"
-          class="form-control"
-          [value]="myProfile.user.user.username"
-          disabled
-        />
-      </div>
-      <!-- email -->
-      <div class="email mb-3">
-        <label for="email" class="form-label">E-Mail</label>
-        <input
-          type="text"
-          name="email"
-          id="email"
-          class="form-control shadow-none"
-          formControlName="email"
-        />
-      </div>
-      <!-- mobile -->
-      <div class="mobile mb-3">
-        <label for="mobile" class="form-label">Mobile Number</label>
-        <input
-          type="text"
-          name="mobile"
-          id="mobile"
-          class="form-control shadow-none"
-          formControlName="mobile"
-        />
-        <span
-          class="text-danger"
-          *ngIf="profileForm.value.user.mobile.length > 10"
-        >
-          Mobile number must contain 10 digits.
-        </span>
-      </div>
-      <!-- user_type -->
-      <div class="user_type mb-3">
-        <label for="mobile" class="form-label">User Type</label>
-        <input
-          type="text"
-          name="user_type"
-          id="user_type"
-          class="form-control"
-          [value]="
+    <div class="message alert alert-success" *ngIf="successMessage">
+        <p class="h5">{{ successMessage }}</p>
+        <button type="button" class="btn btn-danger" (click)="onCloseMessage()">
+            Close
+        </button>
+    </div>
+    <div class="message alert alert-danger" *ngIf="errorMessage">
+        <p class="h5">{{ errorMessage }}</p>
+        <button type="button" class="btn btn-danger" (click)="onCloseMessage()">
+            Close
+        </button>
+    </div>
+    <form [formGroup]="profileForm" (ngSubmit)="onSubmitForm()">
+        <div formGroupName="user" class="userFormGroup">
+            <!-- first & last name -->
+            <div class="row mb-lg-3 mb-0">
+                <div class="col-lg-6 col-12">
+                    <!-- first name -->
+                    <div class="first_name mb-lg-0 mb-3">
+                        <label for="first_name" class="form-label">First Name</label>
+                        <input
+                            type="text"
+                            name="first_name"
+                            id="first_name"
+                            class="form-control shadow-none"
+                            formControlName="first_name" />
+                        <span
+                            class="text-danger"
+                            *ngIf="profileForm.value.user.first_name.length > 150">
+                            Maximum length limit exceeded. Allowed 150 characters only.
+                        </span>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-12">
+                    <!-- last name -->
+                    <div class="last_name mb-lg-0 mb-3">
+                        <label for="last_name" class="form-label">Last Name</label>
+                        <input
+                            type="text"
+                            name="last_name"
+                            id="last_name"
+                            class="form-control shadow-none"
+                            formControlName="last_name" />
+                        <span
+                            class="text-danger"
+                            *ngIf="profileForm.value.user.last_name.length > 150">
+                            Maximum length limit exceeded. Allowed 150 characters only.
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <!-- username -->
+            <div class="username mb-3">
+                <label for="username" class="form-label">Username</label>
+                <input
+                    type="text"
+                    name="username"
+                    id="username"
+                    class="form-control"
+                    [value]="myProfile.user.user.username"
+                    disabled />
+            </div>
+            <!-- email -->
+            <div class="email mb-3">
+                <label for="email" class="form-label">E-Mail</label>
+                <input
+                    type="text"
+                    name="email"
+                    id="email"
+                    class="form-control shadow-none"
+                    formControlName="email" />
+            </div>
+            <!-- mobile -->
+            <div class="mobile mb-3">
+                <label for="mobile" class="form-label">Mobile Number</label>
+                <input
+                    type="text"
+                    name="mobile"
+                    id="mobile"
+                    class="form-control shadow-none"
+                    formControlName="mobile" />
+                <span
+                    class="text-danger"
+                    *ngIf="profileForm.value.user.mobile.length > 10">
+                    Mobile number must contain 10 digits.
+                </span>
+            </div>
+            <!-- user_type -->
+            <div class="user_type mb-3">
+                <label for="mobile" class="form-label">User Type</label>
+                <input
+                    type="text"
+                    name="user_type"
+                    id="user_type"
+                    class="form-control"
+                    [value]="
             myProfile.user.user.user_type == 1
               ? 'Admin'
               : myProfile.user.user.user_type == 2
               ? 'Donor'
               : 'Patient'
           "
-          disabled="true"
-        />
-      </div>
-      <!-- address -->
-      <div class="address mb-3">
-        <label for="address" class="form-label">Address</label>
-        <textarea
-          name="address"
-          id="address"
-          rows="5"
-          class="form-control"
-          formControlName="address"
-        ></textarea>
-        <span
-          class="text-danger"
-          *ngIf="profileForm.value.user.address.length > 500"
-        >
-          Maximum length limit exceeded. Allowed 500 characters only.
-        </span>
-      </div>
-      <!-- last login -->
-      <div class="last_login mb-3">
-        <label for="last_login" class="form-label">Last Login</label>
-        <input
-          type="datetime"
-          name="last_login"
-          id="last_login"
-          class="form-control"
-          value="{{ myProfile.user.user.last_login | customDate }}"
-          disabled
-        />
-      </div>
-    </div>
-    <!-- dob -->
-    <div class="dob mb-3" *ngIf="myProfile.user.user.user_type != 1">
-      <label for="dob" class="form-label">Date of Birth</label>
-      <input
-        type="date"
-        name="dob"
-        id="dob"
-        class="form-control"
-        formControlName="date_of_birth"
-      />
-    </div>
-    <!-- age -->
-    <div class="age mb-3" *ngIf="myProfile.user.user.user_type != 1">
-      <label for="age" class="form-label">Age</label>
-      <input
-        type="number"
-        name="age"
-        id="age"
-        class="form-control"
-        [value]="myProfile.age"
-        disabled
-      />
-    </div>
-    <!-- blood group -->
-    <div class="blood_group mb-3" *ngIf="myProfile.user.user.user_type != 1">
-      <label for="blood_group" class="form-label">Blood Group</label>
-      <input
-        type="text"
-        name="blood_group"
-        id="blood_group"
-        class="form-control"
-        [value]="myProfile.user.blood_group?.blood_group"
-        disabled
-      />
-    </div>
-    <button
-      type="button"
-      class="btn btn-primary me-4"
-      *ngIf="!isEditMode"
-      (click)="onClickEdit(true)"
-    >
-      Edit
-    </button>
-    <button type="submit" class="btn btn-success me-4" *ngIf="isEditMode">
-      Update
-    </button>
-    <button
-      type="button"
-      class="btn btn-danger me-4"
-      *ngIf="isEditMode"
-      (click)="onClickEdit(false)"
-    >
-      Cancel
-    </button>
-  </form>
+                    disabled="true" />
+            </div>
+            <!-- address -->
+            <div class="address mb-3">
+                <label for="address" class="form-label">Address</label>
+                <textarea
+                    name="address"
+                    id="address"
+                    rows="5"
+                    class="form-control"
+                    formControlName="address"></textarea>
+                <span
+                    class="text-danger"
+                    *ngIf="profileForm.value.user.address && profileForm.value.user.address.length > 500">
+                    Maximum length limit exceeded. Allowed 500 characters only.
+                </span>
+            </div>
+            <!-- last login -->
+            <div class="last_login mb-3">
+                <label for="last_login" class="form-label">Last Login</label>
+                <input
+                    type="datetime"
+                    name="last_login"
+                    id="last_login"
+                    class="form-control"
+                    value="{{ myProfile.user.user.last_login | customDate }}"
+                    disabled />
+            </div>
+        </div>
+        <!-- dob -->
+        <div class="dob mb-3" *ngIf="myProfile.user.user.user_type != 1">
+            <label for="dob" class="form-label">Date of Birth</label>
+            <input
+                type="date"
+                name="dob"
+                id="dob"
+                class="form-control"
+                formControlName="date_of_birth" />
+        </div>
+        <!-- age -->
+        <div class="age mb-3" *ngIf="myProfile.user.user.user_type != 1">
+            <label for="age" class="form-label">Age</label>
+            <input
+                type="number"
+                name="age"
+                id="age"
+                class="form-control"
+                [value]="myProfile.age"
+                disabled />
+        </div>
+        <!-- blood group -->
+        <div class="blood_group mb-3" *ngIf="myProfile.user.user.user_type != 1">
+            <label for="blood_group" class="form-label">Blood Group</label>
+            <input
+                type="text"
+                name="blood_group"
+                id="blood_group"
+                class="form-control"
+                [value]="myProfile.user.blood_group?.blood_group"
+                disabled />
+        </div>
+        <button
+            type="button"
+            class="btn btn-primary me-4"
+            *ngIf="!isEditMode"
+            (click)="onClickEdit(true)">
+            Edit
+        </button>
+        <button type="submit" class="btn btn-success me-4" *ngIf="isEditMode">
+            Update
+        </button>
+        <button
+            type="button"
+            class="btn btn-danger me-4"
+            *ngIf="isEditMode"
+            (click)="onClickEdit(false)">
+            Cancel
+        </button>
+    </form>
 </div>
